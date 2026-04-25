@@ -111,8 +111,20 @@ Before writing or committing any UI change, ask: **would a real user understand 
 - **Never push directly to `main`.** All changes go through a feature branch and PR.
 - **Branch naming:** `feature/short-description`, `fix/short-description`, `chore/short-description`
 - **Commit messages:** Imperative mood, lowercase, concise — e.g. `add invite acceptance page`, `fix purchase RLS policy`
-- **One concern per PR.** Don't bundle unrelated changes.
+- **One PR per milestone.** Each milestone in the build order gets its own branch and PR. Do not bundle multiple milestones into one branch.
 - **Repo:** `https://github.com/ericproud/wishlist` (private)
+
+### Milestone completion — do this automatically, without being asked
+
+When a milestone is fully tested and working:
+
+1. Update `docs/project_status.md` and `docs/changelog.md`
+2. Run the pre-commit checklist and fix any issues
+3. Commit the doc updates
+4. Push the branch and open a PR on GitHub
+5. Tell the user the PR is ready to merge, then immediately create the next feature branch and continue
+
+Do not wait for the user to ask. A clean git history is a project requirement.
 
 ### When to commit
 
