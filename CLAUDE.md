@@ -101,6 +101,24 @@ Full technical design: `project_spec.md §2.1–2.9`.
 - **One concern per PR.** Don't bundle unrelated changes.
 - **Repo:** `https://github.com/ericproud/wishlist` (private)
 
+### When to commit
+
+Commit at every logical stopping point — don't let work pile up. Good commit moments:
+- A feature or sub-feature is complete and tested in the browser
+- A bug is fixed and verified
+- A refactor is done and type-checks pass
+- Before switching to a different concern
+
+### Pre-commit checklist (run in order, fix before committing)
+
+```bash
+npx tsc --noEmit   # must be zero errors
+npm run lint       # must be zero errors (warnings OK)
+npm run build      # run before PRs, not necessarily every commit
+```
+
+Never commit with TypeScript errors or lint errors. If the build fails, fix it before opening the PR.
+
 ---
 
 ## Common Commands
@@ -135,5 +153,4 @@ Before marking any feature complete:
 - Test at least one edge/error case (expired token, duplicate purchase, unauthorized list access)
 - For the list page specifically: verify all three viewer identities manually (owner, accepted member, unauthenticated/non-member)
 - Type checking and linting verify code correctness — they do not verify feature correctness. Always test in the browser.
-- Update files in the docs folder after major milestones and additions to the project.
-- Use the /update-docs-and-commit slash when making git commits.
+- Update `docs/project_status.md` and `docs/changelog.md` after completing each milestone before opening a PR.

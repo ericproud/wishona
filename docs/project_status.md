@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**Scaffolding complete — starting Auth next.**
+**Auth complete — starting Profile next.**
 
-Next.js app is scaffolded with dependencies installed and the dev server verified. Supabase schema, RLS policies, and auth flows are the next targets.
+Sign up, log in, log out, and middleware are all working. Supabase schema, RLS policies, and the `public.users` trigger are applied. Next target: profile editing (display name, clothing sizes, interests, note, avatar upload).
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -25,15 +25,15 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 - [x] Next.js app scaffolded (Next 16, TypeScript, Tailwind v4, App Router)
 - [x] Core dependencies installed (`@supabase/ssr`, `@supabase/supabase-js`, `resend`, `shadcn/ui`)
 - [x] Supabase project created, keys in `.env.local`
-- [ ] Supabase schema applied, RLS policies in place
+- [x] Supabase schema applied, RLS policies in place
 - [x] Resend account set up (using `onboarding@resend.dev` sandbox sender for now)
 - [ ] Resend production sending domain verified
 - [ ] Vercel project connected to GitHub repo
 
 ### Auth
-- [ ] Sign up (email + password + username)
-- [ ] Log in / log out
-- [ ] Middleware redirecting unauthenticated users from protected routes
+- [x] Sign up (email + password + username)
+- [x] Log in / log out
+- [x] Middleware redirecting unauthenticated users from protected routes
 
 ### Profile
 - [ ] Edit display name, clothing sizes, interests, wishlist note
