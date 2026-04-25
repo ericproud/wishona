@@ -59,6 +59,19 @@ Full technical design: `project_spec.md §2.1–2.9`.
 
 ---
 
+## UX Standards
+
+Before writing or committing any UI change, ask: **would a real user understand this without explanation?**
+
+- **Write for users, not developers.** Never expose technical concepts in the UI — no slugs, no UUIDs, no database field names, no internal jargon. If a detail only matters to the code, hide it.
+- **Every piece of UI copy should be purposeful.** Labels, hints, placeholders, and error messages must earn their place. If a hint doesn't help the user make a decision, remove it.
+- **Think through the full interaction.** For every new UI element: what does the empty state look like? What does an error look like? What happens on success? All three must be handled before the feature is considered done.
+- **Destructive actions need confirmation.** Any delete or irreversible action must have an inline confirmation step — not a browser `window.confirm()` dialog.
+- **Feedback must be immediate.** If a user clicks a button and nothing visibly changes within ~100ms, add a loading/pending state.
+- **Never make the user feel lost.** Every protected page needs a clear way back (dashboard link) and a way out (log out). Apply this to every new page.
+
+---
+
 ## Product & UX Guidelines
 
 - **One user type.** There is no "lister" vs "gifter" account — these are contextual roles relative to a specific list. Don't create separate account types or separate flows for them.
@@ -98,8 +111,20 @@ Full technical design: `project_spec.md §2.1–2.9`.
 - **Never push directly to `main`.** All changes go through a feature branch and PR.
 - **Branch naming:** `feature/short-description`, `fix/short-description`, `chore/short-description`
 - **Commit messages:** Imperative mood, lowercase, concise — e.g. `add invite acceptance page`, `fix purchase RLS policy`
-- **One concern per PR.** Don't bundle unrelated changes.
+- **One PR per milestone.** Each milestone in the build order gets its own branch and PR. Do not bundle multiple milestones into one branch.
 - **Repo:** `https://github.com/ericproud/wishlist` (private)
+
+### Milestone completion — do this automatically, without being asked
+
+When a milestone is fully tested and working:
+
+1. Update `docs/project_status.md` and `docs/changelog.md`
+2. Run the pre-commit checklist and fix any issues
+3. Commit the doc updates
+4. Push the branch and open a PR on GitHub
+5. Tell the user the PR is ready to merge, then immediately create the next feature branch and continue
+
+Do not wait for the user to ask. A clean git history is a project requirement.
 
 ### When to commit
 

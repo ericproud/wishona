@@ -8,6 +8,24 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Lists milestone)
+- `lib/actions/lists.ts` — `createList`, `updateList` (bind pattern), `deleteList` Server Actions; auto-slug generation with numeric de-duplication; duplicate names disambiguated in display name too
+- `lib/utils.ts` — `slugify` helper
+- `app/list/new/page.tsx` — create list form with `useActionState`
+- `app/dashboard/lists-section.tsx` — client component with inline rename and delete-with-confirmation
+- `app/dashboard/page.tsx` — fetches owned lists, passes to `ListsSection`
+- `types/index.ts` — `Item.url` corrected to `string | null`
+- `CLAUDE.md` — added UX Standards section
+
+### Added (Profile milestone)
+- `lib/actions/profile.ts` — `updateProfile` Server Action (display name, clothing sizes, interests, note) and `updateAvatarUrl` (saves Storage URL to DB)
+- `app/profile/edit/page.tsx` — server page that loads current `users` + `profiles` rows in parallel, passes to form
+- `app/profile/edit/profile-form.tsx` — client form with text fields (uncontrolled, `defaultValue`) and avatar upload direct to Supabase Storage
+- `components/ui/avatar.tsx` — shadcn Avatar primitive (Base UI)
+- `components/ui/user-avatar.tsx` — wrapper with initials fallback; deterministic warm color per user via string hash
+- Supabase Storage: `avatars` bucket (public read) with RLS policies allowing users to write only to their own subfolder
+- `app/dashboard/page.tsx` — added "Edit profile" link
+
 ### Added (Auth milestone)
 - `types/index.ts` — TypeScript interfaces for all DB tables (`User`, `Profile`, `List`, `Item`, `ListInvite`, `Purchase`) plus composed types
 - `lib/supabase/client.ts` — browser Supabase client via `createBrowserClient` from `@supabase/ssr`

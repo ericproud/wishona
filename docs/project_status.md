@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**Auth complete — starting Profile next.**
+**Lists complete — starting Invites next.**
 
-Sign up, log in, log out, and middleware are all working. Supabase schema, RLS policies, and the `public.users` trigger are applied. Next target: profile editing (display name, clothing sizes, interests, note, avatar upload).
+Auth, Profile, and Lists milestones are done. Users can create named lists, rename them inline, and delete them with a confirmation step. Slugs are auto-generated and de-duplicated. Next target: send invite emails via Resend, accept via token link, revoke pending invites.
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -36,13 +36,13 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 - [x] Middleware redirecting unauthenticated users from protected routes
 
 ### Profile
-- [ ] Edit display name, clothing sizes, interests, wishlist note
-- [ ] Profile photo upload (Supabase Storage)
+- [x] Edit display name, clothing sizes, interests, wishlist note
+- [x] Profile photo upload (Supabase Storage)
 
 ### Lists
-- [ ] Create a named list (auto-generates slug)
-- [ ] Rename and delete a list
-- [ ] Multiple lists per user
+- [x] Create a named list (auto-generates slug)
+- [x] Rename and delete a list
+- [x] Multiple lists per user
 
 ### Invites
 - [ ] Send invite by email via Resend
@@ -75,12 +75,9 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 
 ## Immediate Next Steps
 
-1. Apply the Supabase schema from `project_spec.md §2.3` in the Supabase SQL editor
-2. Apply the RLS policies from `project_spec.md §2.4`
-3. Regenerate DB types: `npx supabase gen types typescript --project-id <ref> > types/supabase.ts`
-4. Create Supabase client helpers: `lib/supabase/client.ts` (browser) and `lib/supabase/server.ts` (server components + actions)
-5. Add middleware to refresh Supabase sessions and gate protected routes
-6. Begin Auth milestone — sign up, log in, log out, username selection
+1. Invites milestone — send by email (Resend), accept via token link, revoke
+2. Items milestone — add, edit, delete, quantity
+3. List page milestone — three-view logic (owner / member / non-member)
 
 ---
 
@@ -91,9 +88,9 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 | Planning & spec | ✅ Complete | `project_spec.md` is the source of truth |
 | Repo & tooling setup | ✅ Complete | GitHub repo live, docs scaffolded |
 | App scaffolding | ✅ Complete | Next 16, React 19, Tailwind v4, shadcn/ui initialized |
-| Auth (sign up / log in) | ⬜ Not started | |
-| Profile | ⬜ Not started | |
-| Lists + Items | ⬜ Not started | |
+| Auth (sign up / log in) | ✅ Complete | |
+| Profile | ✅ Complete | |
+| Lists | ✅ Complete | |
 | Invites + email | ⬜ Not started | |
 | List page (3-view) | ⬜ Not started | Highest complexity feature |
 | Dashboard | ⬜ Not started | |

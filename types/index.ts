@@ -32,7 +32,7 @@ export interface Item {
   id: string
   list_id: string
   name: string
-  url: string
+  url: string | null
   price: number | null
   quantity: number
   notes: string | null
