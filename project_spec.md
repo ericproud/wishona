@@ -123,7 +123,7 @@ There is only one type of user account. Every user can create lists (making them
 - [ ] Invite tokens expire after 7 days
 
 **Items**
-- [ ] Add item: name (required), URL (required), price (optional), quantity (required, default 1), notes (optional)
+- [ ] Add item: name (required), URL (optional), price (optional), quantity (required, default 1), notes (optional)
 - [ ] Edit item
 - [ ] Delete item
 - [ ] Items have a quantity; multiple purchases allowed up to that quantity
@@ -173,6 +173,10 @@ There is only one type of user account. Every user can create lists (making them
 - Resend invites, invite reminders
 - Improved onboarding with progress steps
 - Better dashboard with gifting activity feed
+- **Item images:** each item can have a cover image shown on the list page
+  - If a URL is attached: auto-capture a screenshot of the product page (e.g. via a headless browser service or screenshot API) and store it as the item image
+  - If no URL: user can manually upload an image
+  - Images stored in Supabase Storage under a new `item-images` bucket
 
 ---
 
@@ -291,7 +295,7 @@ create table public.items (
   id          uuid primary key default gen_random_uuid(),
   list_id     uuid not null references public.lists(id) on delete cascade,
   name        text not null,
-  url         text not null,
+  url         text,                -- optional; not all items have a product link
   price       numeric(10,2),
   quantity    integer not null default 1,
   notes       text,
