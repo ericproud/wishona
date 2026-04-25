@@ -59,6 +59,19 @@ Full technical design: `project_spec.md §2.1–2.9`.
 
 ---
 
+## UX Standards
+
+Before writing or committing any UI change, ask: **would a real user understand this without explanation?**
+
+- **Write for users, not developers.** Never expose technical concepts in the UI — no slugs, no UUIDs, no database field names, no internal jargon. If a detail only matters to the code, hide it.
+- **Every piece of UI copy should be purposeful.** Labels, hints, placeholders, and error messages must earn their place. If a hint doesn't help the user make a decision, remove it.
+- **Think through the full interaction.** For every new UI element: what does the empty state look like? What does an error look like? What happens on success? All three must be handled before the feature is considered done.
+- **Destructive actions need confirmation.** Any delete or irreversible action must have an inline confirmation step — not a browser `window.confirm()` dialog.
+- **Feedback must be immediate.** If a user clicks a button and nothing visibly changes within ~100ms, add a loading/pending state.
+- **Never make the user feel lost.** Every protected page needs a clear way back (dashboard link) and a way out (log out). Apply this to every new page.
+
+---
+
 ## Product & UX Guidelines
 
 - **One user type.** There is no "lister" vs "gifter" account — these are contextual roles relative to a specific list. Don't create separate account types or separate flows for them.

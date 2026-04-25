@@ -8,6 +8,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Lists milestone)
+- `lib/actions/lists.ts` — `createList`, `updateList` (bind pattern), `deleteList` Server Actions; auto-slug generation with numeric de-duplication; duplicate names disambiguated in display name too
+- `lib/utils.ts` — `slugify` helper
+- `app/list/new/page.tsx` — create list form with `useActionState`
+- `app/dashboard/lists-section.tsx` — client component with inline rename and delete-with-confirmation
+- `app/dashboard/page.tsx` — fetches owned lists, passes to `ListsSection`
+- `types/index.ts` — `Item.url` corrected to `string | null`
+- `CLAUDE.md` — added UX Standards section
+
 ### Added (Profile milestone)
 - `lib/actions/profile.ts` — `updateProfile` Server Action (display name, clothing sizes, interests, note) and `updateAvatarUrl` (saves Storage URL to DB)
 - `app/profile/edit/page.tsx` — server page that loads current `users` + `profiles` rows in parallel, passes to form
