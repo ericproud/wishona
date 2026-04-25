@@ -43,7 +43,7 @@ Supabase
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 14+ (App Router) |
+| Framework | Next.js 16+ (App Router) |
 | Language | TypeScript (strict mode) |
 | Database / Auth / Storage | Supabase (Postgres, Auth, Storage) |
 | Styling | Tailwind CSS |
@@ -100,38 +100,43 @@ Key constraints:
 
 ```
 /app
-  layout.tsx                    — root layout, Supabase session provider
+  layout.tsx                    — root layout
   page.tsx                      — landing page (static)
   /signup/page.tsx
-  /login/page.tsx
+  /login/
+    page.tsx                    — async Server Component, reads searchParams
+    login-form.tsx              — Client Component, receives redirectTo as prop
+  /auth/callback/route.ts       — exchanges Supabase code for session
   /dashboard/page.tsx
-  /profile/edit/page.tsx
-  /invite/[token]/page.tsx      — public invite acceptance page
+  /profile/edit/
+    page.tsx                    — Server Component, fetches user + profile
+    profile-form.tsx            — Client Component, handles edits + avatar upload
+  /invite/[token]/page.tsx      — public invite acceptance page (planned)
   /list/
-    new/page.tsx
-    [id]/edit/page.tsx
-    [id]/invites/page.tsx
-  /[username]/[slug]/page.tsx   — SSR list page (view varies by viewer identity)
-  /admin/page.tsx
+    new/page.tsx                — (planned)
+    [id]/edit/page.tsx          — (planned)
+    [id]/invites/page.tsx       — (planned)
+  /[username]/[slug]/page.tsx   — SSR list page, member-gated (planned)
+  /admin/page.tsx               — (planned)
 
 /components
   /ui/                          — shadcn/ui primitives (do not edit directly)
-  ItemCard.tsx
-  PurchaseButton.tsx
-  AuthModal.tsx
-  ProfileForm.tsx
-  ItemForm.tsx
-  FilterBar.tsx
+    user-avatar.tsx             — UserAvatar with initials fallback + deterministic warm color
+  ItemCard.tsx                  — (planned)
+  PurchaseButton.tsx            — (planned)
+  ItemForm.tsx                  — (planned)
+  FilterBar.tsx                 — (planned)
 
 /lib
   supabase/
     client.ts                   — browser Supabase client
     server.ts                   — server Supabase client (Server Components + Actions)
   actions/
-    items.ts
-    purchases.ts
-    profile.ts
-    invites.ts
+    auth.ts                     — signUp, signIn, signOut
+    profile.ts                  — updateProfile, updateAvatarUrl
+    items.ts                    — (planned)
+    purchases.ts                — (planned)
+    invites.ts                  — (planned)
   utils.ts
 
 /types

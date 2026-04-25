@@ -214,7 +214,7 @@ There is only one type of user account. Every user can create lists (making them
 
 | Layer | Technology | Why |
 |---|---|---|
-| Framework | Next.js 14+ (App Router) | SSR + Server Actions + file-based routing; industry standard |
+| Framework | Next.js 16+ (App Router) | SSR + Server Actions + file-based routing; industry standard |
 | Language | TypeScript | Type safety, internship-impressive, catches bugs early |
 | Database | Supabase (Postgres) | Managed DB + auth + storage + RLS in one place |
 | Auth | Supabase Auth | Email/password built in, session management, integrates with RLS |
@@ -230,17 +230,18 @@ There is only one type of user account. Every user can create lists (making them
 ```
 Browser
   │
-  ├─ Public routes (SSR, no auth required)
-  │    ├─ /{username} — profile page, shows all of the user's lists
-  │    └─ /{username}/{list-slug} — Server Component fetches specific list data at request time
+  ├─ Public routes (no auth required)
+  │    └─ /invite/[token]        — invite acceptance preview, sign up or log in
   │
   ├─ Protected routes (require Supabase session)
   │    ├─ /dashboard
   │    ├─ /profile/edit
   │    ├─ /list/[id]/edit
+  │    ├─ /list/[id]/invites
   │    └─ /admin
   │
-  └─ Auth modal (client component, inline on list page)
+  └─ Member-gated routes (accepted invite required, enforced in Server Component not middleware)
+       └─ /[username]/[slug]     — list page, view varies by viewer identity
 
 Next.js Server
   ├─ Server Components — data fetching, SSR
@@ -281,7 +282,7 @@ create table public.lists (
   owner_id    uuid not null references public.users(id) on delete cascade,
   name        text not null,
   slug        text not null,              -- url-safe version of name, e.g. "birthday-2025"
-  is_public   boolean default true,
+  is_public   boolean default false,   -- lists are private by default
   created_at  timestamptz default now(),
   unique (owner_id, slug)                 -- slugs unique per user, not globally
 );
@@ -458,23 +459,23 @@ deleteList(listId)
   /admin/page.tsx
 
 /components
-  /ui/                    -- shadcn/ui components
-  ItemCard.tsx
-  PurchaseButton.tsx
-  AuthModal.tsx
-  ProfileForm.tsx
-  ItemForm.tsx
-  FilterBar.tsx
+  /ui/                    -- shadcn/ui primitives (do not edit directly)
+    user-avatar.tsx       -- UserAvatar: initials fallback with deterministic warm color
+  ItemCard.tsx            -- (planned)
+  PurchaseButton.tsx      -- (planned)
+  ItemForm.tsx            -- (planned)
+  FilterBar.tsx           -- (planned)
 
 /lib
   supabase/
     client.ts             -- browser Supabase client
     server.ts             -- server Supabase client (for Server Components + Actions)
   actions/
-    items.ts
-    purchases.ts
-    profile.ts
-    invites.ts
+    auth.ts               -- signUp, signIn, signOut
+    profile.ts            -- updateProfile, updateAvatarUrl
+    items.ts              -- (planned)
+    purchases.ts          -- (planned)
+    invites.ts            -- (planned)
   utils.ts
 
 /types
@@ -487,7 +488,7 @@ deleteList(listId)
 
 - Supabase Auth handles sessions via cookies (using `@supabase/ssr` package)
 - Next.js middleware (`middleware.ts`) reads the cookie and redirects unauthenticated requests to `/login` for protected routes
-- `/{username}/[slug]` is protected — middleware checks if `auth.uid()` is an accepted member of the list; non-members are redirected to an access-denied page
+- `/{username}/[slug]` is member-gated — the **page Server Component** (not middleware) queries `list_invites` to check if `auth.uid()` is an accepted member; non-members are shown an access-denied page inline. Middleware only handles simple path-prefix auth redirects and cannot efficiently query per-list membership on every request.
 - `/invite/{token}` is public — the token is looked up server-side using the Supabase service role key (bypasses RLS), so the invite can be read before the user is authenticated
 - After auth on the invite page: `acceptInvite(token)` Server Action links `auth.uid()` to the invite row and sets `accepted_at`, then middleware allows access to the list
 - Invite token matching on login: if an existing user's email matches the `invited_email` on a pending invite, the invite can be auto-accepted on login
@@ -503,13 +504,16 @@ deleteList(listId)
 
 ---
 
-## 2.10 Open Questions
+## 2.10 Notes & Decisions
 
-| Question | Recommendation |
+| Topic | Decision |
 |---|---|
-| App name / domain | Decide before any deployment |
-| Email (invite sending) | **Required for MVP** — use Resend (free tier, simple API, Next.js-friendly) |
-| Email notifications (purchase activity) | V1 — notify list owner only when all items are claimed |
-| Username reservation list | Block: admin, api, login, signup, dashboard, profile, list, admin, assets, static |
-| Error monitoring | Add Sentry free tier before going live |
-| Analytics | Vercel Analytics (free, zero-config) |
+| App name / domain | **Not yet decided** — required before Vercel deploy |
+| Email (invite sending) | Resend — free tier, `onboarding@resend.dev` sandbox for dev; production domain TBD |
+| Email notifications (purchase activity) | V1 only — notify list owner when all items are claimed |
+| Username reservation | Enforced in `signUp` Server Action: `admin`, `api`, `login`, `signup`, `dashboard`, `profile`, `list`, `assets`, `static`, `invite` |
+| `is_public` on lists | Defaults to `false` — all lists are private; the `is_public` field is reserved for a V2 public list mode |
+| `/{username}` public profile page | **Not in MVP** — the route conflicts with `/[username]/[slug]` and adds scope. Deferred to V1. |
+| Member-gating for list pages | Enforced in the page Server Component, not middleware. Middleware only handles simple path-prefix redirects. |
+| Error monitoring | Add Sentry free tier before going live (post-MVP) |
+| Analytics | Vercel Analytics — add at deploy time |
