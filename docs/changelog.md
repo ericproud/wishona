@@ -8,6 +8,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Profile milestone)
+- `lib/actions/profile.ts` — `updateProfile` Server Action (display name, clothing sizes, interests, note) and `updateAvatarUrl` (saves Storage URL to DB)
+- `app/profile/edit/page.tsx` — server page that loads current `users` + `profiles` rows in parallel, passes to form
+- `app/profile/edit/profile-form.tsx` — client form with text fields (uncontrolled, `defaultValue`) and avatar upload direct to Supabase Storage
+- `components/ui/avatar.tsx` — shadcn Avatar primitive (Base UI)
+- `components/ui/user-avatar.tsx` — wrapper with initials fallback; deterministic warm color per user via string hash
+- Supabase Storage: `avatars` bucket (public read) with RLS policies allowing users to write only to their own subfolder
+- `app/dashboard/page.tsx` — added "Edit profile" link
+
 ### Added (Auth milestone)
 - `types/index.ts` — TypeScript interfaces for all DB tables (`User`, `Profile`, `List`, `Item`, `ListInvite`, `Purchase`) plus composed types
 - `lib/supabase/client.ts` — browser Supabase client via `createBrowserClient` from `@supabase/ssr`

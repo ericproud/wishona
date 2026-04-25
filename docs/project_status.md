@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**Auth complete — starting Profile next.**
+**Profile complete — starting Lists next.**
 
-Sign up, log in, log out, and middleware are all working. Supabase schema, RLS policies, and the `public.users` trigger are applied. Next target: profile editing (display name, clothing sizes, interests, note, avatar upload).
+Auth and Profile milestones are done. Users can edit display name, clothing sizes, interests, wishlist note, and upload a profile photo. Avatar uploads go directly to Supabase Storage (`avatars` bucket). Next target: list creation, rename, and delete.
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -36,8 +36,8 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 - [x] Middleware redirecting unauthenticated users from protected routes
 
 ### Profile
-- [ ] Edit display name, clothing sizes, interests, wishlist note
-- [ ] Profile photo upload (Supabase Storage)
+- [x] Edit display name, clothing sizes, interests, wishlist note
+- [x] Profile photo upload (Supabase Storage)
 
 ### Lists
 - [ ] Create a named list (auto-generates slug)
@@ -75,12 +75,9 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 
 ## Immediate Next Steps
 
-1. Apply the Supabase schema from `project_spec.md §2.3` in the Supabase SQL editor
-2. Apply the RLS policies from `project_spec.md §2.4`
-3. Regenerate DB types: `npx supabase gen types typescript --project-id <ref> > types/supabase.ts`
-4. Create Supabase client helpers: `lib/supabase/client.ts` (browser) and `lib/supabase/server.ts` (server components + actions)
-5. Add middleware to refresh Supabase sessions and gate protected routes
-6. Begin Auth milestone — sign up, log in, log out, username selection
+1. Lists milestone — create a named list (auto-slug), rename, delete
+2. Items milestone — add, edit, delete, quantity
+3. Invites milestone — send by email, accept via token link, revoke
 
 ---
 
@@ -91,8 +88,8 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 | Planning & spec | ✅ Complete | `project_spec.md` is the source of truth |
 | Repo & tooling setup | ✅ Complete | GitHub repo live, docs scaffolded |
 | App scaffolding | ✅ Complete | Next 16, React 19, Tailwind v4, shadcn/ui initialized |
-| Auth (sign up / log in) | ⬜ Not started | |
-| Profile | ⬜ Not started | |
+| Auth (sign up / log in) | ✅ Complete | |
+| Profile | ✅ Complete | |
 | Lists + Items | ⬜ Not started | |
 | Invites + email | ⬜ Not started | |
 | List page (3-view) | ⬜ Not started | Highest complexity feature |
