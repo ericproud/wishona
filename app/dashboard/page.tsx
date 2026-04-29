@@ -24,18 +24,37 @@ export default async function DashboardPage() {
     redirect('/login')
   }
 
-  const [{ data: lists }, { data: giftingInvites }] = await Promise.all([
-    supabase
-      .from('lists')
-      .select('*')
-      .eq('owner_id', user.id)
-      .order('created_at', { ascending: false }),
+  const { data: listsData } = await supabase
+    .from('lists')
+    .select('*')
+    .eq('owner_id', user.id)
+    .order('created_at', { ascending: false })
+
+  const lists = (listsData ?? []) as List[]
+  const listIds = lists.map(l => l.id)
+
+  const [{ data: itemRows }, { data: pendingRows }, { data: giftingInvites }] = await Promise.all([
+    listIds.length > 0
+      ? supabase.from('items').select('list_id').in('list_id', listIds)
+      : Promise.resolve({ data: [] as { list_id: string }[], error: null }),
+    listIds.length > 0
+      ? supabase.from('list_invites').select('list_id').in('list_id', listIds).is('accepted_at', null)
+      : Promise.resolve({ data: [] as { list_id: string }[], error: null }),
     supabase
       .from('list_invites')
       .select('id, list:lists(id, name, slug, owner:users(display_name, username))')
       .eq('user_id', user.id)
       .not('accepted_at', 'is', null),
   ])
+
+  const itemCounts: Record<string, number> = {}
+  for (const row of (itemRows ?? [])) {
+    itemCounts[row.list_id] = (itemCounts[row.list_id] ?? 0) + 1
+  }
+  const pendingInviteCounts: Record<string, number> = {}
+  for (const row of (pendingRows ?? [])) {
+    pendingInviteCounts[row.list_id] = (pendingInviteCounts[row.list_id] ?? 0) + 1
+  }
 
   return (
     <main className="min-h-screen p-8">
@@ -52,7 +71,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <ListsSection lists={(lists ?? []) as List[]} />
+        <ListsSection lists={lists} itemCounts={itemCounts} pendingInviteCounts={pendingInviteCounts} />
 
         {/* Lists the user is gifting on */}
         {(() => {

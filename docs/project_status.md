@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**List Page complete — starting Dashboard next.**
+**Dashboard complete — starting Admin next.**
 
-Auth, Profile, Lists, Invites, Items, and List Page milestones are done. The `/[username]/[slug]` route handles three views: owner redirects to the edit page, accepted members see the full gifter view with claim/unclaim, non-members/unauthenticated users see a generic access-denied page. Next target: Dashboard improvements — item counts, invite counts, "Gifting on" section.
+Auth, Profile, Lists, Invites, Items, List Page, and Dashboard milestones are done. The dashboard shows owned lists with item counts and pending invite counts, plus the "Gifting on" section for accepted-invite lists. Next target: Admin page gated to `ADMIN_USER_ID` — view and delete users and lists.
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -63,9 +63,9 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 - [x] Non-member / unauthenticated — generic access denied page
 
 ### Dashboard
-- [ ] All owned lists with item counts and invite counts
-- [ ] Links to manage invites and edit items per list
-- [ ] "Gifting on" section — lists where user has an accepted invite
+- [x] All owned lists with item counts and pending invite counts
+- [x] Links to manage invites and edit items per list
+- [x] "Gifting on" section — lists where user has an accepted invite
 
 ### Admin (`/admin`)
 - [ ] Gated to `ADMIN_USER_ID`
@@ -76,8 +76,8 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 
 ## Immediate Next Steps
 
-1. Dashboard milestone — item counts, invite counts, "gifting on" section
-2. Admin milestone — view/delete users and lists
+1. Admin milestone — view/delete users and lists
+2. Deploy to Vercel
 
 ---
 
@@ -94,7 +94,7 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 | Invites + email | ✅ Complete | |
 | Items | ✅ Complete | |
 | List page (3-view) | ✅ Complete | |
-| Dashboard | ⬜ Not started | |
+| Dashboard | ✅ Complete | |
 | Admin | ⬜ Not started | |
 | Deploy to Vercel | ⬜ Not started | Needs app name / domain first |
 | MVP complete | ⬜ Not started | |
