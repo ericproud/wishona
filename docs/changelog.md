@@ -8,6 +8,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Dashboard milestone)
+- `app/dashboard/page.tsx` — fetches item counts and pending invite counts per list; passes to `ListsSection`
+- `app/dashboard/lists-section.tsx` — displays item count and pending invite count below each list name
+
 ### Added (List Page milestone)
 - `app/[username]/[slug]/page.tsx` — public list page; looks up owner by username, routes to one of three views based on RLS + auth state; owner redirects to edit page
 - `app/[username]/[slug]/member-view.tsx` — gifter view; shows owner profile header (display name, wishlist note, interests, clothing sizes) and items list with claim/unclaim per item
