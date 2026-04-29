@@ -5,8 +5,6 @@ import { redirect } from 'next/navigation'
 import { Resend } from 'resend'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export type InviteState = { error: string } | { success: true; inviteUrl?: string } | null
 
 export async function sendInvite(
@@ -80,6 +78,7 @@ export async function sendInvite(
     return { success: true, inviteUrl }
   }
 
+  const resend = new Resend(process.env.RESEND_API_KEY)
   const { error: emailError } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
     to: email,
