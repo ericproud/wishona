@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**Items complete — starting List Page next.**
+**List Page complete — starting Dashboard next.**
 
-Auth, Profile, Lists, Invites, and Items milestones are done. Owners can add, edit, and delete items (name, URL, price, quantity, notes) from their list's edit page. Next target: the public list page with three-view logic — owner sees items only, accepted member sees purchase status and can claim items, non-member/unauthenticated sees an access-denied page.
+Auth, Profile, Lists, Invites, Items, and List Page milestones are done. The `/[username]/[slug]` route handles three views: owner redirects to the edit page, accepted members see the full gifter view with claim/unclaim, non-members/unauthenticated users see a generic access-denied page. Next target: Dashboard improvements — item counts, invite counts, "Gifting on" section.
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -58,9 +58,9 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 - [ ] Quantity-aware purchase tracking
 
 ### List Page (`/[username]/[slug]`)
-- [ ] Owner view — items only, zero purchase data
-- [ ] Member view — items + who claimed what + filter bar + mark purchased
-- [ ] Non-member / unauthenticated — access denied page
+- [x] Owner view — redirects to `/list/[id]/edit` (items-only edit page)
+- [x] Member view — items + who claimed what + mark purchased / unclaim; partial quantity support
+- [x] Non-member / unauthenticated — generic access denied page
 
 ### Dashboard
 - [ ] All owned lists with item counts and invite counts
@@ -76,9 +76,8 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 
 ## Immediate Next Steps
 
-1. List page milestone — three-view logic (owner / member / non-member)
-2. Dashboard milestone — item counts, invite counts, "gifting on" section
-3. Admin milestone — view/delete users and lists
+1. Dashboard milestone — item counts, invite counts, "gifting on" section
+2. Admin milestone — view/delete users and lists
 
 ---
 
@@ -94,7 +93,7 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 | Lists | ✅ Complete | |
 | Invites + email | ✅ Complete | |
 | Items | ✅ Complete | |
-| List page (3-view) | ⬜ Not started | Highest complexity feature |
+| List page (3-view) | ✅ Complete | |
 | Dashboard | ⬜ Not started | |
 | Admin | ⬜ Not started | |
 | Deploy to Vercel | ⬜ Not started | Needs app name / domain first |

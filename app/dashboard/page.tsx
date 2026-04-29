@@ -55,37 +55,44 @@ export default async function DashboardPage() {
         <ListsSection lists={(lists ?? []) as List[]} />
 
         {/* Lists the user is gifting on */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold">Gifting on</h2>
-          {(giftingInvites ?? []).length === 0 ? (
-            <p className="text-sm text-muted-foreground py-6 text-center">
-              You haven&apos;t accepted any invites yet.
-            </p>
-          ) : (
-            <ul className="space-y-2">
-              {(giftingInvites as unknown as GiftingList[]).map((invite) => {
-                const owner = invite.list.owner
-                const ownerName = owner.display_name ?? owner.username
-                return (
-                  <li key={invite.id} className="border border-border rounded-lg px-4 py-3 bg-card">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-sm">{invite.list.name}</p>
-                        <p className="text-xs text-muted-foreground">{ownerName}&apos;s list</p>
-                      </div>
-                      <Link
-                        href={`/${owner.username}/${invite.list.slug}`}
-                        className={buttonVariants({ variant: 'outline', size: 'sm' })}
-                      >
-                        View list
-                      </Link>
-                    </div>
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-        </div>
+        {(() => {
+          const validGifting = (giftingInvites as unknown as GiftingList[]).filter(
+            invite => invite.list !== null
+          )
+          return (
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold">Gifting on</h2>
+              {validGifting.length === 0 ? (
+                <p className="text-sm text-muted-foreground py-6 text-center">
+                  You haven&apos;t accepted any invites yet.
+                </p>
+              ) : (
+                <ul className="space-y-2">
+                  {validGifting.map((invite) => {
+                    const owner = invite.list.owner
+                    const ownerName = owner.display_name ?? owner.username
+                    return (
+                      <li key={invite.id} className="border border-border rounded-lg px-4 py-3 bg-card">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-medium text-sm">{invite.list.name}</p>
+                            <p className="text-xs text-muted-foreground">{ownerName}&apos;s list</p>
+                          </div>
+                          <Link
+                            href={`/${owner.username}/${invite.list.slug}`}
+                            className={buttonVariants({ variant: 'outline', size: 'sm' })}
+                          >
+                            View list
+                          </Link>
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+            </div>
+          )
+        })()}
       </div>
     </main>
   )

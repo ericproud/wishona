@@ -28,6 +28,10 @@ export interface ItemWithPurchases extends Item {
   purchases: Purchase[]
 }
 
+export interface PurchaseWithGifter extends Purchase {
+  gifter: Pick<User, 'id' | 'display_name' | 'username'>
+}
+
 export interface ListInviteWithList extends ListInvite {
   list: List & { owner: User }
 }

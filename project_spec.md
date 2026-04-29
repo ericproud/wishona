@@ -168,6 +168,7 @@ There is only one type of user account. Every user can create lists (making them
 ### V1 — After MVP
 
 - ~~Users can gift on other users' lists~~ — moved to MVP (dashboard "Gifting on" section)
+- **Anonymous purchase toggle:** members see real purchaser names by default; list owners can toggle a setting to hide gifter identities from each other (show "Someone" instead of a name). Default = names visible.
 - Gift priority ranking (drag to reorder, or explicit priority tag)
 - Users can suggest items to a list they're gifting on
 - Email notification to list owner when all items on a list are claimed (no per-purchase notifications — that would reveal gifting activity)
@@ -186,6 +187,8 @@ There is only one type of user account. Every user can create lists (making them
 - Affiliate link rewriting (Amazon Associates + Skimlinks for other retailers)
 - Confirmed purchase tracking via affiliate callbacks
 - Public list mode: purchases require affiliate confirmation
+- **Filter bar on list page:** members can toggle between "All items" and "Available only" (not yet fully claimed). Deferred from MVP.
+- **Request access CTA on access-denied page:** non-members can enter their email to notify the list owner. Deferred from MVP — currently a dead end.
 - List themes (Christmas, Birthday, Wedding, Baby Shower visual skins)
 - Recommendation engine (based on interests)
 - Group buy: split cost of one item across multiple gifters
