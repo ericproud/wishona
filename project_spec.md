@@ -155,7 +155,8 @@ There is only one type of user account. Every user can create lists (making them
 - [ ] See all owned lists with item counts and pending/accepted invite counts
 - [ ] Links to manage invites per list (send new, view pending, revoke)
 - [ ] Links to edit each list (items)
-- [ ] No gifting activity or purchase data shown anywhere
+- [ ] No gifting activity or purchase data shown anywhere on the owned-lists section
+- [ ] "Gifting on" section — lists where the user has an accepted invite (not their own lists); shows list name and owner's display name; links to the list page
 
 **Admin**
 - [ ] Protected `/admin` route (you only, hardcoded check against your user ID)
@@ -166,7 +167,7 @@ There is only one type of user account. Every user can create lists (making them
 
 ### V1 — After MVP
 
-- Users can gift on other users' lists (already architecturally true; V1 adds a dashboard view of "lists I'm gifting on")
+- ~~Users can gift on other users' lists~~ — moved to MVP (dashboard "Gifting on" section)
 - Gift priority ranking (drag to reorder, or explicit priority tag)
 - Users can suggest items to a list they're gifting on
 - Email notification to list owner when all items on a list are claimed (no per-purchase notifications — that would reveal gifting activity)

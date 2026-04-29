@@ -8,6 +8,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Invites milestone)
+- `lib/actions/invites.ts` — `sendInvite`, `acceptInvite`, `acceptInviteForm`, `revokeInvite` Server Actions; 7-day token expiry; dev mode returns invite URL directly instead of sending email
+- `app/invite/[token]/page.tsx` — public invite preview page; handles not-found, expired, already-accepted, unauthenticated (create account / log in), and wrong-email states
+- `app/invite/[token]/invite-accept.tsx` — client accept form with `useActionState`; email mismatch shown inline before form is rendered
+- `app/list/[id]/invites/page.tsx` — invite management page; separated pending (with revoke) and accepted sections
+- `app/list/[id]/invites/invite-form.tsx` — send-invite form with dev-mode URL display
+- `app/dashboard/page.tsx` — "Gifting on" section showing lists the user has accepted invites to
+- `app/dashboard/lists-section.tsx` — "Invites" button per list linking to `/list/[id]/invites`
+- `app/signup/page.tsx` + `signup-form.tsx` — `redirectTo` param preserved through signup so invite links survive account creation
+- `types/supabase.ts` — generated Supabase DB types
+- `types/index.ts` — `ListInvite`, `ListInviteWithList` types derived from generated schema
+
 ### Added (Lists milestone)
 - `lib/actions/lists.ts` — `createList`, `updateList` (bind pattern), `deleteList` Server Actions; auto-slug generation with numeric de-duplication; duplicate names disambiguated in display name too
 - `lib/utils.ts` — `slugify` helper
