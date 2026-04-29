@@ -8,6 +8,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Items milestone)
+- `lib/actions/items.ts` — `addItem`, `updateItem`, `deleteItem` Server Actions; owner-only auth check; validates name required, price ≥ 0, quantity ≥ 1
+- `app/list/[id]/edit/page.tsx` — items management page; fetches list + items server-side; owner-only access (redirects to dashboard otherwise)
+- `app/list/[id]/edit/item-form.tsx` — add-item inline form; opens/closes without navigation; controlled state closes form on success using React's "store previous renders" pattern
+- `app/list/[id]/edit/item-list.tsx` — item list with per-row edit and delete; edit form uses controlled inputs; delete requires inline confirmation
+- `app/dashboard/lists-section.tsx` — added "Items" link per list linking to `/list/[id]/edit`
+- `CLAUDE.md` — added rule to fix all browser console errors immediately
+
 ### Added (Invites milestone)
 - `lib/actions/invites.ts` — `sendInvite`, `acceptInvite`, `acceptInviteForm`, `revokeInvite` Server Actions; 7-day token expiry; dev mode returns invite URL directly instead of sending email
 - `app/invite/[token]/page.tsx` — public invite preview page; handles not-found, expired, already-accepted, unauthenticated (create account / log in), and wrong-email states

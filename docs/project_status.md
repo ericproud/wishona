@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**Invites complete — starting Items next.**
+**Items complete — starting List Page next.**
 
-Auth, Profile, Lists, and Invites milestones are done. Owners can send invites by email (Resend, dev mode returns URL directly), view pending/accepted invites, and revoke pending ones. Invitees visit a token link, see a preview of the list and owner, and accept after authenticating. Tokens expire after 7 days. Next target: add, edit, delete items with quantity tracking.
+Auth, Profile, Lists, Invites, and Items milestones are done. Owners can add, edit, and delete items (name, URL, price, quantity, notes) from their list's edit page. Next target: the public list page with three-view logic — owner sees items only, accepted member sees purchase status and can claim items, non-member/unauthenticated sees an access-denied page.
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -53,8 +53,8 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 - [x] Tokens expire after 7 days
 
 ### Items
-- [ ] Add item (name, URL, price, quantity, notes)
-- [ ] Edit and delete items
+- [x] Add item (name, URL, price, quantity, notes)
+- [x] Edit and delete items
 - [ ] Quantity-aware purchase tracking
 
 ### List Page (`/[username]/[slug]`)
@@ -76,9 +76,9 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 
 ## Immediate Next Steps
 
-1. Items milestone — add, edit, delete, quantity
-2. List page milestone — three-view logic (owner / member / non-member)
-3. Dashboard milestone — item counts, invite counts, "gifting on" section
+1. List page milestone — three-view logic (owner / member / non-member)
+2. Dashboard milestone — item counts, invite counts, "gifting on" section
+3. Admin milestone — view/delete users and lists
 
 ---
 
@@ -93,6 +93,7 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 | Profile | ✅ Complete | |
 | Lists | ✅ Complete | |
 | Invites + email | ✅ Complete | |
+| Items | ✅ Complete | |
 | List page (3-view) | ⬜ Not started | Highest complexity feature |
 | Dashboard | ⬜ Not started | |
 | Admin | ⬜ Not started | |
