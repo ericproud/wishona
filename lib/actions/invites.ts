@@ -107,7 +107,7 @@ export async function acceptInvite(token: string): Promise<{ error: string } | n
   if (!user) return { error: 'You must be logged in to accept an invite.' }
 
   // Use admin client so we can read the invite regardless of RLS
-  const adminClient = await createAdminClient()
+  const adminClient = createAdminClient()
   const { data: invite } = await adminClient
     .from('list_invites')
     .select('id, invited_email, accepted_at, expires_at, user_id')

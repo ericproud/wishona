@@ -11,7 +11,7 @@ export default async function InvitePage({
 }) {
   const { token } = await params
 
-  const adminClient = await createAdminClient()
+  const adminClient = createAdminClient()
   const { data: invite } = await adminClient
     .from('list_invites')
     .select('id, invited_email, accepted_at, expires_at, list_id')
