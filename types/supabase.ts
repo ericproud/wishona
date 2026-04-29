@@ -189,18 +189,21 @@ export type Database = {
           id: string
           item_id: string
           purchased_at: string | null
+          quantity: number
         }
         Insert: {
           gifter_id: string
           id?: string
           item_id: string
           purchased_at?: string | null
+          quantity?: number
         }
         Update: {
           gifter_id?: string
           id?: string
           item_id?: string
           purchased_at?: string | null
+          quantity?: number
         }
         Relationships: [
           {

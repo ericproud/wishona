@@ -8,6 +8,28 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (List Page milestone)
+- `app/[username]/[slug]/page.tsx` — public list page; looks up owner by username, routes to one of three views based on RLS + auth state; owner redirects to edit page
+- `app/[username]/[slug]/member-view.tsx` — gifter view; shows owner profile header (display name, wishlist note, interests, clothing sizes) and items list with claim/unclaim per item
+- `app/[username]/[slug]/item-card.tsx` — client component with three-state UI (idle / claiming / unclaiming); partial quantity claiming; shows who else has claimed; reclaim-after-unclaim bug fixed via "store previous renders" pattern on `myPurchase` prop
+- `app/[username]/[slug]/access-denied.tsx` — generic access-denied page for non-members/unauthenticated; no request-access CTA (deferred to V2)
+- `lib/actions/purchases.ts` — `markPurchased` Server Action (validates availability, enforces owner-cannot-gift invariant); `unmarkPurchased` (deletes own purchase, revalidates path)
+- `types/index.ts` — added `PurchaseWithGifter` type
+- `types/supabase.ts` — added `quantity` field to `purchases` table types
+
+### Fixed (List Page milestone)
+- `lists` "Member read" RLS policy had a self-join bug: the EXISTS subquery compared `list_invites.list_id = list_invites.id` (both columns from the same inner table) instead of `list_invites.list_id = lists.id`. Fixed by applying a migration with explicit table qualifiers. This was the root cause of accepted-invite members seeing "Access restricted" and the dashboard "Gifting on" section appearing empty.
+- `app/[username]/[slug]/item-card.tsx` — after unclaiming, `mode` state stayed `'unclaiming'` while `myPurchase` prop became null, hiding both the unclaiming UI and the idle buttons. Fixed by resetting mode to `'idle'` when `myPurchase` transitions to null.
+- `app/dashboard/page.tsx` — crash when `invite.list` is null (RLS circular reference on dashboard gifting query); fixed by filtering null lists before rendering.
+
+### Added (Items milestone)
+- `lib/actions/items.ts` — `addItem`, `updateItem`, `deleteItem` Server Actions; owner-only auth check; validates name required, price ≥ 0, quantity ≥ 1
+- `app/list/[id]/edit/page.tsx` — items management page; fetches list + items server-side; owner-only access (redirects to dashboard otherwise)
+- `app/list/[id]/edit/item-form.tsx` — add-item inline form; opens/closes without navigation; controlled state closes form on success using React's "store previous renders" pattern
+- `app/list/[id]/edit/item-list.tsx` — item list with per-row edit and delete; edit form uses controlled inputs; delete requires inline confirmation
+- `app/dashboard/lists-section.tsx` — added "Items" link per list linking to `/list/[id]/edit`
+- `CLAUDE.md` — added rule to fix all browser console errors immediately
+
 ### Added (Invites milestone)
 - `lib/actions/invites.ts` — `sendInvite`, `acceptInvite`, `acceptInviteForm`, `revokeInvite` Server Actions; 7-day token expiry; dev mode returns invite URL directly instead of sending email
 - `app/invite/[token]/page.tsx` — public invite preview page; handles not-found, expired, already-accepted, unauthenticated (create account / log in), and wrong-email states

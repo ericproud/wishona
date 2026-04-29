@@ -103,6 +103,7 @@ Before writing or committing any UI change, ask: **would a real user understand 
 - No unused imports or variables.
 - Types live in `/types/index.ts`.
 - Keep components small. If a component needs more than ~150 lines it probably needs to be split.
+- **Fix all browser console errors immediately.** Console errors — including framework and library warnings — are bugs. Do not defer them. Every error left in place accumulates into technical debt that becomes harder to unwind later.
 
 ---
 
