@@ -11,9 +11,10 @@ interface ListsSectionProps {
   lists: List[]
   itemCounts: Record<string, number>
   pendingInviteCounts: Record<string, number>
+  acceptedInviteCounts: Record<string, number>
 }
 
-export default function ListsSection({ lists, itemCounts, pendingInviteCounts }: ListsSectionProps) {
+export default function ListsSection({ lists, itemCounts, pendingInviteCounts, acceptedInviteCounts }: ListsSectionProps) {
   const [renamingId, setRenamingId] = useState<string | null>(null)
   const [confirmingId, setConfirmingId] = useState<string | null>(null)
 
@@ -87,8 +88,11 @@ export default function ListsSection({ lists, itemCounts, pendingInviteCounts }:
                   <p className="font-medium text-sm truncate">{list.name}</p>
                   <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5">
                     <span>{itemCounts[list.id] ?? 0} {(itemCounts[list.id] ?? 0) === 1 ? 'item' : 'items'}</span>
+                    {(acceptedInviteCounts[list.id] ?? 0) > 0 && (
+                      <span>{acceptedInviteCounts[list.id]} {acceptedInviteCounts[list.id] === 1 ? 'gifter' : 'gifters'}</span>
+                    )}
                     {(pendingInviteCounts[list.id] ?? 0) > 0 && (
-                      <span>{pendingInviteCounts[list.id]} pending {pendingInviteCounts[list.id] === 1 ? 'invite' : 'invites'}</span>
+                      <span>{pendingInviteCounts[list.id]} pending</span>
                     )}
                   </div>
                 </div>

@@ -33,13 +33,17 @@ export default async function DashboardPage() {
   const lists = (listsData ?? []) as List[]
   const listIds = lists.map(l => l.id)
 
-  const [{ data: itemRows }, { data: pendingRows }, { data: giftingInvites }] = await Promise.all([
+  const emptyRows = Promise.resolve({ data: [] as { list_id: string }[], error: null })
+  const [{ data: itemRows }, { data: pendingRows }, { data: acceptedRows }, { data: giftingInvites }] = await Promise.all([
     listIds.length > 0
       ? supabase.from('items').select('list_id').in('list_id', listIds)
-      : Promise.resolve({ data: [] as { list_id: string }[], error: null }),
+      : emptyRows,
     listIds.length > 0
       ? supabase.from('list_invites').select('list_id').in('list_id', listIds).is('accepted_at', null)
-      : Promise.resolve({ data: [] as { list_id: string }[], error: null }),
+      : emptyRows,
+    listIds.length > 0
+      ? supabase.from('list_invites').select('list_id').in('list_id', listIds).not('accepted_at', 'is', null)
+      : emptyRows,
     supabase
       .from('list_invites')
       .select('id, list:lists(id, name, slug, owner:users(display_name, username))')
@@ -54,6 +58,10 @@ export default async function DashboardPage() {
   const pendingInviteCounts: Record<string, number> = {}
   for (const row of (pendingRows ?? [])) {
     pendingInviteCounts[row.list_id] = (pendingInviteCounts[row.list_id] ?? 0) + 1
+  }
+  const acceptedInviteCounts: Record<string, number> = {}
+  for (const row of (acceptedRows ?? [])) {
+    acceptedInviteCounts[row.list_id] = (acceptedInviteCounts[row.list_id] ?? 0) + 1
   }
 
   return (
@@ -71,7 +79,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <ListsSection lists={lists} itemCounts={itemCounts} pendingInviteCounts={pendingInviteCounts} />
+        <ListsSection lists={lists} itemCounts={itemCounts} pendingInviteCounts={pendingInviteCounts} acceptedInviteCounts={acceptedInviteCounts} />
 
         {/* Lists the user is gifting on */}
         {(() => {
