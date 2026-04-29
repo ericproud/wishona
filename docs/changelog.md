@@ -8,6 +8,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Admin milestone)
+- `app/admin/page.tsx` — admin-only page; checks `ADMIN_USER_ID` server-side; fetches all users (with auth emails via `adminClient.auth.admin.listUsers`) and all lists with item counts
+- `app/admin/admin-users.tsx` — users table with inline delete confirmation
+- `app/admin/admin-lists.tsx` — lists table with inline delete confirmation
+- `lib/actions/admin.ts` — `adminDeleteUser` (via `auth.admin.deleteUser`), `adminDeleteList`; both re-verify admin identity server-side
+- `.env.local` — `ADMIN_USER_ID` set to ericp's Supabase user UUID
+
 ### Added (Dashboard milestone)
 - `app/dashboard/page.tsx` — fetches item counts and pending invite counts per list; passes to `ListsSection`
 - `app/dashboard/lists-section.tsx` — displays item count and pending invite count below each list name

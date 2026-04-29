@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**Dashboard complete — starting Admin next.**
+**Admin complete — MVP feature-complete. Next: deploy to Vercel.**
 
-Auth, Profile, Lists, Invites, Items, List Page, and Dashboard milestones are done. The dashboard shows owned lists with item counts and pending invite counts, plus the "Gifting on" section for accepted-invite lists. Next target: Admin page gated to `ADMIN_USER_ID` — view and delete users and lists.
+All milestones are done. Next target: deploy to Vercel and connect a production domain.
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -68,16 +68,15 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 - [x] "Gifting on" section — lists where user has an accepted invite
 
 ### Admin (`/admin`)
-- [ ] Gated to `ADMIN_USER_ID`
-- [ ] View all users and lists
-- [ ] Delete users and lists
+- [x] Gated to `ADMIN_USER_ID` — non-admins redirected to dashboard
+- [x] View all users (username, email, list count, joined date) and lists (name, owner, item count, created date)
+- [x] Delete users and lists with inline confirmation
 
 ---
 
 ## Immediate Next Steps
 
-1. Admin milestone — view/delete users and lists
-2. Deploy to Vercel
+1. Deploy to Vercel — connect domain, set production env vars
 
 ---
 
@@ -95,6 +94,6 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 | Items | ✅ Complete | |
 | List page (3-view) | ✅ Complete | |
 | Dashboard | ✅ Complete | |
-| Admin | ⬜ Not started | |
+| Admin | ✅ Complete | |
 | Deploy to Vercel | ⬜ Not started | Needs app name / domain first |
 | MVP complete | ⬜ Not started | |
