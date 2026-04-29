@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**Lists complete — starting Invites next.**
+**Invites complete — starting Items next.**
 
-Auth, Profile, and Lists milestones are done. Users can create named lists, rename them inline, and delete them with a confirmation step. Slugs are auto-generated and de-duplicated. Next target: send invite emails via Resend, accept via token link, revoke pending invites.
+Auth, Profile, Lists, and Invites milestones are done. Owners can send invites by email (Resend, dev mode returns URL directly), view pending/accepted invites, and revoke pending ones. Invitees visit a token link, see a preview of the list and owner, and accept after authenticating. Tokens expire after 7 days. Next target: add, edit, delete items with quantity tracking.
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -45,12 +45,12 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 - [x] Multiple lists per user
 
 ### Invites
-- [ ] Send invite by email via Resend
-- [ ] Unique token link: `/invite/[token]`
-- [ ] Invite acceptance page (public, previews list + prompts auth)
-- [ ] Account linked to invite on sign-up or log-in
-- [ ] Owner can view pending/accepted invites and revoke pending ones
-- [ ] Tokens expire after 7 days
+- [x] Send invite by email via Resend
+- [x] Unique token link: `/invite/[token]`
+- [x] Invite acceptance page (public, previews list + prompts auth)
+- [x] Account linked to invite on sign-up or log-in
+- [x] Owner can view pending/accepted invites and revoke pending ones
+- [x] Tokens expire after 7 days
 
 ### Items
 - [ ] Add item (name, URL, price, quantity, notes)
@@ -65,6 +65,7 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 ### Dashboard
 - [ ] All owned lists with item counts and invite counts
 - [ ] Links to manage invites and edit items per list
+- [ ] "Gifting on" section — lists where user has an accepted invite
 
 ### Admin (`/admin`)
 - [ ] Gated to `ADMIN_USER_ID`
@@ -75,9 +76,9 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 
 ## Immediate Next Steps
 
-1. Invites milestone — send by email (Resend), accept via token link, revoke
-2. Items milestone — add, edit, delete, quantity
-3. List page milestone — three-view logic (owner / member / non-member)
+1. Items milestone — add, edit, delete, quantity
+2. List page milestone — three-view logic (owner / member / non-member)
+3. Dashboard milestone — item counts, invite counts, "gifting on" section
 
 ---
 
@@ -91,7 +92,7 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 | Auth (sign up / log in) | ✅ Complete | |
 | Profile | ✅ Complete | |
 | Lists | ✅ Complete | |
-| Invites + email | ⬜ Not started | |
+| Invites + email | ✅ Complete | |
 | List page (3-view) | ⬜ Not started | Highest complexity feature |
 | Dashboard | ⬜ Not started | |
 | Admin | ⬜ Not started | |

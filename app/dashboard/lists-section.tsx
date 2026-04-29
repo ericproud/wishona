@@ -85,10 +85,16 @@ export default function ListsSection({ lists }: ListsSectionProps) {
                   <p className="font-medium text-sm truncate">{list.name}</p>
                 </div>
                 <Link
+                  href={`/list/${list.id}/invites`}
+                  className={buttonVariants({ variant: 'outline', size: 'sm' })}
+                >
+                  Invites
+                </Link>
+                <Link
                   href={`/list/${list.id}/edit`}
                   className={buttonVariants({ variant: 'outline', size: 'sm' })}
                 >
-                  Add items
+                  Items
                 </Link>
                 <Button
                   variant="ghost"

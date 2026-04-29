@@ -1,62 +1,22 @@
-export interface User {
-  id: string
-  email: string
-  username: string
-  display_name: string | null
-  created_at: string
-}
+import type { Tables } from './supabase'
 
-export interface Profile {
-  user_id: string
-  avatar_url: string | null
+// Base table types — derived from generated Supabase types so they stay in sync with the DB.
+// Regenerate with: npx supabase gen types typescript --project-id <ref> > types/supabase.ts
+
+export type User = Tables<'users'>
+export type List = Tables<'lists'>
+export type Item = Tables<'items'>
+export type ListInvite = Tables<'list_invites'>
+export type Purchase = Tables<'purchases'>
+
+// Profile overrides clothing_sizes with a structured type instead of the generic Json
+export type Profile = Omit<Tables<'profiles'>, 'clothing_sizes'> & {
   clothing_sizes: {
     shirt?: string
     pants?: string
     shoe?: string
     dress?: string
   } | null
-  interests: string | null
-  wishlist_note: string | null
-}
-
-export interface List {
-  id: string
-  owner_id: string
-  name: string
-  slug: string
-  is_public: boolean
-  created_at: string
-}
-
-export interface Item {
-  id: string
-  list_id: string
-  name: string
-  url: string | null
-  price: number | null
-  quantity: number
-  notes: string | null
-  priority: number | null
-  created_at: string
-}
-
-export interface ListInvite {
-  id: string
-  list_id: string
-  invited_by: string
-  invited_email: string
-  token: string
-  user_id: string | null
-  accepted_at: string | null
-  expires_at: string
-  created_at: string
-}
-
-export interface Purchase {
-  id: string
-  item_id: string
-  gifter_id: string
-  purchased_at: string
 }
 
 // Composed types used in UI

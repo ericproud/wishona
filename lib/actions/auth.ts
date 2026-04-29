@@ -16,6 +16,7 @@ export async function signUp(_prevState: string | null, formData: FormData): Pro
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const username = formData.get('username') as string
+  const redirectTo = (formData.get('redirectTo') as string) || '/dashboard'
 
   if (!isValidUsername(username)) {
     return 'Username must be 3–20 characters: letters, numbers, and hyphens only.'
@@ -39,7 +40,7 @@ export async function signUp(_prevState: string | null, formData: FormData): Pro
     return error.message
   }
 
-  redirect('/dashboard')
+  redirect(redirectTo)
 }
 
 // State type for signIn — null means not yet submitted
