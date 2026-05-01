@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wishona
+
+Smart wishlists for meaningful gifts. Create a wishlist, invite the people in your life, and let them give with confidence — no duplicates, no guessing.
+
+**Live:** [wishona.com](https://wishona.com)
+
+---
+
+## What it does
+
+- **Private by default.** Lists are invite-only. Share with exactly who you want.
+- **Any store, any item.** Paste a link from anywhere — Amazon, Etsy, a local shop, or no link at all.
+- **No duplicate gifts.** Gifters see what's already been claimed so everyone buys something different.
+- **Owner blindness.** List owners never see purchase data, gifter identities, or claimed status. The gift stays a surprise.
+- **Auto-fill from links.** Paste a product URL into an item and the name, price, image, and description populate automatically.
+
+---
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router) + TypeScript (strict)
+- **Database / Auth / Storage:** Supabase (Postgres, RLS, email auth, Storage for avatars)
+- **Styling:** Tailwind CSS v4 + shadcn/ui
+- **Email:** Resend (invite emails)
+- **Affiliate:** Skimlinks
+- **Deployment:** Vercel + Supabase
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Copy env template and fill in values from Supabase + Resend
+cp .env.example .env.local
+
+# Start the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Required environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See [`.env.example`](.env.example) for the full list. You'll need:
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+- `RESEND_API_KEY`, `RESEND_FROM_EMAIL`
+- `NEXT_PUBLIC_APP_URL` (e.g. `http://localhost:3000` in dev)
+- `ADMIN_USER_ID` (Supabase user UUID for the admin)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Common Commands
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev               # start dev server
+npm run build             # production build
+npx tsc --noEmit          # type check
+npm run lint              # ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# shadcn/ui
+npx shadcn@latest add <component>
 
-## Deploy on Vercel
+# Regenerate Supabase types after schema changes
+npx supabase gen types typescript --local > types/supabase.ts
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Docs
+
+- [`project_spec.md`](project_spec.md) — full product + technical spec (source of truth)
+- [`CLAUDE.md`](CLAUDE.md) — instructions for AI assistants working in this codebase
+- [`docs/architecture.md`](docs/architecture.md) — system architecture and data flow
+- [`docs/design-system.md`](docs/design-system.md) — visual language and component patterns
+- [`docs/project_status.md`](docs/project_status.md) — current milestone tracking
+- [`docs/changelog.md`](docs/changelog.md) — release notes
+
+---
+
+## License
+
+Private. All rights reserved.

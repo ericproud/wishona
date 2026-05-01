@@ -1,4 +1,4 @@
-# Project Spec: Gift Simple
+# Project Spec: Wishona
 
 ---
 
@@ -92,76 +92,84 @@ There is only one type of user account. Every user can create lists (making them
 
 ## 1.6 Feature Requirements
 
-### MVP — Target: 7 days
+### MVP — ✅ Complete (Deployed)
 
 **Auth**
-- [ ] Sign up (email + password)
-- [ ] Log in / log out
-- [ ] Username chosen on signup (unique, alphanumeric + hyphens, 3–20 chars)
-- [ ] Reserve system usernames: `admin`, `api`, `login`, `signup`, `dashboard`, `profile`
+- [x] Sign up (email + password)
+- [x] Log in / log out
+- [x] Username chosen on signup (unique, alphanumeric + hyphens, 3–20 chars)
+- [x] Reserve system usernames: `admin`, `api`, `login`, `signup`, `dashboard`, `profile`
 
 **Profile**
-- [ ] Display name
-- [ ] Profile photo (upload via Supabase Storage)
-- [ ] Clothing sizes (structured: shirt, pants, shoe, dress — all optional)
-- [ ] Interests & hobbies (free text)
-- [ ] Wishlist note (personal message to gifters, free text)
+- [x] First name + last name (replaced original `display_name` field)
+- [x] Profile photo (upload via Supabase Storage)
+- [x] Clothing sizes (structured: shirt, pants, shoe, dress — all optional)
+- [x] Interests & hobbies (free text)
+- [x] Wishlist note (personal message to gifters, free text)
 
 **Lists**
-- [ ] Create a named list (name required, slug auto-generated from name)
-- [ ] Rename or delete a list
-- [ ] Multiple lists per user — no hard limit for MVP
-- [ ] Lists are private by default — only accessible to invited members
+- [x] Create a named list (name required, slug auto-generated from name)
+- [x] Rename or delete a list
+- [x] Multiple lists per user — no hard limit for MVP
+- [x] Lists are private by default — only accessible to invited members
 
 **Invites**
-- [ ] List owner enters one or more email addresses to invite
-- [ ] System sends each invitee an email with a unique invite link: `yourapp.com/invite/{token}`
-- [ ] Invitee clicks link → shown a preview (list name, owner) and prompted to sign up or log in
-- [ ] After auth: account is linked to the invite and they gain access to the list
-- [ ] If an existing account's email matches the invite email, linking is automatic on login
-- [ ] List owner can see pending vs. accepted invites and revoke pending ones
-- [ ] Invite tokens expire after 7 days
+- [x] List owner enters one or more email addresses to invite
+- [x] System sends each invitee an email with a unique invite link: `yourapp.com/invite/{token}`
+- [x] Invitee clicks link → shown a preview (list name, owner) and prompted to sign up or log in
+- [x] After auth: account is linked to the invite and they gain access to the list
+- [x] If an existing account's email matches the invite email, linking is automatic on login
+- [x] List owner can see pending vs. accepted invites and revoke pending ones
+- [x] Invite tokens expire after 7 days
 
 **Items**
-- [ ] Add item: name (required), URL (optional), price (optional), quantity (required, default 1), notes (optional)
-- [ ] Edit item
-- [ ] Delete item
-- [ ] Items have a quantity; multiple purchases allowed up to that quantity
-- [ ] Multiple purchases of same item allowed (quantity-based — e.g. 2 of 3 bought)
+- [x] Add item: name (required), URL (optional), price (optional), quantity (required, default 1), notes (optional), image (auto-fetched from URL)
+- [x] Edit item
+- [x] Delete item
+- [x] Items have a quantity; multiple purchases allowed up to that quantity
+- [x] Multiple purchases of same item allowed (quantity-based — e.g. 2 of 3 bought)
+- [x] Auto-fill on URL paste (open-graph-scraper + Amazon regex fallback)
 
 **Invite Page (`/invite/{token}`)**
-- [ ] Publicly accessible (no auth required to reach this page)
-- [ ] Shows list owner's name and list name as a preview
-- [ ] Presents sign-up and log-in options
-- [ ] On auth: links account to invite, marks invite accepted, redirects to the list
-- [ ] If token is expired or already used: shows a clear error message
+- [x] Publicly accessible (no auth required to reach this page)
+- [x] Shows list owner's name and list name as a preview
+- [x] Presents sign-up and log-in options
+- [x] On auth: links account to invite, marks invite accepted, redirects to the list
+- [x] If token is expired or already used: shows a clear error message
 
 **List Page (`/{username}/{list-slug}`) — access controlled by invite membership**
 
-*Unauthenticated or non-member:* redirected to `/invite/{token}` or shown an access denied page
+*Unauthenticated or non-member:* shown an access denied page
 
 *Accepted member (logged in, NOT the list owner):*
-- [ ] Sees list owner's profile and all items
-- [ ] Sees who has claimed what (e.g. "Alex is getting the Air Fryer")
-- [ ] Filter bar: All / Available / Claimed
-- [ ] Can mark available items as purchased
-- [ ] Cannot mark items that are fully claimed
+- [x] Sees list owner's profile and all items
+- [x] Sees who has claimed what (e.g. "Alex is getting the Air Fryer")
+- [x] Can mark available items as purchased (partial quantity supported)
+- [x] Cannot mark items that are fully claimed
 
 *List owner (viewing their own list page):*
-- [ ] Sees items only — zero purchase data, no availability status
-- [ ] Completely blind to gifting activity to preserve the surprise
+- [x] Redirects to `/list/[id]/edit` — items management view
+- [x] Owner page shows items only — zero purchase data, no availability status
+- [x] Completely blind to gifting activity to preserve the surprise
 
 **Dashboard**
-- [ ] See all owned lists with item counts and pending/accepted invite counts
-- [ ] Links to manage invites per list (send new, view pending, revoke)
-- [ ] Links to edit each list (items)
-- [ ] No gifting activity or purchase data shown anywhere on the owned-lists section
-- [ ] "Gifting on" section — lists where the user has an accepted invite (not their own lists); shows list name and owner's display name; links to the list page
+- [x] See all owned lists with item counts and pending/accepted invite counts
+- [x] Links to manage invites per list (send new, view pending, revoke)
+- [x] Links to edit each list (items)
+- [x] No gifting activity or purchase data shown anywhere on the owned-lists section
+- [x] "Gifting on" section — lists where the user has an accepted invite (not their own lists); shows list name and owner's name; links to the list page
 
 **Admin**
-- [ ] Protected `/admin` route (you only, hardcoded check against your user ID)
-- [ ] View all users, lists, and recent purchases
-- [ ] Delete users / lists
+- [x] Protected `/admin` route (gated by `ADMIN_USER_ID` env var)
+- [x] View all users, lists, and item counts
+- [x] Delete users / lists with inline confirmation
+
+**Post-MVP additions (delivered)**
+- [x] Full UI redesign — Shopify admin-inspired aesthetic, DM Sans, dark nav, green primary
+- [x] App rebranded from "Wishlist" → "Gift Simple" → **Wishona**
+- [x] Custom domain: wishona.com
+- [x] Skimlinks affiliate integration on all pages
+- [x] Redesigned invite email with HTML template explaining the platform
 
 ---
 
@@ -273,7 +281,8 @@ create table public.users (
   id          uuid primary key references auth.users(id) on delete cascade,
   email       text not null,
   username    text not null unique,
-  display_name text,
+  first_name  text,
+  last_name   text,
   created_at  timestamptz default now()
 );
 
@@ -300,6 +309,7 @@ create table public.items (
   list_id     uuid not null references public.lists(id) on delete cascade,
   name        text not null,
   url         text,                -- optional; not all items have a product link
+  image_url   text,                -- optional; auto-fetched from URL or manually added
   price       numeric(10,2),
   quantity    integer not null default 1,
   notes       text,
@@ -324,6 +334,7 @@ create table public.purchases (
   id           uuid primary key default gen_random_uuid(),
   item_id      uuid not null references public.items(id) on delete cascade,
   gifter_id    uuid not null references public.users(id) on delete cascade,
+  quantity     integer not null default 1,    -- supports partial-quantity claims
   purchased_at timestamptz default now()
 );
 ```
@@ -410,20 +421,22 @@ acceptInvite(token)         -- links auth.uid() to invite, sets accepted_at
 revokeInvite(inviteId)      -- deletes a pending invite
 
 // Items
-addItem(listId, { name, url, price, quantity, notes })
+addItem(listId, { name, url, image_url, price, quantity, notes })
 updateItem(itemId, fields)
 deleteItem(itemId)
+scrapeItemUrl(url)          -- server action: fetches OG metadata for auto-fill
 
 // Purchases
-markPurchased(itemId)       -- creates a purchases row for auth.uid()
+markPurchased(itemId, quantity)  -- creates a purchases row for auth.uid() (partial-quantity supported)
+unmarkPurchased(purchaseId)      -- deletes own purchase
 
 // Profile
 updateProfile(fields)       -- clothing_sizes, interests, wishlist_note, avatar_url
-updateUser(fields)          -- display_name, username
+updateUser(fields)          -- first_name, last_name, username
 
 // Admin
-deleteUser(userId)
-deleteList(listId)
+adminDeleteUser(userId)
+adminDeleteList(listId)
 ```
 
 ---

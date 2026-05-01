@@ -1,7 +1,0 @@
-- generic [active] [ref=e1]:
-  - generic [ref=e4]:
-    - generic [ref=e5]: Invite not found
-    - generic [ref=e6]: This invite link is not valid. It may have been revoked or never existed.
-  - button "Open Next.js Dev Tools" [ref=e12] [cursor=pointer]:
-    - img [ref=e13]
-  - alert [ref=e16]

@@ -1,6 +1,6 @@
 # Design System
 
-Shopify admin–inspired visual language for Gift Simple. Clean, professional, and user-focused.
+Shopify admin–inspired visual language for Wishona. Clean, professional, and user-focused.
 
 ---
 
@@ -60,7 +60,7 @@ All authenticated pages use the `AppShell` component (`components/app-shell.tsx`
 ```
 ┌─────────────────────────────────────────────┐
 │  [Nav bar — bg-nav, h-14]                   │
-│  Gift Simple               Name · Log out   │
+│  Wishona                   Name · Log out   │
 └─────────────────────────────────────────────┘
 ┌─────────────────────────────────────────────┐
 │  [Page content — bg-background]             │
@@ -199,7 +199,7 @@ The item form uses a fixed overlay instead of an inline form:
 ```
 Height: 56px (h-14)
 Background: bg-nav (dark navy)
-Left: "Gift Simple" — white, font-semibold, links to /dashboard
+Left: "Wishona" — white, font-semibold, links to /dashboard
 Right: display name (links to /profile/edit) + logout button
 ```
 
