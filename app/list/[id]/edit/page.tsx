@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { signOut } from '@/lib/actions/auth'
-import { Button, buttonVariants } from '@/components/ui/button'
+import AppShell from '@/components/app-shell'
 import ItemForm from './item-form'
 import ItemList from './item-list'
 import type { Item, List } from '@/types'
@@ -33,32 +32,46 @@ export default async function EditItemsPage({
     .eq('list_id', id)
     .order('created_at', { ascending: true })
 
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-2xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/dashboard" className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
-            ← Dashboard
-          </Link>
-          <form action={signOut}>
-            <Button variant="outline" size="sm" type="submit">Log out</Button>
-          </form>
-        </div>
+  const itemList = (items ?? []) as Item[]
 
-        <div className="flex items-start justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-semibold">{(list as List).name}</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              {(items ?? []).length === 0
-                ? 'No items yet'
-                : `${(items ?? []).length} item${(items ?? []).length === 1 ? '' : 's'}`}
-            </p>
-          </div>
+  return (
+    <AppShell>
+      <div className="flex items-center gap-2 mb-6 text-sm">
+        <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
+          Dashboard
+        </Link>
+        <span className="text-border">›</span>
+        <span className="text-foreground">{(list as List).name}</span>
+      </div>
+
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <h1 className="text-xl font-semibold text-foreground">{(list as List).name}</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            {itemList.length === 0
+              ? 'No items yet'
+              : `${itemList.length} ${itemList.length === 1 ? 'item' : 'items'}`}
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/list/${id}/invites`}
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Manage invites
+          </Link>
           <ItemForm listId={id} />
         </div>
-
-        <ItemList items={(items ?? []) as Item[]} />
       </div>
-    </div>
+
+      {itemList.length === 0 ? (
+        <div className="bg-card border border-border rounded-lg px-5 py-12 text-center">
+          <p className="text-sm text-muted-foreground">No items on this list yet.</p>
+          <p className="text-xs text-muted-foreground mt-1">Click &ldquo;Add item&rdquo; to get started.</p>
+        </div>
+      ) : (
+        <ItemList items={itemList} />
+      )}
+    </AppShell>
   )
 }

@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**Admin complete — MVP feature-complete. Next: deploy to Vercel.**
+**MVP deployed. App renamed to Gift Simple. Currently in V1 feature development.**
 
-All milestones are done. Next target: deploy to Vercel and connect a production domain.
+MVP is feature-complete and deployed. App name updated from "Wishlist" to "Gift Simple" across the codebase.
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 
@@ -95,5 +95,5 @@ Target: 7 days from first line of code. Full requirements in `project_spec.md §
 | List page (3-view) | ✅ Complete | |
 | Dashboard | ✅ Complete | |
 | Admin | ✅ Complete | |
-| Deploy to Vercel | ⬜ Not started | Needs app name / domain first |
-| MVP complete | ⬜ Not started | |
+| Deploy to Vercel | ✅ Complete | Deployed, app renamed to Gift Simple |
+| MVP complete | ✅ Complete | |

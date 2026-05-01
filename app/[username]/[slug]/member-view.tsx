@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { buttonVariants, Button } from '@/components/ui/button'
 import { signOut } from '@/lib/actions/auth'
 import ItemCard from './item-card'
 import type { Item, List, Profile, PurchaseWithGifter } from '@/types'
@@ -18,51 +17,64 @@ type Props = {
 
 export default function MemberView({ list, owner, profile, items, purchases, currentUserId, listPath }: Props) {
   const sizes = profile?.clothing_sizes
-  const sizeStr = sizes
+  const sizeEntries = sizes
     ? [
         sizes.shirt && `Shirt ${sizes.shirt}`,
         sizes.pants && `Pants ${sizes.pants}`,
         sizes.shoe && `Shoe ${sizes.shoe}`,
         sizes.dress && `Dress ${sizes.dress}`,
-      ].filter(Boolean).join(' · ')
-    : null
+      ].filter(Boolean)
+    : []
+
+  const ownerName = owner.display_name ?? owner.username
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-2xl mx-auto px-4 py-6">
-        {/* Nav */}
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/dashboard" className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
-            ← Dashboard
+      {/* Nav */}
+      <header className="bg-nav sticky top-0 z-50">
+        <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center justify-between">
+          <Link href="/dashboard" className="text-white font-semibold text-sm tracking-tight hover:text-white/80 transition-colors">
+            Gift Simple
           </Link>
-          <form action={signOut}>
-            <Button variant="outline" size="sm" type="submit">Log out</Button>
-          </form>
+          <div className="flex items-center gap-5">
+            <Link href="/dashboard" className="text-sm text-white/60 hover:text-white/90 transition-colors">
+              Dashboard
+            </Link>
+            <form action={signOut}>
+              <button type="submit" className="text-sm text-white/60 hover:text-white/90 transition-colors cursor-pointer">
+                Log out
+              </button>
+            </form>
+          </div>
         </div>
+      </header>
 
+      <main className="max-w-[960px] mx-auto px-6 py-8">
         {/* Owner profile header */}
-        <div className="mb-8">
-          <p className="text-sm text-muted-foreground">
-            {owner.display_name ?? owner.username}&apos;s list
+        <div className="bg-card border border-border rounded-lg p-6 mb-6">
+          <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">
+            {ownerName}&apos;s wishlist
           </p>
-          <h1 className="text-2xl font-semibold mt-0.5">{list.name}</h1>
+          <h1 className="text-xl font-semibold text-foreground">{list.name}</h1>
+
           {profile?.wishlist_note && (
             <p className="text-sm text-muted-foreground mt-2 italic">
               &ldquo;{profile.wishlist_note}&rdquo;
             </p>
           )}
-          {(profile?.interests || sizeStr) && (
-            <div className="mt-3 space-y-1 text-xs text-muted-foreground">
+
+          {(profile?.interests || sizeEntries.length > 0) && (
+            <div className="mt-4 pt-4 border-t border-border space-y-1.5">
               {profile?.interests && (
-                <p>
+                <p className="text-sm text-muted-foreground">
                   <span className="font-medium text-foreground">Interests:</span>{' '}
                   {profile.interests}
                 </p>
               )}
-              {sizeStr && (
-                <p>
+              {sizeEntries.length > 0 && (
+                <p className="text-sm text-muted-foreground">
                   <span className="font-medium text-foreground">Sizes:</span>{' '}
-                  {sizeStr}
+                  {sizeEntries.join(' · ')}
                 </p>
               )}
             </div>
@@ -71,11 +83,11 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
 
         {/* Items */}
         {items.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-12">
-            No items on this list yet.
-          </p>
+          <div className="bg-card border border-border rounded-lg px-5 py-12 text-center">
+            <p className="text-sm text-muted-foreground">No items on this list yet.</p>
+          </div>
         ) : (
-          <ul className="space-y-3">
+          <div className="bg-card border border-border rounded-lg divide-y divide-border">
             {items.map(item => {
               const itemPurchases = purchases.filter(p => p.item_id === item.id)
               const myPurchase = itemPurchases.find(p => p.gifter_id === currentUserId) ?? null
@@ -94,9 +106,9 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
                 />
               )
             })}
-          </ul>
+          </div>
         )}
-      </div>
+      </main>
     </div>
   )
 }

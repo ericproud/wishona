@@ -7,7 +7,6 @@ import UserAvatar from '@/components/ui/user-avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { User, Profile } from '@/types'
 
 interface ProfileFormProps {
@@ -66,21 +65,19 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
   const error = state && 'error' in state ? state.error : null
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 max-w-2xl">
       {/* Avatar */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Profile photo</CardTitle>
-        </CardHeader>
-        <CardContent className="flex items-center gap-6">
+      <div className="bg-card border border-border rounded-lg p-5">
+        <h2 className="text-sm font-semibold text-foreground mb-4">Profile photo</h2>
+        <div className="flex items-center gap-5">
           <UserAvatar
             avatarUrl={avatarUrl}
             displayName={user.display_name}
             username={user.username}
             size="lg"
-            className="size-20 text-xl"
+            className="size-16 text-lg"
           />
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <Button
               type="button"
               variant="outline"
@@ -90,119 +87,76 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
             >
               {avatarUploading ? 'Uploading…' : 'Change photo'}
             </Button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleAvatarChange}
-            />
-            {avatarError && (
-              <p className="text-sm text-destructive">{avatarError}</p>
-            )}
+            <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
+            {avatarError && <p className="text-xs text-destructive">{avatarError}</p>}
             <p className="text-xs text-muted-foreground">JPG, PNG or WebP · max 2 MB</p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Profile fields */}
       <form action={formAction}>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">About you</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {success && (
-              <p className="text-sm text-green-600">Profile saved.</p>
-            )}
-            {error && (
-              <p className="text-sm text-destructive">{error}</p>
-            )}
-
-            <div className="space-y-1.5">
-              <Label htmlFor="display_name">Display name</Label>
-              <Input
-                id="display_name"
-                name="display_name"
-                defaultValue={user.display_name ?? ''}
-                placeholder="Your full name"
-              />
+        <div className="bg-card border border-border rounded-lg p-5 space-y-4">
+          <h2 className="text-sm font-semibold text-foreground">About you</h2>
+          {success && (
+            <div className="bg-primary/8 border border-primary/20 text-primary text-sm rounded-md px-3 py-2">
+              Profile saved.
             </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="interests">Interests</Label>
-              <Input
-                id="interests"
-                name="interests"
-                defaultValue={profile?.interests ?? ''}
-                placeholder="e.g. cooking, hiking, jazz records"
-              />
-              <p className="text-xs text-muted-foreground">
-                Helps gifters pick something you&apos;ll actually like.
-              </p>
+          )}
+          {error && (
+            <div className="bg-destructive/8 border border-destructive/20 text-destructive text-sm rounded-md px-3 py-2">
+              {error}
             </div>
+          )}
+          <div className="space-y-1.5">
+            <Label htmlFor="display_name">Display name</Label>
+            <Input id="display_name" name="display_name" defaultValue={user.display_name ?? ''} placeholder="Your full name" />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="interests">Interests</Label>
+            <Input
+              id="interests"
+              name="interests"
+              defaultValue={profile?.interests ?? ''}
+              placeholder="e.g. cooking, hiking, jazz records"
+            />
+            <p className="text-xs text-muted-foreground">Helps gifters pick something you&apos;ll actually like.</p>
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="wishlist_note">Wishlist note</Label>
+            <Input
+              id="wishlist_note"
+              name="wishlist_note"
+              defaultValue={profile?.wishlist_note ?? ''}
+              placeholder="e.g. I prefer experiences over things"
+            />
+            <p className="text-xs text-muted-foreground">Shown at the top of your list pages.</p>
+          </div>
+        </div>
 
-            <div className="space-y-1.5">
-              <Label htmlFor="wishlist_note">Wishlist note</Label>
-              <Input
-                id="wishlist_note"
-                name="wishlist_note"
-                defaultValue={profile?.wishlist_note ?? ''}
-                placeholder="e.g. I prefer experiences over things"
-              />
-              <p className="text-xs text-muted-foreground">
-                Shown at the top of your list pages.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Clothing sizes */}
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle className="text-base">Clothing sizes</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-4">
+        <div className="bg-card border border-border rounded-lg p-5 mt-5">
+          <h2 className="text-sm font-semibold text-foreground mb-4">Clothing sizes</h2>
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="shirt">Shirt / top</Label>
-              <Input
-                id="shirt"
-                name="shirt"
-                defaultValue={sizes.shirt ?? ''}
-                placeholder="M"
-              />
+              <Input id="shirt" name="shirt" defaultValue={sizes.shirt ?? ''} placeholder="M" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="pants">Pants / bottoms</Label>
-              <Input
-                id="pants"
-                name="pants"
-                defaultValue={sizes.pants ?? ''}
-                placeholder="32×30"
-              />
+              <Input id="pants" name="pants" defaultValue={sizes.pants ?? ''} placeholder="32×30" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="shoe">Shoe</Label>
-              <Input
-                id="shoe"
-                name="shoe"
-                defaultValue={sizes.shoe ?? ''}
-                placeholder="10"
-              />
+              <Input id="shoe" name="shoe" defaultValue={sizes.shoe ?? ''} placeholder="10" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="dress">Dress</Label>
-              <Input
-                id="dress"
-                name="dress"
-                defaultValue={sizes.dress ?? ''}
-                placeholder="6"
-              />
+              <Input id="dress" name="dress" defaultValue={sizes.dress ?? ''} placeholder="6" />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <div className="mt-6">
+        <div className="mt-5">
           <Button type="submit" disabled={pending}>
             {pending ? 'Saving…' : 'Save profile'}
           </Button>

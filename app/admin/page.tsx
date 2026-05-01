@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
+import AppShell from '@/components/app-shell'
 import AdminUsers from './admin-users'
 import AdminLists from './admin-lists'
 
@@ -29,7 +30,6 @@ export default async function AdminPage() {
     (authUsers?.users ?? []).map(u => [u.id, u.email ?? ''])
   )
 
-  // Item counts per list
   const listIds = lists.map(l => l.id)
   const { data: itemRows } = listIds.length > 0
     ? await adminClient.from('items').select('list_id').in('list_id', listIds)
@@ -40,20 +40,23 @@ export default async function AdminPage() {
     itemCounts[row.list_id] = (itemCounts[row.list_id] ?? 0) + 1
   }
 
-  // List counts per user
   const listCountsByUser: Record<string, number> = {}
   for (const list of lists) {
     listCountsByUser[list.owner_id] = (listCountsByUser[list.owner_id] ?? 0) + 1
   }
 
-  // Owner display per list
   const userMap = Object.fromEntries(users.map(u => [u.id, u]))
 
   return (
-    <main className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto space-y-10">
-        <h1 className="text-2xl font-semibold">Admin</h1>
+    <AppShell>
+      <div className="mb-8">
+        <h1 className="text-xl font-semibold text-foreground">Admin</h1>
+        <p className="text-sm text-muted-foreground mt-0.5">
+          {users.length} users · {lists.length} lists
+        </p>
+      </div>
 
+      <div className="space-y-8">
         <AdminUsers
           users={users.map(u => ({
             id: u.id,
@@ -77,6 +80,6 @@ export default async function AdminPage() {
           }))}
         />
       </div>
-    </main>
+    </AppShell>
   )
 }

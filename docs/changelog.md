@@ -8,6 +8,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+- App renamed from "Wishlist" to **Gift Simple** — updated across all UI, page titles, and docs
+- Full UI redesign: Shopify admin–inspired aesthetic (dark navy nav, light gray page background, Shopify green primary, DM Sans font)
+- Shared `AppShell` component replaces per-page nav/layout code
+- Item add form converted to modal overlay
+- Breadcrumb navigation replaces "← Dashboard" ghost buttons
+- Improved empty states, status badges, and error banners throughout
+- Design system documented in `docs/design-system.md`
+
+## [MVP]
+
 ### Added (Admin milestone)
 - `app/admin/page.tsx` — admin-only page; checks `ADMIN_USER_ID` server-side; fetches all users (with auth emails via `adminClient.auth.admin.listUsers`) and all lists with item counts
 - `app/admin/admin-users.tsx` — users table with inline delete confirmation

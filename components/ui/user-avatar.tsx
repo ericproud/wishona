@@ -2,13 +2,13 @@
 
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 
-const WARM_COLORS = [
-  'bg-amber-200 text-amber-800',
-  'bg-rose-200 text-rose-800',
-  'bg-orange-200 text-orange-800',
-  'bg-yellow-200 text-yellow-800',
-  'bg-pink-200 text-pink-800',
-  'bg-red-200 text-red-800',
+const AVATAR_COLORS = [
+  'bg-teal-100 text-teal-700',
+  'bg-violet-100 text-violet-700',
+  'bg-sky-100 text-sky-700',
+  'bg-rose-100 text-rose-700',
+  'bg-amber-100 text-amber-700',
+  'bg-emerald-100 text-emerald-700',
 ]
 
 function getColorClass(seed: string): string {
@@ -16,7 +16,7 @@ function getColorClass(seed: string): string {
   for (let i = 0; i < seed.length; i++) {
     hash = (hash * 31 + seed.charCodeAt(i)) >>> 0
   }
-  return WARM_COLORS[hash % WARM_COLORS.length]
+  return AVATAR_COLORS[hash % AVATAR_COLORS.length]
 }
 
 function getInitials(displayName: string | null, username: string): string {
