@@ -70,7 +70,7 @@ export default async function InvitePage({
     <div className="min-h-screen bg-background">
       <header className="bg-nav">
         <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center">
-          <span className="text-white font-semibold text-sm tracking-tight">Gift Simple</span>
+          <span className="text-white font-semibold text-sm tracking-tight">Wishona</span>
         </div>
       </header>
       <main className="flex items-center justify-center px-4 py-16">
@@ -127,7 +127,7 @@ function InviteShell({
     <div className="min-h-screen bg-background">
       <header className="bg-nav">
         <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center">
-          <span className="text-white font-semibold text-sm tracking-tight">Gift Simple</span>
+          <span className="text-white font-semibold text-sm tracking-tight">Wishona</span>
         </div>
       </header>
       <main className="flex items-center justify-center px-4 py-16">

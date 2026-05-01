@@ -7,7 +7,7 @@ export default function Home() {
       {/* Nav */}
       <header className="bg-nav">
         <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center justify-between">
-          <span className="text-white font-semibold text-sm tracking-tight">Gift Simple</span>
+          <span className="text-white font-semibold text-sm tracking-tight">Wishona</span>
           <div className="flex items-center gap-4">
             <Link href="/login" className="text-sm text-white/60 hover:text-white/90 transition-colors">
               Log in

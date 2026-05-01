@@ -6,7 +6,7 @@ export default function AccessDenied({ ownerName }: { ownerName: string }) {
     <div className="min-h-screen bg-background">
       <header className="bg-nav">
         <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center">
-          <span className="text-white font-semibold text-sm tracking-tight">Gift Simple</span>
+          <span className="text-white font-semibold text-sm tracking-tight">Wishona</span>
         </div>
       </header>
       <main className="max-w-[960px] mx-auto px-6 py-24 flex items-center justify-center">

@@ -34,7 +34,7 @@ export default async function AppShell({ children }: AppShellProps) {
             href="/dashboard"
             className="text-white font-semibold text-sm tracking-tight hover:text-white/80 transition-colors"
           >
-            Gift Simple
+            Wishona
           </Link>
           {user && (
             <div className="flex items-center gap-5">

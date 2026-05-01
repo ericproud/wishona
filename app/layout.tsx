@@ -10,7 +10,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Gift Simple",
+  title: "Wishona",
   description: "Share what you want. Gift what they'll love.",
 };
 
