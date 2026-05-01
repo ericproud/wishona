@@ -173,20 +173,26 @@ There is only one type of user account. Every user can create lists (making them
 
 ---
 
-### V1 — After MVP
+### V1 — In Progress (1–2 week sprint)
 
-- ~~Users can gift on other users' lists~~ — moved to MVP (dashboard "Gifting on" section)
-- **Anonymous purchase toggle:** members see real purchaser names by default; list owners can toggle a setting to hide gifter identities from each other (show "Someone" instead of a name). Default = names visible.
-- Gift priority ranking (drag to reorder, or explicit priority tag)
-- Users can suggest items to a list they're gifting on
-- Email notification to list owner when all items on a list are claimed (no per-purchase notifications — that would reveal gifting activity)
-- Resend invites, invite reminders
-- Improved onboarding with progress steps
-- Better dashboard with gifting activity feed
-- **Item images:** each item can have a cover image shown on the list page
-  - If a URL is attached: auto-capture a screenshot of the product page (e.g. via a headless browser service or screenshot API) and store it as the item image
-  - If no URL: user can manually upload an image
-  - Images stored in Supabase Storage under a new `item-images` bucket
+Goals locked in: **more signups** + **deeper engagement post-signup**. The core experience needs to be visually tighter and more mobile-friendly. Track-level breakdown lives in `docs/project_status.md`.
+
+**In scope:**
+- **Image-forward layout redesign** across all pages (dashboard, list pages, profile, invites, admin, landing). Pinterest/Etsy-style grid replaces the uniform vertical card list. Same palette (dark nav, green accent), same DM Sans, just better layout and mobile responsiveness.
+- **Pending/disabled states** on every async mutation (deletes, revokes, uploads) so users get visual feedback within ~100ms.
+- **Profile-edit redirect:** new users who finish profile setup land on the dashboard, not back on the form.
+- **Manual product image upload** alongside the existing URL auto-scrape. Reuses the `avatars` Storage bucket (path `${userId}/items/...`) and mirrors the avatar upload pattern. Manual upload takes precedence over auto-scrape.
+- **Event dates on lists** (optional `event_date date` column). Displayed on dashboard and member view as relative ("in 3 weeks") or absolute ("Aug 15") depending on proximity.
+- **Reminder emails** sent via Vercel Cron + Resend to all accepted gifters at T-14 and T-3 days before a list's `event_date`. Reuses the existing invite email HTML template style.
+
+**Deferred (originally V1, now V1.5 / V2):**
+- Anonymous purchase toggle (owner-facing setting to hide gifter identities from each other).
+- Gift priority ranking (drag to reorder, or explicit priority tag).
+- Members can suggest items to a list they're gifting on.
+- "All claimed" notification email to list owner.
+- Improved onboarding with progress steps (the redirect-to-profile-edit on signup is enough for now).
+- Better dashboard with full gifting activity feed.
+- ~~Item images~~ — already shipped in post-MVP work; manual upload added in V1 above.
 
 ---
 
