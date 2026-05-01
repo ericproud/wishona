@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { PendingButton } from '@/components/ui/pending-button'
 import { adminDeleteUser } from '@/lib/actions/admin'
 
 type AdminUser = {
@@ -55,7 +56,9 @@ export default function AdminUsers({ users }: { users: AdminUser[] }) {
                       <div className="flex items-center justify-end gap-2">
                         <span className="text-xs text-destructive">Delete user?</span>
                         <form action={adminDeleteUser.bind(null, u.id)}>
-                          <Button variant="destructive" size="sm" type="submit">Delete</Button>
+                          <PendingButton variant="destructive" size="sm" pendingLabel="Deleting…">
+                            Delete
+                          </PendingButton>
                         </form>
                         <Button variant="ghost" size="sm" onClick={() => setConfirmingId(null)}>Cancel</Button>
                       </div>

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { updateItem, deleteItem } from '@/lib/actions/items'
 import { scrapeItemUrl } from '@/lib/actions/scrape'
 import { Button } from '@/components/ui/button'
+import { PendingButton } from '@/components/ui/pending-button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import type { Item } from '@/types'
@@ -130,7 +131,9 @@ function ItemRow({ item }: { item: Item }) {
             Delete &ldquo;{item.name}&rdquo;? This cannot be undone.
           </p>
           <form action={deleteItem.bind(null, item.id)}>
-            <Button variant="destructive" size="sm" type="submit">Delete</Button>
+            <PendingButton variant="destructive" size="sm" pendingLabel="Deleting…">
+              Delete
+            </PendingButton>
           </form>
           <Button variant="ghost" size="sm" onClick={() => setMode('view')}>Cancel</Button>
         </div>
