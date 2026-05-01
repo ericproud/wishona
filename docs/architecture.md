@@ -100,47 +100,47 @@ Key constraints:
 
 ```
 /app
-  layout.tsx                    — root layout
+  layout.tsx                    — root layout (DM Sans, Skimlinks script)
   page.tsx                      — landing page (static)
-  /signup/page.tsx
-  /login/
-    page.tsx                    — async Server Component, reads searchParams
-    login-form.tsx              — Client Component, receives redirectTo as prop
+  /signup/                      — sign-up form (preserves redirectTo for invite flow)
+  /login/                       — log-in form (Server + Client split)
   /auth/callback/route.ts       — exchanges Supabase code for session
-  /dashboard/page.tsx
-  /profile/edit/
-    page.tsx                    — Server Component, fetches user + profile
-    profile-form.tsx            — Client Component, handles edits + avatar upload
-  /invite/[token]/page.tsx      — public invite acceptance page (planned)
+  /dashboard/                   — owned lists + "Gifting on" section
+  /profile/edit/                — first/last name, sizes, interests, note, avatar upload
+  /invite/[token]/              — public invite acceptance page
   /list/
-    new/page.tsx                — (planned)
-    [id]/edit/page.tsx          — (planned)
-    [id]/invites/page.tsx       — (planned)
-  /[username]/[slug]/page.tsx   — SSR list page, member-gated (planned)
-  /admin/page.tsx               — (planned)
+    new/                        — create list form
+    [id]/edit/                  — items management (add, edit, delete, image, link auto-fill)
+    [id]/invites/               — send/revoke invites for a list
+  /[username]/[slug]/           — list page (3 view states: owner / member / non-member)
+    page.tsx                    — server entry, routes to correct view based on RLS + auth
+    member-view.tsx             — gifter view (items + claim status + who claimed what)
+    item-card.tsx               — per-item claim/unclaim with partial quantity support
+    access-denied.tsx           — non-member fallback
+  /admin/                       — admin-gated user/list management
 
 /components
-  /ui/                          — shadcn/ui primitives (do not edit directly)
-    user-avatar.tsx             — UserAvatar with initials fallback + deterministic warm color
-  ItemCard.tsx                  — (planned)
-  PurchaseButton.tsx            — (planned)
-  ItemForm.tsx                  — (planned)
-  FilterBar.tsx                 — (planned)
+  app-shell.tsx                 — shared nav + page layout for authenticated routes
+  /ui/                          — shadcn/ui primitives
+    user-avatar.tsx             — wrapper with initials fallback + deterministic warm color
 
 /lib
   supabase/
     client.ts                   — browser Supabase client
-    server.ts                   — server Supabase client (Server Components + Actions)
+    server.ts                   — server Supabase client + admin client
   actions/
     auth.ts                     — signUp, signIn, signOut
     profile.ts                  — updateProfile, updateAvatarUrl
-    items.ts                    — (planned)
-    purchases.ts                — (planned)
-    invites.ts                  — (planned)
-  utils.ts
+    lists.ts                    — createList, updateList, deleteList
+    items.ts                    — addItem, updateItem, deleteItem
+    purchases.ts                — markPurchased, unmarkPurchased
+    invites.ts                  — sendInvite, acceptInvite, revokeInvite
+    scrape.ts                   — scrapeItemUrl (open-graph-scraper + Amazon fallback)
+    admin.ts                    — adminDeleteUser, adminDeleteList
+  utils.ts                      — slugify, cn helpers
 
 /types
-  index.ts                      — shared TypeScript types
+  index.ts                      — shared TypeScript types (composed)
   supabase.ts                   — auto-generated from Supabase schema
 ```
 

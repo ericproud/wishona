@@ -1,9 +1,0 @@
-- generic [active] [ref=e1]:
-  - generic [ref=e3]:
-    - heading "Access restricted" [level=1] [ref=e4]
-    - paragraph [ref=e5]: This list is private. You need an invitation from Eric P to view it.
-    - link "Go to dashboard" [ref=e6] [cursor=pointer]:
-      - /url: /dashboard
-  - button "Open Next.js Dev Tools" [ref=e12] [cursor=pointer]:
-    - img [ref=e13]
-  - alert [ref=e16]
