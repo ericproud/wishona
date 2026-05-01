@@ -89,15 +89,46 @@ Full requirements in `project_spec.md §1.6`.
 
 ---
 
-## V1 — In Progress / Planned
+## V1 — In Progress
 
-Loose backlog. Items from `project_spec.md §1.6` V1 section, plus emergent priorities.
+**Goals:** more signups + deeper engagement post-signup. **Time budget:** 1–2 weeks.
 
-- [ ] Anonymous purchase toggle (members see real names by default; owner can hide gifter identities from each other)
-- [ ] Gift priority ranking (drag to reorder, or explicit priority tag)
-- [ ] Members can suggest items to a list they're gifting on
-- [ ] "All claimed" notification email to list owner (when every item is claimed)
-- [ ] Better mobile experience pass
+V1 scope was scoped down from the original V1 backlog (in `project_spec.md §1.6`) to focus on what makes the *core experience* tighter and more visual. The original V1 items not in this scope (anonymous purchase toggle, gift priority ranking, item suggestions from gifters, "all claimed" notification) are deferred to V1.5 or V2.
+
+### Locked-in scope — 5 tracks
+
+#### Track 1 — Quick wins (~½ day)
+- [ ] `updateProfile` server action redirects to `/dashboard` on success
+- [ ] Pending/disabled states on every async mutation that doesn't have one yet (delete list, delete item, revoke invite, admin deletes, avatar upload progress)
+
+#### Track 2 — Image-forward layout redesign (~5 days)
+Image-forward grid pattern (Pinterest/Etsy style), keeping the existing color palette (dark nav, green accent) and DM Sans. The current uniform vertical-card-list layout is the main thing that makes the app feel boring.
+- [ ] New shared components: `ListCard`, `ItemTile`, `EmptyStateCard`
+- [ ] Mobile-first grid wrapper standard (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`)
+- [ ] Page-by-page swap: dashboard, member view, item edit, item form (modal → mobile sheet), invites page, profile form (sectioned), admin tables (overflow-x), app-shell header (mobile collapse)
+- [ ] Landing page (`app/page.tsx`) redesigned alongside the app pages
+
+#### Track 3 — Manual product image upload (~1 day)
+- [ ] Mirror existing avatar upload pattern in `app/list/[id]/edit/item-form.tsx` and `item-list.tsx`
+- [ ] Reuse the `avatars` Storage bucket (path: `${userId}/items/...`) — no new bucket
+- [ ] Manual upload takes precedence; auto-scrape only fills `image_url` when empty
+
+#### Track 4 — Event dates on lists (~1 day)
+- [ ] Migration: add nullable `event_date date` column to `lists` table
+- [ ] Optional input on list create/edit forms
+- [ ] Display on dashboard ("in 3 weeks") and member view ("Sarah's birthday — Aug 15")
+- [ ] `formatEventDate` helper in `lib/utils.ts`
+
+#### Track 5 — Reminder emails (~2 days)
+- [ ] Vercel cron at 9am ET → `/api/cron/send-reminders`
+- [ ] Reminder cadence: 14 days before + 3 days before (default; tweakable)
+- [ ] Reuse Resend HTML template pattern from `lib/actions/invites.ts`
+- [ ] `CRON_SECRET` env var for route auth
+
+### Branching
+One PR per track. Tracks 1, 3, 4 are independent. Track 2 should land before Track 4's UI bits because `ListCard` consumes `event_date`. Track 5 depends on Track 4's schema migration.
+
+Detailed plan in the local plan file (not committed).
 
 ---
 
