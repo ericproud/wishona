@@ -84,12 +84,74 @@ export async function sendInvite(
   const { error: emailError } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
     to: email,
-    subject: `${ownerName} invited you to their wishlist`,
+    subject: `${ownerName} invited you to view their wishlist on Wishona`,
     html: `
-      <p>Hi there,</p>
-      <p><strong>${ownerName}</strong> has invited you to view their wishlist: <strong>${list.name}</strong>.</p>
-      <p><a href="${inviteUrl}">Click here to accept the invite</a></p>
-      <p>This invite expires in 7 days.</p>
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        </head>
+        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f9fafb;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9fafb;">
+            <tr>
+              <td align="center" style="padding: 40px 20px;">
+                <table width="100%" max-width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+                  <!-- Header -->
+                  <tr style="background: linear-gradient(135deg, #1f2937 0%, #111827 100%);">
+                    <td align="center" style="padding: 30px 20px;">
+                      <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 600;">Wishona</h1>
+                      <p style="margin: 8px 0 0 0; color: #d1d5db; font-size: 14px;">Smart wishlists for meaningful gifts</p>
+                    </td>
+                  </tr>
+
+                  <!-- Main content -->
+                  <tr>
+                    <td style="padding: 40px 30px;">
+                      <p style="margin: 0 0 20px 0; font-size: 16px;"><strong>${ownerName}</strong> has invited you to view their wishlist on Wishona!</p>
+
+                      <div style="background-color: #f3f4f6; border-left: 4px solid #059669; padding: 16px; margin: 20px 0; border-radius: 4px;">
+                        <p style="margin: 0; font-size: 15px;"><strong>Wishlist:</strong> <span style="color: #059669; font-weight: 600;">${list.name}</span></p>
+                      </div>
+
+                      <h3 style="margin: 30px 0 12px 0; font-size: 14px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">What is Wishona?</h3>
+                      <p style="margin: 0 0 16px 0; font-size: 14px; color: #6b7280;">Wishona is a platform for creating and sharing wishlists. When someone invites you to a wishlist, you can see exactly what they want and claim items before you buy them — preventing duplicate gifts and making shopping easy.</p>
+
+                      <h3 style="margin: 24px 0 12px 0; font-size: 14px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">What happens next?</h3>
+                      <ol style="margin: 0 0 24px 20px; padding: 0; font-size: 14px; color: #6b7280;">
+                        <li style="margin-bottom: 8px;">Click the button below to view the wishlist</li>
+                        <li style="margin-bottom: 8px;">Create an account or sign in (takes 30 seconds)</li>
+                        <li style="margin-bottom: 0;">Browse items and claim what you want to gift</li>
+                      </ol>
+
+                      <!-- CTA Button -->
+                      <table cellpadding="0" cellspacing="0" style="margin: 32px 0;">
+                        <tr>
+                          <td align="center" style="background-color: #059669; border-radius: 6px;">
+                            <a href="${inviteUrl}" style="display: inline-block; padding: 14px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">View Wishlist</a>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <p style="margin: 24px 0 0 0; font-size: 13px; color: #9ca3af;">This invite expires in 7 days. If you have any questions, feel free to reach out to ${ownerName}.</p>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="padding: 24px 30px; border-top: 1px solid #e5e7eb; background-color: #f9fafb;">
+                      <p style="margin: 0; font-size: 12px; color: #9ca3af; text-align: center;">
+                        © 2026 Wishona. All rights reserved.<br />
+                        <a href="${process.env.NEXT_PUBLIC_APP_URL}" style="color: #059669; text-decoration: none;">Visit Wishona →</a>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
     `,
   })
 
