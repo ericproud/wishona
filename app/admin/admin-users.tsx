@@ -7,7 +7,8 @@ import { adminDeleteUser } from '@/lib/actions/admin'
 type AdminUser = {
   id: string
   username: string
-  display_name: string | null
+  first_name: string | null
+  last_name: string | null
   email: string
   created_at: string | null
   list_count: number
@@ -40,8 +41,8 @@ export default function AdminUsers({ users }: { users: AdminUser[] }) {
                 <tr key={u.id}>
                   <td className="px-5 py-3.5">
                     <p className="font-medium text-foreground">{u.username}</p>
-                    {u.display_name && (
-                      <p className="text-xs text-muted-foreground mt-0.5">{u.display_name}</p>
+                    {(u.first_name || u.last_name) && (
+                      <p className="text-xs text-muted-foreground mt-0.5">{u.first_name} {u.last_name}</p>
                     )}
                   </td>
                   <td className="px-5 py-3.5 text-muted-foreground text-sm">{u.email}</td>

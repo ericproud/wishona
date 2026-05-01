@@ -1,0 +1,14 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e39] [cursor=pointer]:
+    - img [ref=e40]
+  - alert [ref=e43]
+  - generic [ref=e45]:
+    - generic [ref=e46]:
+      - link "← Dashboard" [ref=e47] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Log out" [ref=e49]
+    - generic [ref=e50]:
+      - generic [ref=e51]:
+        - heading "farts 2" [level=1] [ref=e52]
+        - paragraph [ref=e53]: No items yet
+      - button "Add item" [ref=e54]

@@ -19,7 +19,7 @@ export default async function AdminPage() {
     { data: listsData },
     { data: authUsers },
   ] = await Promise.all([
-    adminClient.from('users').select('id, username, display_name, created_at').order('created_at', { ascending: false }),
+    adminClient.from('users').select('id, username, first_name, last_name, created_at').order('created_at', { ascending: false }),
     adminClient.from('lists').select('id, name, slug, owner_id, created_at').order('created_at', { ascending: false }),
     adminClient.auth.admin.listUsers({ perPage: 1000 }),
   ])
@@ -61,7 +61,8 @@ export default async function AdminPage() {
           users={users.map(u => ({
             id: u.id,
             username: u.username,
-            display_name: u.display_name,
+            first_name: u.first_name,
+            last_name: u.last_name,
             email: authUserMap[u.id] ?? '',
             created_at: u.created_at,
             list_count: listCountsByUser[u.id] ?? 0,

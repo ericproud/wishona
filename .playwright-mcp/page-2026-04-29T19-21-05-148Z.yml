@@ -1,0 +1,44 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "← Dashboard" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Log out" [ref=e7]
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - heading "farts 2" [level=1] [ref=e10]
+        - paragraph [ref=e11]: 1 item
+      - button "Add item" [ref=e47]
+    - list [ref=e48]:
+      - listitem [ref=e49]:
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - generic [ref=e60]: Name
+              - textbox "Name" [ref=e61]: Test item
+            - generic [ref=e62]:
+              - generic [ref=e63]:
+                - text: Link
+                - generic [ref=e64]: (optional)
+              - textbox "Link (optional)" [ref=e65]:
+                - /placeholder: https://...
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - text: Price
+                - generic [ref=e68]: (optional)
+              - spinbutton "Price (optional)" [ref=e69]
+            - generic [ref=e70]:
+              - generic [ref=e71]: Quantity
+              - spinbutton "Quantity" [ref=e72]: "1"
+            - generic [ref=e73]:
+              - generic [ref=e74]:
+                - text: Notes
+                - generic [ref=e75]: (optional)
+              - textbox "Notes (optional)" [ref=e76]:
+                - /placeholder: Size, color, or anything helpful for the gifter
+          - generic [ref=e77]:
+            - button "Save" [ref=e78]
+            - button "Cancel" [ref=e79]
+  - button "Open Next.js Dev Tools" [ref=e18] [cursor=pointer]:
+    - img [ref=e19]
+  - alert [ref=e22]

@@ -14,10 +14,16 @@ export default async function AppShell({ children }: AppShellProps) {
   if (user) {
     const { data } = await supabase
       .from('users')
-      .select('display_name, username')
+      .select('first_name, last_name, username')
       .eq('id', user.id)
       .single()
-    navName = data?.display_name ?? data?.username ?? null
+    if (data?.first_name && data?.last_name) {
+      navName = `${data.first_name} ${data.last_name}`
+    } else if (data?.first_name) {
+      navName = data.first_name
+    } else {
+      navName = data?.username ?? null
+    }
   }
 
   return (

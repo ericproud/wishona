@@ -3,7 +3,7 @@ import { signOut } from '@/lib/actions/auth'
 import ItemCard from './item-card'
 import type { Item, List, Profile, PurchaseWithGifter } from '@/types'
 
-type Owner = { id: string; username: string; display_name: string | null }
+type Owner = { id: string; username: string; first_name: string | null; last_name: string | null }
 
 type Props = {
   list: List
@@ -26,7 +26,9 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
       ].filter(Boolean)
     : []
 
-  const ownerName = owner.display_name ?? owner.username
+  const ownerName = (owner.first_name && owner.last_name)
+    ? `${owner.first_name} ${owner.last_name}`
+    : owner.first_name ?? owner.username
 
   return (
     <div className="min-h-screen bg-background">

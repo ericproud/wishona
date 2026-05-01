@@ -52,12 +52,14 @@ export default async function InvitePage({
   const { data: owner } = list
     ? await adminClient
         .from('users')
-        .select('display_name, username')
+        .select('first_name, last_name, username')
         .eq('id', list.owner_id)
         .single()
     : { data: null }
 
-  const ownerName = owner?.display_name ?? owner?.username ?? 'Someone'
+  const ownerName = (owner?.first_name && owner?.last_name)
+    ? `${owner.first_name} ${owner.last_name}`
+    : owner?.first_name ?? owner?.username ?? 'Someone'
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

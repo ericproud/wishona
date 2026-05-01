@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "← Dashboard" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Log out" [ref=e7]
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - heading "farts 2" [level=1] [ref=e10]
+        - paragraph [ref=e11]: 1 item
+      - button "Add item" [ref=e47]
+    - list [ref=e48]:
+      - listitem [ref=e49]:
+        - generic [ref=e80]:
+          - paragraph [ref=e87]: Delete “Test item”? This cannot be undone.
+          - button "Delete" [ref=e89]
+          - button "Cancel" [ref=e90]
+  - button "Open Next.js Dev Tools" [ref=e18] [cursor=pointer]:
+    - img [ref=e19]
+  - alert [ref=e22]

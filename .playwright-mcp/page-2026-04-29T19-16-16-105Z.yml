@@ -1,0 +1,38 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - heading "Dashboard" [level=1] [ref=e5]
+        - generic [ref=e6]:
+          - link "Edit profile" [ref=e7] [cursor=pointer]:
+            - /url: /profile/edit
+          - button "Log out" [ref=e9]
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - heading "Your lists" [level=2] [ref=e12]
+          - link "New list" [ref=e13] [cursor=pointer]:
+            - /url: /list/new
+        - list [ref=e14]:
+          - listitem [ref=e15]:
+            - generic [ref=e16]:
+              - paragraph [ref=e18]: farts 2
+              - link "Invites" [ref=e19] [cursor=pointer]:
+                - /url: /list/95bfb1cd-8da8-47cf-aa22-d8d7b6795e24/invites
+              - link "Items" [ref=e20] [cursor=pointer]:
+                - /url: /list/95bfb1cd-8da8-47cf-aa22-d8d7b6795e24/edit
+              - button "Rename" [ref=e21]
+              - button "Delete" [ref=e22]
+          - listitem [ref=e23]:
+            - generic [ref=e24]:
+              - paragraph [ref=e26]: farts
+              - link "Invites" [ref=e27] [cursor=pointer]:
+                - /url: /list/7a940854-da52-4ad0-85a8-ee8331fc2c55/invites
+              - link "Items" [ref=e28] [cursor=pointer]:
+                - /url: /list/7a940854-da52-4ad0-85a8-ee8331fc2c55/edit
+              - button "Rename" [ref=e29]
+              - button "Delete" [ref=e30]
+      - generic [ref=e31]:
+        - heading "Gifting on" [level=2] [ref=e32]
+        - paragraph [ref=e33]: You haven't accepted any invites yet.
+  - button "Open Next.js Dev Tools" [ref=e39] [cursor=pointer]:
+    - img [ref=e40]

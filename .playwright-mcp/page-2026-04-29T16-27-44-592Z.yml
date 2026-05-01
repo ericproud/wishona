@@ -1,0 +1,16 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: You're invited
+      - generic [ref=e6]:
+        - strong [ref=e7]: Eric P
+        - text: "has invited you to their wishlist:"
+        - strong [ref=e8]: farts 2
+    - paragraph [ref=e10]:
+      - text: This invite was sent to
+      - strong [ref=e11]: testgifter@example.com
+      - text: . You're signed in as
+      - strong [ref=e12]: eric.proud11@gmail.com
+      - text: . Please log in with the correct account.
+  - button "Open Next.js Dev Tools" [ref=e18] [cursor=pointer]:
+    - img [ref=e19]
