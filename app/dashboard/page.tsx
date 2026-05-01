@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { signOut } from '@/lib/actions/auth'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
+import AppShell from '@/components/app-shell'
 import ListsSection from './lists-section'
 import type { List } from '@/types'
 
@@ -20,9 +20,7 @@ export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) {
-    redirect('/login')
-  }
+  if (!user) redirect('/login')
 
   const { data: listsData } = await supabase
     .from('lists')
@@ -64,63 +62,60 @@ export default async function DashboardPage() {
     acceptedInviteCounts[row.list_id] = (acceptedInviteCounts[row.list_id] ?? 0) + 1
   }
 
+  const validGifting = (giftingInvites as unknown as GiftingList[]).filter(
+    invite => invite.list !== null
+  )
+
   return (
-    <main className="min-h-screen p-8">
-      <div className="max-w-2xl mx-auto space-y-10">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Dashboard</h1>
-          <div className="flex items-center gap-2">
-            <Link href="/profile/edit" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
-              Edit profile
-            </Link>
-            <form action={signOut}>
-              <Button variant="outline" size="sm" type="submit">Log out</Button>
-            </form>
-          </div>
+    <AppShell>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-xl font-semibold text-foreground">Dashboard</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">Manage your wishlists</p>
         </div>
-
-        <ListsSection lists={lists} itemCounts={itemCounts} pendingInviteCounts={pendingInviteCounts} acceptedInviteCounts={acceptedInviteCounts} />
-
-        {/* Lists the user is gifting on */}
-        {(() => {
-          const validGifting = (giftingInvites as unknown as GiftingList[]).filter(
-            invite => invite.list !== null
-          )
-          return (
-            <div className="space-y-4">
-              <h2 className="text-lg font-semibold">Gifting on</h2>
-              {validGifting.length === 0 ? (
-                <p className="text-sm text-muted-foreground py-6 text-center">
-                  You haven&apos;t accepted any invites yet.
-                </p>
-              ) : (
-                <ul className="space-y-2">
-                  {validGifting.map((invite) => {
-                    const owner = invite.list.owner
-                    const ownerName = owner.display_name ?? owner.username
-                    return (
-                      <li key={invite.id} className="border border-border rounded-lg px-4 py-3 bg-card">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="font-medium text-sm">{invite.list.name}</p>
-                            <p className="text-xs text-muted-foreground">{ownerName}&apos;s list</p>
-                          </div>
-                          <Link
-                            href={`/${owner.username}/${invite.list.slug}`}
-                            className={buttonVariants({ variant: 'outline', size: 'sm' })}
-                          >
-                            View list
-                          </Link>
-                        </div>
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-            </div>
-          )
-        })()}
+        <Link href="/profile/edit" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
+          Edit profile
+        </Link>
       </div>
-    </main>
+
+      <div className="space-y-8">
+        <ListsSection
+          lists={lists}
+          itemCounts={itemCounts}
+          pendingInviteCounts={pendingInviteCounts}
+          acceptedInviteCounts={acceptedInviteCounts}
+        />
+
+        <div>
+          <h2 className="text-sm font-semibold text-foreground mb-3">Gifting on</h2>
+          {validGifting.length === 0 ? (
+            <div className="bg-card border border-border rounded-lg px-5 py-10 text-center">
+              <p className="text-sm text-muted-foreground">You haven&apos;t accepted any invites yet.</p>
+            </div>
+          ) : (
+            <div className="bg-card border border-border rounded-lg divide-y divide-border">
+              {validGifting.map((invite) => {
+                const owner = invite.list.owner
+                const ownerName = owner.display_name ?? owner.username
+                return (
+                  <div key={invite.id} className="flex items-center justify-between px-5 py-3.5">
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{invite.list.name}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{ownerName}&apos;s list</p>
+                    </div>
+                    <Link
+                      href={`/${owner.username}/${invite.list.slug}`}
+                      className={buttonVariants({ variant: 'outline', size: 'sm' })}
+                    >
+                      View list
+                    </Link>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+    </AppShell>
   )
 }

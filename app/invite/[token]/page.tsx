@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { createAdminClient, createClient } from '@/lib/supabase/server'
 import { buttonVariants } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import InviteAccept from './invite-accept'
 
 export default async function InvitePage({
@@ -18,17 +17,24 @@ export default async function InvitePage({
     .eq('token', token)
     .maybeSingle()
 
-  // Token not found
   if (!invite) {
-    return <InviteShell title="Invite not found" description="This invite link is not valid. It may have been revoked or never existed." />
+    return (
+      <InviteShell
+        title="Invite not found"
+        description="This invite link isn't valid. It may have been revoked or never existed."
+      />
+    )
   }
 
-  // Token expired
   if (new Date(invite.expires_at) < new Date()) {
-    return <InviteShell title="Invite expired" description="This invite link has expired. Ask the list owner to send a new one." />
+    return (
+      <InviteShell
+        title="Invite expired"
+        description="This invite link has expired. Ask the list owner to send a new one."
+      />
+    )
   }
 
-  // Already accepted
   if (invite.accepted_at) {
     return (
       <InviteShell title="Already accepted" description="This invite has already been accepted.">
@@ -53,26 +59,36 @@ export default async function InvitePage({
 
   const ownerName = owner?.display_name ?? owner?.username ?? 'Someone'
 
-  // Check if the current user is logged in
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   const inviteUrl = `/invite/${token}`
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>You&apos;re invited</CardTitle>
-          <CardDescription>
-            <strong>{ownerName}</strong> has invited you to their wishlist: <strong>{list?.name ?? 'their wishlist'}</strong>
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <div className="min-h-screen bg-background">
+      <header className="bg-nav">
+        <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center">
+          <span className="text-white font-semibold text-sm tracking-tight">Gift Simple</span>
+        </div>
+      </header>
+      <main className="flex items-center justify-center px-4 py-16">
+        <div className="bg-card border border-border rounded-lg p-8 w-full max-w-sm shadow-sm">
+          <div className="mb-6">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-2">
+              You&apos;re invited
+            </p>
+            <h1 className="text-xl font-semibold text-foreground">
+              {list?.name ?? 'A wishlist'}
+            </h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              {ownerName} has invited you to view their wishlist.
+            </p>
+          </div>
+
           {user ? (
             <InviteAccept token={token} userEmail={user.email ?? ''} invitedEmail={invite.invited_email} />
           ) : (
-            <div className="flex flex-col gap-3">
+            <div className="space-y-2.5">
               <Link
                 href={`/signup?redirectTo=${encodeURIComponent(inviteUrl)}`}
                 className={buttonVariants({ className: 'w-full' })}
@@ -85,10 +101,13 @@ export default async function InvitePage({
               >
                 Log in
               </Link>
+              <p className="text-xs text-muted-foreground text-center pt-1">
+                You need an account to accept this invite.
+              </p>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </main>
     </div>
   )
 }
@@ -103,14 +122,19 @@ function InviteShell({
   children?: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
-        </CardHeader>
-        {children && <CardContent>{children}</CardContent>}
-      </Card>
+    <div className="min-h-screen bg-background">
+      <header className="bg-nav">
+        <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center">
+          <span className="text-white font-semibold text-sm tracking-tight">Gift Simple</span>
+        </div>
+      </header>
+      <main className="flex items-center justify-center px-4 py-16">
+        <div className="bg-card border border-border rounded-lg p-8 w-full max-w-sm shadow-sm text-center space-y-3">
+          <h1 className="text-base font-semibold text-foreground">{title}</h1>
+          <p className="text-sm text-muted-foreground">{description}</p>
+          {children && <div className="pt-2">{children}</div>}
+        </div>
+      </main>
     </div>
   )
 }

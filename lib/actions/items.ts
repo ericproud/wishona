@@ -31,6 +31,7 @@ export async function addItem(
   const priceRaw = (formData.get('price') as string).trim()
   const quantityRaw = (formData.get('quantity') as string).trim()
   const notes = (formData.get('notes') as string).trim()
+  const imageUrl = (formData.get('image_url') as string | null)?.trim() || null
 
   const url = urlRaw || null
   const price = priceRaw ? parseFloat(priceRaw) : null
@@ -41,7 +42,7 @@ export async function addItem(
 
   const { error } = await supabase
     .from('items')
-    .insert({ list_id: listId, name, url, price, quantity, notes: notes || null })
+    .insert({ list_id: listId, name, url, price, quantity, notes: notes || null, image_url: imageUrl })
 
   if (error) return { error: error.message }
 
@@ -73,6 +74,7 @@ export async function updateItem(
   const priceRaw = (formData.get('price') as string).trim()
   const quantityRaw = (formData.get('quantity') as string).trim()
   const notes = (formData.get('notes') as string).trim()
+  const imageUrl = (formData.get('image_url') as string | null)?.trim() || null
 
   const url = urlRaw || null
   const price = priceRaw ? parseFloat(priceRaw) : null
@@ -83,7 +85,7 @@ export async function updateItem(
 
   const { error } = await supabase
     .from('items')
-    .update({ name, url, price, quantity, notes: notes || null })
+    .update({ name, url, price, quantity, notes: notes || null, image_url: imageUrl })
     .eq('id', itemId)
 
   if (error) return { error: error.message }

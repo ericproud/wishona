@@ -1,4 +1,4 @@
-# Project Spec: Wishlist App
+# Project Spec: Gift Simple
 
 ---
 

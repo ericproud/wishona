@@ -8,7 +8,10 @@ export default async function SignupPage({
   const { redirectTo } = await searchParams
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
+      <div className="mb-8 text-center">
+        <span className="text-lg font-semibold text-foreground">Gift Simple</span>
+      </div>
       <SignupForm redirectTo={redirectTo ?? ''} />
     </div>
   )

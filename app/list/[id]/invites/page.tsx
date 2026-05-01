@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { signOut } from '@/lib/actions/auth'
 import { revokeInvite } from '@/lib/actions/invites'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
+import AppShell from '@/components/app-shell'
 import InviteForm from './invite-form'
 import type { List, ListInvite } from '@/types'
 
@@ -37,68 +37,77 @@ export default async function InvitesPage({
   const accepted = (invites ?? []).filter((i: ListInvite) => !!i.accepted_at)
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-2xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/dashboard" className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
-            ← Dashboard
-          </Link>
-          <form action={signOut}>
-            <Button variant="outline" size="sm" type="submit">Log out</Button>
-          </form>
-        </div>
+    <AppShell>
+      <div className="flex items-center gap-2 mb-6 text-sm">
+        <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
+          Dashboard
+        </Link>
+        <span className="text-border">›</span>
+        <Link href={`/list/${id}/edit`} className="text-muted-foreground hover:text-foreground transition-colors">
+          {(list as List).name}
+        </Link>
+        <span className="text-border">›</span>
+        <span className="text-foreground">Invites</span>
+      </div>
 
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold">{(list as List).name}</h1>
-          <p className="text-sm text-muted-foreground mt-1">Manage who has access to this list</p>
-        </div>
+      <div className="mb-6">
+        <h1 className="text-xl font-semibold text-foreground">{(list as List).name}</h1>
+        <p className="text-sm text-muted-foreground mt-0.5">Manage who has access to this list</p>
+      </div>
 
+      <div className="max-w-2xl space-y-6">
         <InviteForm listId={id} />
 
         {pending.length > 0 && (
-          <div className="mt-8">
-            <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">
+          <div>
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
               Pending ({pending.length})
             </h2>
-            <ul className="space-y-2">
+            <div className="bg-card border border-border rounded-lg divide-y divide-border">
               {pending.map((invite: ListInvite) => (
-                <li key={invite.id} className="flex items-center justify-between border border-border rounded-lg px-4 py-3 bg-card">
+                <div key={invite.id} className="flex items-center justify-between px-5 py-3.5">
                   <div>
-                    <p className="text-sm font-medium">{invite.invited_email}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-sm font-medium text-foreground">{invite.invited_email}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       Expires {new Date(invite.expires_at).toLocaleDateString()}
                     </p>
                   </div>
                   <form action={revokeInvite.bind(null, invite.id)}>
-                    <Button variant="ghost" size="sm" type="submit">Revoke</Button>
+                    <Button variant="ghost" size="sm" type="submit" className="text-destructive hover:text-destructive">
+                      Revoke
+                    </Button>
                   </form>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         )}
 
         {accepted.length > 0 && (
-          <div className="mt-8">
-            <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">
+          <div>
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
               Accepted ({accepted.length})
             </h2>
-            <ul className="space-y-2">
+            <div className="bg-card border border-border rounded-lg divide-y divide-border">
               {accepted.map((invite: ListInvite) => (
-                <li key={invite.id} className="flex items-center border border-border rounded-lg px-4 py-3 bg-card">
-                  <p className="text-sm font-medium">{invite.invited_email}</p>
-                </li>
+                <div key={invite.id} className="flex items-center px-5 py-3.5">
+                  <p className="text-sm text-foreground">{invite.invited_email}</p>
+                  <span className="ml-auto text-xs text-primary font-medium bg-primary/8 px-2 py-0.5 rounded-full">
+                    Accepted
+                  </span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         )}
 
         {pending.length === 0 && accepted.length === 0 && (
-          <p className="text-sm text-muted-foreground text-center py-8">
-            No invites sent yet.
-          </p>
+          <div className="bg-card border border-border rounded-lg px-5 py-10 text-center">
+            <p className="text-sm text-muted-foreground">No invites sent yet.</p>
+            <p className="text-xs text-muted-foreground mt-1">Add an email above to invite someone to this list.</p>
+          </div>
         )}
       </div>
-    </div>
+    </AppShell>
   )
 }

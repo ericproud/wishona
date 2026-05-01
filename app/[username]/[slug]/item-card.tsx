@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState, useState } from 'react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { markPurchased, unmarkPurchased } from '@/lib/actions/purchases'
@@ -38,37 +39,53 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
   const hasActivity = myPurchase !== null || otherPurchases.length > 0
 
   return (
-    <li className="border border-border rounded-lg px-4 py-4 bg-card space-y-3">
-      {/* Item details */}
-      <div className="flex items-start justify-between gap-3">
+    <div className="px-5 py-4 space-y-3">
+      {/* Item header */}
+      <div className="flex items-start gap-3">
+        {item.image_url ? (
+          <div className="relative w-12 h-12 rounded border border-border overflow-hidden shrink-0 bg-muted">
+            <Image src={item.image_url} alt="" fill className="object-contain" unoptimized />
+          </div>
+        ) : (
+          <div className="w-12 h-12 rounded border border-border bg-muted shrink-0 flex items-center justify-center">
+            <svg className="w-5 h-5 text-muted-foreground/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        )}
         <div className="space-y-0.5 flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <p className="font-medium text-sm">{item.name}</p>
+          <div className="flex items-center gap-2 flex-wrap">
+            <p className="font-medium text-sm text-foreground">{item.name}</p>
             {item.quantity > 1 && (
-              <span className="text-xs text-muted-foreground shrink-0">×{item.quantity}</span>
+              <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded shrink-0">×{item.quantity}</span>
+            )}
+            {isFullyClaimed && (
+              <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full shrink-0">
+                Fully claimed
+              </span>
             )}
           </div>
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
             {item.price !== null && <span>${item.price.toFixed(2)}</span>}
+            {item.price !== null && item.url && <span className="text-border">·</span>}
             {item.url && (
-              <a href={item.url} target="_blank" rel="noopener noreferrer"
-                className="underline underline-offset-2 hover:text-foreground truncate max-w-[200px]">
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline truncate max-w-[220px]"
+              >
                 View link
               </a>
             )}
           </div>
           {item.notes && <p className="text-xs text-muted-foreground">{item.notes}</p>}
         </div>
-        {isFullyClaimed && (
-          <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full shrink-0">
-            Fully claimed
-          </span>
-        )}
       </div>
 
-      {/* Who's getting what */}
+      {/* Gifting activity */}
       {hasActivity && (
-        <div className="text-xs text-muted-foreground space-y-0.5 pt-2 border-t border-border">
+        <div className="text-xs text-muted-foreground space-y-0.5 pt-2 border-t border-border/60">
           {item.quantity > 1 && totalClaimed > 0 && (
             <p>{totalClaimed} of {item.quantity} claimed</p>
           )}
@@ -88,7 +105,7 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
 
       {/* Claim form */}
       {mode === 'claiming' && (
-        <form action={claimAction} className="space-y-2">
+        <form action={claimAction} className="space-y-2 pt-1">
           {availableQty > 1 ? (
             <div className="flex items-center gap-2">
               <label htmlFor={`qty-${item.id}`} className="text-xs text-muted-foreground shrink-0">
@@ -127,7 +144,7 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
 
       {/* Unclaim confirmation */}
       {mode === 'unclaiming' && myPurchase && (
-        <div className="space-y-2">
+        <div className="space-y-2 pt-1">
           <p className="text-xs text-muted-foreground">Remove your claim on this item?</p>
           <div className="flex items-center gap-2">
             <form action={unmarkPurchased.bind(null, myPurchase.id, listPath)}>
@@ -138,9 +155,9 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
         </div>
       )}
 
-      {/* Idle action buttons */}
+      {/* Idle actions */}
       {mode === 'idle' && (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pt-1">
           {!isFullyClaimed && !myPurchase && (
             <Button size="sm" onClick={() => setMode('claiming')}>Mark as purchased</Button>
           )}
@@ -149,6 +166,6 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
           )}
         </div>
       )}
-    </li>
+    </div>
   )
 }
