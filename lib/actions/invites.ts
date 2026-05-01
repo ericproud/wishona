@@ -71,7 +71,8 @@ export async function sendInvite(
   const ownerName = (ownerUser?.first_name && ownerUser?.last_name)
     ? `${ownerUser.first_name} ${ownerUser.last_name}`
     : ownerUser?.first_name ?? ownerUser?.username ?? 'Someone'
-  const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL}/invite/${token}`
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://wishona.com'
+  const inviteUrl = `${appUrl}/invite/${token}`
 
   // In development, skip email and return the invite URL directly so it can
   // be tested without a verified sending domain or real inbox.
@@ -142,7 +143,7 @@ export async function sendInvite(
                     <td style="padding: 24px 30px; border-top: 1px solid #e5e7eb; background-color: #f9fafb;">
                       <p style="margin: 0; font-size: 12px; color: #9ca3af; text-align: center;">
                         © 2026 Wishona. All rights reserved.<br />
-                        <a href="${process.env.NEXT_PUBLIC_APP_URL}" style="color: #059669; text-decoration: none;">Visit Wishona →</a>
+                        <a href="${appUrl}" style="color: #059669; text-decoration: none;">Visit Wishona →</a>
                       </p>
                     </td>
                   </tr>

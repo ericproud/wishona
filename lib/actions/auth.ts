@@ -16,7 +16,9 @@ export async function signUp(_prevState: string | null, formData: FormData): Pro
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const username = formData.get('username') as string
-  const redirectTo = (formData.get('redirectTo') as string) || '/dashboard'
+  // New users land on /profile/edit to fill out their profile.
+  // If they came through an invite link, redirectTo is set and we honor it.
+  const redirectTo = (formData.get('redirectTo') as string) || '/profile/edit'
 
   if (!isValidUsername(username)) {
     return 'Username must be 3–20 characters: letters, numbers, and hyphens only.'
