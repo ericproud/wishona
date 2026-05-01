@@ -1,0 +1,15 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - heading "The Art of Gifting" [level=1] [ref=e5]
+        - paragraph [ref=e6]: Share what you want. Give what they'll love.
+      - paragraph [ref=e7]: Create a wishlist, invite the people in your life, and let them gift with confidence — no duplicates, no guessing.
+      - generic [ref=e8]:
+        - link "Get started" [ref=e9] [cursor=pointer]:
+          - /url: /signup
+        - link "Log in" [ref=e10] [cursor=pointer]:
+          - /url: /login
+  - button "Open Next.js Dev Tools" [ref=e16] [cursor=pointer]:
+    - img [ref=e17]
+  - alert [ref=e20]

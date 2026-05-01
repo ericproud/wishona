@@ -29,7 +29,7 @@ export interface ItemWithPurchases extends Item {
 }
 
 export interface PurchaseWithGifter extends Purchase {
-  gifter: Pick<User, 'id' | 'display_name' | 'username'>
+  gifter: Pick<User, 'id' | 'first_name' | 'last_name' | 'username'>
 }
 
 export interface ListInviteWithList extends ListInvite {

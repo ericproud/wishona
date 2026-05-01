@@ -32,7 +32,7 @@ export async function sendInvite(
   // Prevent owners from inviting themselves
   const { data: ownerUser } = await supabase
     .from('users')
-    .select('email, display_name, username')
+    .select('email, first_name, last_name, username')
     .eq('id', user.id)
     .single()
 
@@ -68,7 +68,9 @@ export async function sendInvite(
 
   if (insertError) return { error: insertError.message }
 
-  const ownerName = ownerUser?.display_name ?? ownerUser?.username ?? 'Someone'
+  const ownerName = (ownerUser?.first_name && ownerUser?.last_name)
+    ? `${ownerUser.first_name} ${ownerUser.last_name}`
+    : ownerUser?.first_name ?? ownerUser?.username ?? 'Someone'
   const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL}/invite/${token}`
 
   // In development, skip email and return the invite URL directly so it can

@@ -1,0 +1,28 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e7] [cursor=pointer]:
+    - img [ref=e8]
+  - alert [ref=e11]
+  - generic [ref=e45]:
+    - generic [ref=e46]:
+      - link "← Dashboard" [ref=e47] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Log out" [ref=e49]
+    - generic [ref=e50]:
+      - heading "farts 2" [level=1] [ref=e51]
+      - paragraph [ref=e52]: Manage who has access to this list
+    - generic [ref=e53]:
+      - generic [ref=e55]: Invite someone
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e59]: Email address
+          - textbox "Email address" [ref=e60]:
+            - /placeholder: friend@example.com
+        - button "Send invite" [ref=e61]
+    - generic [ref=e62]:
+      - heading "Pending (1)" [level=2] [ref=e63]
+      - list [ref=e64]:
+        - listitem [ref=e65]:
+          - generic [ref=e66]:
+            - paragraph [ref=e67]: f@g.com
+            - paragraph [ref=e68]: Expires 2026-05-02
+          - button "Revoke" [ref=e70]

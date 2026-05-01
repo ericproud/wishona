@@ -8,8 +8,20 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (V1 Feature Development)
+- Link metadata auto-fill: paste URLs into item form, auto-populates name, price, description, and image via `open-graph-scraper` with Amazon regex fallback
+- Item image thumbnails: 40–48px preview images displayed in list edit view, gifter view, and dashboard
+- Affiliate integration: Skimlinks affiliate script loaded on all pages (affiliate ID `302378X1790378`)
+- Split user names: `first_name` and `last_name` replace single `display_name` field; three-level fallback logic in display (first + last if both exist, else first, else username)
+
 ### Changed
-- App renamed from "Wishlist" to **Gift Simple** — updated across all UI, page titles, and docs
+- App renamed from "Gift Simple" to **Wishona** — updated across all UI, page titles, metadata, and branding
+- User profile form: two separate inputs for first name and last name instead of single display name field
+- Database: `users` table migrated from `display_name` to `first_name` and `last_name` columns
+- Avatar component refactored to accept `firstName` and `lastName` props separately
+
+### Completed (Previous session)
+- App renamed from "Wishlist" to "Gift Simple" — updated across all UI, page titles, and docs
 - Full UI redesign: Shopify admin–inspired aesthetic (dark navy nav, light gray page background, Shopify green primary, DM Sans font)
 - Shared `AppShell` component replaces per-page nav/layout code
 - Item add form converted to modal overlay

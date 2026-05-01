@@ -6,9 +6,9 @@ Tracks milestones, what has been completed, and what comes next. Updated after e
 
 ## Current Phase
 
-**MVP deployed. App renamed to Gift Simple. Currently in V1 feature development.**
+**MVP deployed. App renamed to Wishona. Currently in V1 feature development.**
 
-MVP is feature-complete and deployed. App name updated from "Wishlist" to "Gift Simple" across the codebase.
+MVP is feature-complete and deployed. Latest work: added link metadata auto-fill, Skimlinks affiliate integration, item image thumbnails, and split user names (first_name/last_name).
 
 **Installed versions:** Next.js 16.2.4, React 19.2.4, Tailwind v4, shadcn/ui, `@supabase/ssr`, `@supabase/supabase-js`, `resend`.
 

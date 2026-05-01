@@ -3,7 +3,7 @@ import { signOut } from '@/lib/actions/auth'
 import ItemCard from './item-card'
 import type { Item, List, Profile, PurchaseWithGifter } from '@/types'
 
-type Owner = { id: string; username: string; display_name: string | null }
+type Owner = { id: string; username: string; first_name: string | null; last_name: string | null }
 
 type Props = {
   list: List
@@ -26,7 +26,9 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
       ].filter(Boolean)
     : []
 
-  const ownerName = owner.display_name ?? owner.username
+  const ownerName = (owner.first_name && owner.last_name)
+    ? `${owner.first_name} ${owner.last_name}`
+    : owner.first_name ?? owner.username
 
   return (
     <div className="min-h-screen bg-background">
@@ -34,7 +36,7 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
       <header className="bg-nav sticky top-0 z-50">
         <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/dashboard" className="text-white font-semibold text-sm tracking-tight hover:text-white/80 transition-colors">
-            Gift Simple
+            Wishona
           </Link>
           <div className="flex items-center gap-5">
             <Link href="/dashboard" className="text-sm text-white/60 hover:text-white/90 transition-colors">

@@ -72,7 +72,8 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
         <div className="flex items-center gap-5">
           <UserAvatar
             avatarUrl={avatarUrl}
-            displayName={user.display_name}
+            firstName={user.first_name}
+            lastName={user.last_name}
             username={user.username}
             size="lg"
             className="size-16 text-lg"
@@ -108,9 +109,15 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
               {error}
             </div>
           )}
-          <div className="space-y-1.5">
-            <Label htmlFor="display_name">Display name</Label>
-            <Input id="display_name" name="display_name" defaultValue={user.display_name ?? ''} placeholder="Your full name" />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="first_name">First name</Label>
+              <Input id="first_name" name="first_name" defaultValue={user.first_name ?? ''} placeholder="Jane" />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="last_name">Last name</Label>
+              <Input id="last_name" name="last_name" defaultValue={user.last_name ?? ''} placeholder="Doe" />
+            </div>
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="interests">Interests</Label>

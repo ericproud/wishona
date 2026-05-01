@@ -1,0 +1,651 @@
+[    4813ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    4826ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  328510ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  328531ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  328627ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  328692ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  337877ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  337985ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  338473ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  338654ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  338686ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/list/95bfb1cd-8da8-47cf-aa22-d8d7b6795e24/invites?_rsc=16rg7:0
+[  338706ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  338847ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  338953ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/list/95bfb1cd-8da8-47cf-aa22-d8d7b6795e24/invites?_rsc=16rg7:0
+[  338972ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  338981ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/list/95bfb1cd-8da8-47cf-aa22-d8d7b6795e24/invites:0
+[  339187ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[  339272ms] Error: ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts
+
+
+    at <unknown> (Error: ./lib/supabase/server.ts:6:23)
+    at Object.getCompilationErrors (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\lib\dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\base-server.js:1745:26)
+[  339275ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  339281ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  339281ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import traces:
+  #1 [Server Component]:
+    ./lib/supabase/server.ts
+    ./app/invite/[token]/page.tsx
+
+  #2 [Server Component]:
+    ./lib/supabase/server.ts
+    ./lib/actions/invites.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  339282ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import traces:
+  #1 [Server Component]:
+    ./lib/supabase/server.ts
+    ./app/dashboard/page.tsx
+
+  #2 [Server Component]:
+    ./lib/supabase/server.ts
+    ./lib/actions/lists.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  339282ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./app/list/[id]/invites/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  339282ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  339322ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  345558ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  345676ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  345850ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/list/95bfb1cd-8da8-47cf-aa22-d8d7b6795e24/invites:0
+[  345959ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[  345994ms] Error: ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts
+
+
+    at <unknown> (Error: ./lib/supabase/server.ts:6:23)
+    at Object.getCompilationErrors (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\lib\dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\base-server.js:1745:26)
+[  345997ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  346002ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  346003ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import traces:
+  #1 [Server Component]:
+    ./lib/supabase/server.ts
+    ./app/invite/[token]/page.tsx
+
+  #2 [Server Component]:
+    ./lib/supabase/server.ts
+    ./lib/actions/invites.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  346003ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import traces:
+  #1 [Server Component]:
+    ./lib/supabase/server.ts
+    ./app/dashboard/page.tsx
+
+  #2 [Server Component]:
+    ./lib/supabase/server.ts
+    ./lib/actions/lists.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  346003ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./app/list/[id]/invites/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  346003ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  346064ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  346115ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  350221ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  350369ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  350831ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  350844ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/list/95bfb1cd-8da8-47cf-aa22-d8d7b6795e24/invites:0
+[  350923ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[  350951ms] Error: ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts
+
+
+    at <unknown> (Error: ./lib/supabase/server.ts:6:23)
+    at Object.getCompilationErrors (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\lib\dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\dev\next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file://C:\Users\ericp\projects\wishlist-app\node_modules\next\dist\server\base-server.js:1745:26)
+[  350970ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  350973ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  350974ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import traces:
+  #1 [Server Component]:
+    ./lib/supabase/server.ts
+    ./app/invite/[token]/page.tsx
+
+  #2 [Server Component]:
+    ./lib/supabase/server.ts
+    ./lib/actions/invites.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  350974ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import traces:
+  #1 [Server Component]:
+    ./lib/supabase/server.ts
+    ./app/dashboard/page.tsx
+
+  #2 [Server Component]:
+    ./lib/supabase/server.ts
+    ./lib/actions/lists.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  350974ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./app/list/[id]/invites/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  350974ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  351017ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  355120ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  355180ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  368947ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  368993ms] [ERROR] ./lib/supabase/server.ts:6:23
+the name `createClient` is defined multiple times
+  4 | import type { Database } from '@/types/supabase'
+  5 |
+> 6 | export async function createClient() {
+    |                       ^^^^^^^^^^^^
+  7 |   const cookieStore = await cookies()
+  8 |
+  9 |   return createServerClient<Database>(
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./lib/supabase/server.ts
+    ./lib/actions/auth.ts @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  369059ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  384445ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  384559ms] [LOG] [Fast Refresh] done in 47ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  384896ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  385085ms] [LOG] [Fast Refresh] done in 293ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  385190ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  385249ms] [LOG] [Fast Refresh] done in 163ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  385421ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  385435ms] [LOG] [Fast Refresh] done in 123ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  385941ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  385967ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  391274ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  391407ms] [LOG] [Fast Refresh] done in 227ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  391681ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  391771ms] [LOG] [Fast Refresh] done in 191ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  391982ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  392087ms] [LOG] [Fast Refresh] done in 217ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  392214ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  392367ms] [LOG] [Fast Refresh] done in 258ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  392496ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  392497ms] [LOG] [Fast Refresh] done in 114ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  393380ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  393387ms] [LOG] [Fast Refresh] done in 115ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  393749ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  393827ms] [LOG] [Fast Refresh] done in 181ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  525160ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  525485ms] [LOG] [Fast Refresh] done in 410ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  525936ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  526412ms] [LOG] [Fast Refresh] done in 579ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  526584ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  526868ms] [LOG] [Fast Refresh] done in 395ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  527154ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  527216ms] [LOG] [Fast Refresh] done in 169ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  527581ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  527657ms] [LOG] [Fast Refresh] done in 190ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  528003ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  528078ms] [LOG] [Fast Refresh] done in 182ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  528402ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  528424ms] [LOG] [Fast Refresh] done in 126ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  528718ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  528739ms] [LOG] [Fast Refresh] done in 132ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  529105ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  529143ms] [LOG] [Fast Refresh] done in 146ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  529286ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  529364ms] [LOG] [Fast Refresh] done in 179ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  529582ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  529596ms] [LOG] [Fast Refresh] done in 125ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  529969ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  529988ms] [LOG] [Fast Refresh] done in 129ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  530550ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  530561ms] [LOG] [Fast Refresh] done in 115ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  530918ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  530937ms] [LOG] [Fast Refresh] done in 128ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  531235ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  531249ms] [LOG] [Fast Refresh] done in 124ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  531844ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  531845ms] [LOG] [Fast Refresh] done in 103ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  532083ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  532142ms] [LOG] [Fast Refresh] done in 158ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  532779ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  532803ms] [LOG] [Fast Refresh] done in 128ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  532984ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  533099ms] [LOG] [Fast Refresh] done in 226ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  533665ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  533694ms] [LOG] [Fast Refresh] done in 132ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1520262ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2977558ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 8874401ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431

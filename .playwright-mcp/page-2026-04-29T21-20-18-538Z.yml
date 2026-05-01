@@ -1,0 +1,25 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - heading "Dashboard" [level=1] [ref=e5]
+        - generic [ref=e6]:
+          - link "Edit profile" [ref=e7] [cursor=pointer]:
+            - /url: /profile/edit
+          - button "Log out" [ref=e9]
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - heading "Your lists" [level=2] [ref=e12]
+          - link "New list" [ref=e13] [cursor=pointer]:
+            - /url: /list/new
+        - paragraph [ref=e14]:
+          - text: You don't have any lists yet.
+          - link "Create one" [ref=e15] [cursor=pointer]:
+            - /url: /list/new
+          - text: .
+        - list
+      - generic [ref=e16]:
+        - heading "Gifting on" [level=2] [ref=e17]
+        - list
+  - button "Open Next.js Dev Tools" [ref=e23] [cursor=pointer]:
+    - img [ref=e24]

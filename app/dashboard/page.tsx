@@ -12,7 +12,7 @@ type GiftingList = {
     id: string
     name: string
     slug: string
-    owner: { display_name: string | null; username: string }
+    owner: { first_name: string | null; last_name: string | null; username: string }
   }
 }
 
@@ -44,7 +44,7 @@ export default async function DashboardPage() {
       : emptyRows,
     supabase
       .from('list_invites')
-      .select('id, list:lists(id, name, slug, owner:users(display_name, username))')
+      .select('id, list:lists(id, name, slug, owner:users(first_name, last_name, username))')
       .eq('user_id', user.id)
       .not('accepted_at', 'is', null),
   ])
@@ -96,7 +96,7 @@ export default async function DashboardPage() {
             <div className="bg-card border border-border rounded-lg divide-y divide-border">
               {validGifting.map((invite) => {
                 const owner = invite.list.owner
-                const ownerName = owner.display_name ?? owner.username
+                const ownerName = (owner.first_name && owner.last_name) ? `${owner.first_name} ${owner.last_name}` : owner.first_name || owner.username
                 return (
                   <div key={invite.id} className="flex items-center justify-between px-5 py-3.5">
                     <div>

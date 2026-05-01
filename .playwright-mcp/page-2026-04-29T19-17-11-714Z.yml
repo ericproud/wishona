@@ -1,0 +1,45 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e39] [cursor=pointer]:
+    - img [ref=e40]
+  - alert [ref=e43]
+  - generic [ref=e45]:
+    - generic [ref=e46]:
+      - link "← Dashboard" [ref=e47] [cursor=pointer]:
+        - /url: /dashboard
+      - button "Log out" [ref=e49]
+    - generic [ref=e50]:
+      - generic [ref=e51]:
+        - heading "farts 2" [level=1] [ref=e52]
+        - paragraph [ref=e53]: 1 item
+      - button "Add item" [ref=e79]
+    - list [ref=e80]:
+      - listitem [ref=e81]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e94]:
+              - generic [ref=e95]: Name
+              - textbox "Name" [ref=e96]: Kindle Paperwhite
+            - generic [ref=e97]:
+              - generic [ref=e98]:
+                - text: Link
+                - generic [ref=e99]: (optional)
+              - textbox "Link (optional)" [ref=e100]:
+                - /placeholder: https://...
+                - text: https://amazon.com/dp/B09SWV3BYH
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - text: Price
+                - generic [ref=e103]: (optional)
+              - spinbutton "Price (optional)" [ref=e104]: "139.99"
+            - generic [ref=e105]:
+              - generic [ref=e106]: Quantity
+              - spinbutton "Quantity" [ref=e107]: "1"
+            - generic [ref=e108]:
+              - generic [ref=e109]:
+                - text: Notes
+                - generic [ref=e110]: (optional)
+              - textbox "Notes (optional)" [ref=e111]:
+                - /placeholder: Size, color, or anything helpful for the gifter
+          - generic [ref=e112]:
+            - button "Save" [ref=e113]
+            - button "Cancel" [ref=e114]

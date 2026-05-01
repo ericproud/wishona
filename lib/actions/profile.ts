@@ -16,7 +16,8 @@ export async function updateProfile(
     redirect('/login')
   }
 
-  const displayName = (formData.get('display_name') as string).trim()
+  const firstName = (formData.get('first_name') as string).trim()
+  const lastName = (formData.get('last_name') as string).trim()
   const interests = (formData.get('interests') as string).trim()
   const wishlistNote = (formData.get('wishlist_note') as string).trim()
   const shirt = (formData.get('shirt') as string).trim()
@@ -28,7 +29,7 @@ export async function updateProfile(
 
   const { error: userError } = await supabase
     .from('users')
-    .update({ display_name: displayName || null })
+    .update({ first_name: firstName || null, last_name: lastName || null })
     .eq('id', user.id)
 
   if (userError) return { error: userError.message }

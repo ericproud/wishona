@@ -52,12 +52,14 @@ export default async function InvitePage({
   const { data: owner } = list
     ? await adminClient
         .from('users')
-        .select('display_name, username')
+        .select('first_name, last_name, username')
         .eq('id', list.owner_id)
         .single()
     : { data: null }
 
-  const ownerName = owner?.display_name ?? owner?.username ?? 'Someone'
+  const ownerName = (owner?.first_name && owner?.last_name)
+    ? `${owner.first_name} ${owner.last_name}`
+    : owner?.first_name ?? owner?.username ?? 'Someone'
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -68,7 +70,7 @@ export default async function InvitePage({
     <div className="min-h-screen bg-background">
       <header className="bg-nav">
         <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center">
-          <span className="text-white font-semibold text-sm tracking-tight">Gift Simple</span>
+          <span className="text-white font-semibold text-sm tracking-tight">Wishona</span>
         </div>
       </header>
       <main className="flex items-center justify-center px-4 py-16">
@@ -125,7 +127,7 @@ function InviteShell({
     <div className="min-h-screen bg-background">
       <header className="bg-nav">
         <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center">
-          <span className="text-white font-semibold text-sm tracking-tight">Gift Simple</span>
+          <span className="text-white font-semibold text-sm tracking-tight">Wishona</span>
         </div>
       </header>
       <main className="flex items-center justify-center px-4 py-16">

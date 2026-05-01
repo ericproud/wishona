@@ -19,20 +19,27 @@ function getColorClass(seed: string): string {
   return AVATAR_COLORS[hash % AVATAR_COLORS.length]
 }
 
-function getInitials(displayName: string | null, username: string): string {
-  if (displayName) {
-    const parts = displayName.trim().split(/\s+/)
-    if (parts.length >= 2) {
-      return (parts[0][0] + parts[1][0]).toUpperCase()
-    }
-    return displayName.slice(0, 2).toUpperCase()
+function getInitials(firstName: string | null, lastName: string | null, username: string): string {
+  if (firstName && lastName) {
+    return (firstName[0] + lastName[0]).toUpperCase()
+  }
+  if (firstName) {
+    return firstName.slice(0, 2).toUpperCase()
   }
   return username.slice(0, 2).toUpperCase()
 }
 
+function getDisplayName(firstName: string | null, lastName: string | null): string | null {
+  if (firstName && lastName) {
+    return `${firstName} ${lastName}`
+  }
+  return firstName || null
+}
+
 interface UserAvatarProps {
   avatarUrl: string | null
-  displayName: string | null
+  firstName: string | null
+  lastName: string | null
   username: string
   size?: 'sm' | 'default' | 'lg'
   className?: string
@@ -40,12 +47,14 @@ interface UserAvatarProps {
 
 export default function UserAvatar({
   avatarUrl,
-  displayName,
+  firstName,
+  lastName,
   username,
   size = 'default',
   className,
 }: UserAvatarProps) {
-  const initials = getInitials(displayName, username)
+  const initials = getInitials(firstName, lastName, username)
+  const displayName = getDisplayName(firstName, lastName)
   const colorClass = getColorClass(username)
 
   return (

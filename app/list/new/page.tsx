@@ -16,7 +16,7 @@ export default function NewListPage() {
       <header className="bg-nav">
         <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center">
           <Link href="/dashboard" className="text-white font-semibold text-sm tracking-tight hover:text-white/80 transition-colors">
-            Gift Simple
+            Wishona
           </Link>
         </div>
       </header>

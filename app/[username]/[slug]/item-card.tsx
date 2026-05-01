@@ -91,7 +91,7 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
           )}
           {otherPurchases.map(p => (
             <p key={p.id}>
-              {p.gifter.display_name ?? p.gifter.username}
+              {(p.gifter.first_name && p.gifter.last_name) ? `${p.gifter.first_name} ${p.gifter.last_name}` : p.gifter.first_name || p.gifter.username}
               {' '}{p.quantity > 1 ? `is getting ${p.quantity}` : 'is getting this'}
             </p>
           ))}

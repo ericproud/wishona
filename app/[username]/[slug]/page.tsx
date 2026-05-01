@@ -15,7 +15,7 @@ export default async function ListPage({
   // users table is public read — safe without auth
   const { data: ownerData } = await supabase
     .from('users')
-    .select('id, username, display_name')
+    .select('id, username, first_name, last_name')
     .eq('username', username)
     .single()
 
@@ -30,7 +30,10 @@ export default async function ListPage({
 
   // No list returned = no access (list doesn't exist, or viewer isn't a member)
   if (!list) {
-    return <AccessDenied ownerName={ownerData.display_name ?? ownerData.username} />
+    const ownerName = (ownerData.first_name && ownerData.last_name)
+      ? `${ownerData.first_name} ${ownerData.last_name}`
+      : ownerData.first_name ?? ownerData.username
+    return <AccessDenied ownerName={ownerName} />
   }
 
   // Owner → redirect to the items edit page
@@ -52,14 +55,14 @@ export default async function ListPage({
   const { data: purchasesData } = items.length > 0
     ? await supabase
         .from('purchases')
-        .select('id, item_id, quantity, gifter_id, purchased_at, gifter:users!purchases_gifter_id_fkey(id, display_name, username)')
+        .select('id, item_id, quantity, gifter_id, purchased_at, gifter:users!purchases_gifter_id_fkey(id, first_name, last_name, username)')
         .in('item_id', items.map(i => i.id))
     : { data: [] }
 
   return (
     <MemberView
       list={list as List}
-      owner={{ id: ownerData.id, username: ownerData.username, display_name: ownerData.display_name ?? null }}
+      owner={{ id: ownerData.id, username: ownerData.username, first_name: ownerData.first_name ?? null, last_name: ownerData.last_name ?? null }}
       profile={profile as Profile | null}
       items={items}
       purchases={(purchasesData ?? []) as unknown as PurchaseWithGifter[]}

@@ -1,0 +1,12 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]: You're invited
+    - generic [ref=e6]:
+      - strong [ref=e7]: Eric P
+      - text: "has invited you to their wishlist:"
+      - strong [ref=e8]: farts 2
+  - generic [ref=e10]:
+    - link "Create an account" [ref=e11] [cursor=pointer]:
+      - /url: /signup?redirectTo=%2Finvite%2F7e22b2f7-6506-4983-aa9a-e4c35ad3d51c
+    - link "Log in" [ref=e12] [cursor=pointer]:
+      - /url: /login?redirectTo=%2Finvite%2F7e22b2f7-6506-4983-aa9a-e4c35ad3d51c
