@@ -76,7 +76,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-border py-6 px-6 bg-background">
         <div className="max-w-[960px] mx-auto flex items-center justify-between">
-          <span className="text-sm font-semibold text-foreground">Gift Simple</span>
+          <span className="text-sm font-semibold text-foreground">Wishona</span>
           <p className="text-xs text-muted-foreground">Share what you want. Give what they&apos;ll love.</p>
         </div>
       </footer>
