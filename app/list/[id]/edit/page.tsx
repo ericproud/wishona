@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import AppShell from '@/components/app-shell'
+import EmptyStateCard from '@/components/empty-state-card'
 import ItemForm from './item-form'
 import ItemList from './item-list'
 import type { Item, List } from '@/types'
@@ -44,7 +45,7 @@ export default async function EditItemsPage({
         <span className="text-foreground">{(list as List).name}</span>
       </div>
 
-      <div className="flex items-start justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
         <div>
           <h1 className="text-xl font-semibold text-foreground">{(list as List).name}</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
@@ -65,10 +66,10 @@ export default async function EditItemsPage({
       </div>
 
       {itemList.length === 0 ? (
-        <div className="bg-card border border-border rounded-lg px-5 py-12 text-center">
-          <p className="text-sm text-muted-foreground">No items on this list yet.</p>
-          <p className="text-xs text-muted-foreground mt-1">Click &ldquo;Add item&rdquo; to get started.</p>
-        </div>
+        <EmptyStateCard
+          title="No items on this list yet."
+          description="Add items by pasting a link, uploading a photo, or typing in something they'll love."
+        />
       ) : (
         <ItemList items={itemList} />
       )}

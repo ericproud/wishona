@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { buttonVariants } from '@/components/ui/button'
 import AppShell from '@/components/app-shell'
+import EmptyStateCard from '@/components/empty-state-card'
+import ListCard from '@/components/list-card'
 import ListsSection from './lists-section'
 import type { List } from '@/types'
 
@@ -31,17 +33,18 @@ export default async function DashboardPage() {
   const lists = (listsData ?? []) as List[]
   const listIds = lists.map(l => l.id)
 
-  const emptyRows = Promise.resolve({ data: [] as { list_id: string }[], error: null })
+  const emptyItemRows = Promise.resolve({ data: [] as { list_id: string; image_url: string | null; created_at: string | null }[], error: null })
+  const emptyInviteRows = Promise.resolve({ data: [] as { list_id: string }[], error: null })
   const [{ data: itemRows }, { data: pendingRows }, { data: acceptedRows }, { data: giftingInvites }] = await Promise.all([
     listIds.length > 0
-      ? supabase.from('items').select('list_id').in('list_id', listIds)
-      : emptyRows,
+      ? supabase.from('items').select('list_id, image_url, created_at').in('list_id', listIds).order('created_at', { ascending: true })
+      : emptyItemRows,
     listIds.length > 0
       ? supabase.from('list_invites').select('list_id').in('list_id', listIds).is('accepted_at', null)
-      : emptyRows,
+      : emptyInviteRows,
     listIds.length > 0
       ? supabase.from('list_invites').select('list_id').in('list_id', listIds).not('accepted_at', 'is', null)
-      : emptyRows,
+      : emptyInviteRows,
     supabase
       .from('list_invites')
       .select('id, list:lists(id, name, slug, owner:users(first_name, last_name, username))')
@@ -50,8 +53,13 @@ export default async function DashboardPage() {
   ])
 
   const itemCounts: Record<string, number> = {}
+  const coverImagesByList: Record<string, string[]> = {}
   for (const row of (itemRows ?? [])) {
     itemCounts[row.list_id] = (itemCounts[row.list_id] ?? 0) + 1
+    if (row.image_url) {
+      const list = coverImagesByList[row.list_id] ?? (coverImagesByList[row.list_id] = [])
+      if (list.length < 4) list.push(row.image_url)
+    }
   }
   const pendingInviteCounts: Record<string, number> = {}
   for (const row of (pendingRows ?? [])) {
@@ -62,13 +70,28 @@ export default async function DashboardPage() {
     acceptedInviteCounts[row.list_id] = (acceptedInviteCounts[row.list_id] ?? 0) + 1
   }
 
-  const validGifting = (giftingInvites as unknown as GiftingList[]).filter(
-    invite => invite.list !== null
-  )
+  const validGifting = (giftingInvites as unknown as GiftingList[]).filter(invite => invite.list !== null)
+  const giftingListIds = validGifting.map(g => g.list.id)
+  const giftingCovers: Record<string, string[]> = {}
+  const giftingCounts: Record<string, number> = {}
+  if (giftingListIds.length > 0) {
+    const { data: giftingItems } = await supabase
+      .from('items')
+      .select('list_id, image_url, created_at')
+      .in('list_id', giftingListIds)
+      .order('created_at', { ascending: true })
+    for (const row of (giftingItems ?? [])) {
+      giftingCounts[row.list_id] = (giftingCounts[row.list_id] ?? 0) + 1
+      if (row.image_url) {
+        const list = giftingCovers[row.list_id] ?? (giftingCovers[row.list_id] = [])
+        if (list.length < 4) list.push(row.image_url)
+      }
+    }
+  }
 
   return (
     <AppShell>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
         <div>
           <h1 className="text-xl font-semibold text-foreground">Dashboard</h1>
           <p className="text-sm text-muted-foreground mt-0.5">Manage your wishlists</p>
@@ -78,10 +101,11 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-10">
         <ListsSection
           lists={lists}
           itemCounts={itemCounts}
+          coverImagesByList={coverImagesByList}
           pendingInviteCounts={pendingInviteCounts}
           acceptedInviteCounts={acceptedInviteCounts}
         />
@@ -89,27 +113,30 @@ export default async function DashboardPage() {
         <div>
           <h2 className="text-sm font-semibold text-foreground mb-3">Gifting on</h2>
           {validGifting.length === 0 ? (
-            <div className="bg-card border border-border rounded-lg px-5 py-10 text-center">
-              <p className="text-sm text-muted-foreground">You haven&apos;t accepted any invites yet.</p>
-            </div>
+            <EmptyStateCard
+              title="You haven't accepted any invites yet."
+              description="When someone invites you to their wishlist, it'll show up here."
+            />
           ) : (
-            <div className="bg-card border border-border rounded-lg divide-y divide-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {validGifting.map((invite) => {
                 const owner = invite.list.owner
                 const ownerName = (owner.first_name && owner.last_name) ? `${owner.first_name} ${owner.last_name}` : owner.first_name || owner.username
+                const count = giftingCounts[invite.list.id] ?? 0
                 return (
-                  <div key={invite.id} className="flex items-center justify-between px-5 py-3.5">
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{invite.list.name}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{ownerName}&apos;s list</p>
-                    </div>
-                    <Link
-                      href={`/${owner.username}/${invite.list.slug}`}
-                      className={buttonVariants({ variant: 'outline', size: 'sm' })}
-                    >
-                      View list
-                    </Link>
-                  </div>
+                  <ListCard
+                    key={invite.id}
+                    href={`/${owner.username}/${invite.list.slug}`}
+                    name={invite.list.name}
+                    coverImages={giftingCovers[invite.list.id] ?? []}
+                    metadata={
+                      <>
+                        <span>{ownerName}&apos;s list</span>
+                        <span className="mx-1.5 text-border">·</span>
+                        <span>{count} {count === 1 ? 'item' : 'items'}</span>
+                      </>
+                    }
+                  />
                 )
               })}
             </div>

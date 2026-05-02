@@ -97,16 +97,16 @@ V1 scope was scoped down from the original V1 backlog (in `project_spec.md §1.6
 
 ### Locked-in scope — 5 tracks
 
-#### Track 1 — Quick wins (~½ day)
-- [ ] `updateProfile` server action redirects to `/dashboard` on success
-- [ ] Pending/disabled states on every async mutation that doesn't have one yet (delete list, delete item, revoke invite, admin deletes, avatar upload progress)
+#### Track 1 — Quick wins (~½ day) — ✅ Complete
+- [x] `updateProfile` server action redirects to `/dashboard` on success
+- [x] Pending/disabled states on every async mutation that doesn't have one yet (delete list, delete item, revoke invite, admin deletes, avatar upload progress)
 
-#### Track 2 — Image-forward layout redesign (~5 days)
-Image-forward grid pattern (Pinterest/Etsy style), keeping the existing color palette (dark nav, green accent) and DM Sans. The current uniform vertical-card-list layout is the main thing that makes the app feel boring.
-- [ ] New shared components: `ListCard`, `ItemTile`, `EmptyStateCard`
-- [ ] Mobile-first grid wrapper standard (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`)
-- [ ] Page-by-page swap: dashboard, member view, item edit, item form (modal → mobile sheet), invites page, profile form (sectioned), admin tables (overflow-x), app-shell header (mobile collapse)
-- [ ] Landing page (`app/page.tsx`) redesigned alongside the app pages
+#### Track 2 — Image-forward layout redesign (~5 days) — ✅ Complete
+Image-forward grid pattern (Pinterest/Etsy style), keeping the existing color palette (dark nav, green accent) and DM Sans. The current uniform vertical-card-list layout was the main thing that made the app feel boring.
+- [x] New shared components: `ListCard`, `ItemTile`, `EmptyStateCard`
+- [x] Mobile-first grid wrapper standard (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`, `2/3/4` for tiles)
+- [x] Page-by-page swap: dashboard, member view, item edit, item form (modal → Sheet), invites page, profile form (sectioned), admin tables (overflow-x), app-shell header (hamburger Sheet on mobile)
+- [x] Landing page (`app/page.tsx`) redesigned alongside the app pages — hero list mockup + image-led feature cards
 
 #### Track 3 — Manual product image upload (~1 day)
 - [ ] Mirror existing avatar upload pattern in `app/list/[id]/edit/item-form.tsx` and `item-list.tsx`

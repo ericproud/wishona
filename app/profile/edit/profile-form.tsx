@@ -103,7 +103,7 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
               {error}
             </div>
           )}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="first_name">First name</Label>
               <Input id="first_name" name="first_name" defaultValue={user.first_name ?? ''} placeholder="Jane" />
@@ -137,7 +137,7 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
 
         <div className="bg-card border border-border rounded-lg p-5 mt-5">
           <h2 className="text-sm font-semibold text-foreground mb-4">Clothing sizes</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="shirt">Shirt / top</Label>
               <Input id="shirt" name="shirt" defaultValue={sizes.shirt ?? ''} placeholder="M" />
