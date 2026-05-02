@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { revokeInvite } from '@/lib/actions/invites'
 import { PendingButton } from '@/components/ui/pending-button'
 import AppShell from '@/components/app-shell'
+import EmptyStateCard from '@/components/empty-state-card'
 import InviteForm from './invite-form'
 import type { List, ListInvite } from '@/types'
 
@@ -38,7 +39,7 @@ export default async function InvitesPage({
 
   return (
     <AppShell>
-      <div className="flex items-center gap-2 mb-6 text-sm">
+      <div className="flex items-center gap-2 mb-6 text-sm flex-wrap">
         <Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">
           Dashboard
         </Link>
@@ -55,7 +56,7 @@ export default async function InvitesPage({
         <p className="text-sm text-muted-foreground mt-0.5">Manage who has access to this list</p>
       </div>
 
-      <div className="max-w-2xl space-y-6">
+      <div className="space-y-6">
         <InviteForm listId={id} />
 
         {pending.length > 0 && (
@@ -63,17 +64,30 @@ export default async function InvitesPage({
             <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
               Pending ({pending.length})
             </h2>
-            <div className="bg-card border border-border rounded-lg divide-y divide-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {pending.map((invite: ListInvite) => (
-                <div key={invite.id} className="flex items-center justify-between px-5 py-3.5">
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{invite.invited_email}</p>
+                <div
+                  key={invite.id}
+                  className="bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-3"
+                >
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground shrink-0">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate">{invite.invited_email}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">
                       Expires {new Date(invite.expires_at).toLocaleDateString()}
                     </p>
                   </div>
                   <form action={revokeInvite.bind(null, invite.id)}>
-                    <PendingButton variant="ghost" size="sm" pendingLabel="Revoking…" className="text-destructive hover:text-destructive">
+                    <PendingButton
+                      variant="ghost"
+                      size="sm"
+                      pendingLabel="Revoking…"
+                      className="text-destructive hover:text-destructive"
+                    >
                       Revoke
                     </PendingButton>
                   </form>
@@ -88,13 +102,21 @@ export default async function InvitesPage({
             <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
               Accepted ({accepted.length})
             </h2>
-            <div className="bg-card border border-border rounded-lg divide-y divide-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {accepted.map((invite: ListInvite) => (
-                <div key={invite.id} className="flex items-center px-5 py-3.5">
-                  <p className="text-sm text-foreground">{invite.invited_email}</p>
-                  <span className="ml-auto text-xs text-primary font-medium bg-primary/8 px-2 py-0.5 rounded-full">
-                    Accepted
-                  </span>
+                <div
+                  key={invite.id}
+                  className="bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-3"
+                >
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate">{invite.invited_email}</p>
+                    <p className="text-xs text-primary/80 mt-0.5">Accepted</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -102,10 +124,10 @@ export default async function InvitesPage({
         )}
 
         {pending.length === 0 && accepted.length === 0 && (
-          <div className="bg-card border border-border rounded-lg px-5 py-10 text-center">
-            <p className="text-sm text-muted-foreground">No invites sent yet.</p>
-            <p className="text-xs text-muted-foreground mt-1">Add an email above to invite someone to this list.</p>
-          </div>
+          <EmptyStateCard
+            title="No invites sent yet."
+            description="Add an email above to invite someone to this list."
+          />
         )}
       </div>
     </AppShell>

@@ -8,6 +8,25 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (V1 Track 2 — image-forward layout)
+- Shared `ListCard`, `ItemTile`, `EmptyStateCard` primitives (`components/list-card.tsx`, `components/item-tile.tsx`, `components/empty-state-card.tsx`) — image-forward retail tiles replace row-based UI throughout the app
+- shadcn `Sheet` component for slide-in drawers
+- Mobile nav (`components/mobile-nav.tsx`) — hamburger button + slide-in sheet menu on mobile; collapses the desktop header on small screens
+- Landing page redesign (`app/page.tsx`): hero list mockup that bridges the dark nav into the features grid; image-forward feature cards with mini UI illustrations; new CTA section
+- Dashboard now queries up to 4 item images per list to render a 1/2/3/4-up cover collage on each `ListCard`
+
+### Changed (V1 Track 2)
+- Dashboard owned-list rows → `ListCard` grid with cover-image collage + inline rename / delete states (`app/dashboard/page.tsx`, `app/dashboard/lists-section.tsx`)
+- "Gifting on" section → `ListCard` grid using item images from each shared list
+- Member list view → square `ItemTile` grid with claim status overlay; claim/unclaim actions stay inline within each tile (`app/[username]/[slug]/member-view.tsx`, `app/[username]/[slug]/item-card.tsx`)
+- Member view header now shows the owner's avatar alongside their name
+- Edit-items page → `ItemTile` grid; Edit opens a right-side `Sheet`; Delete uses an inline confirmation in the tile footer (`app/list/[id]/edit/item-list.tsx`)
+- Add item modal overlay → `Sheet` drawer (`app/list/[id]/edit/item-form.tsx`)
+- Invites page pending/accepted rows → 2-column compact card grids with avatar-style icons (`app/list/[id]/invites/page.tsx`)
+- Profile edit form: clothing sizes / name grids now `grid-cols-1 sm:grid-cols-2` for mobile
+- Admin tables → `overflow-x-auto` with `min-w-[640px]` so they scroll horizontally on mobile instead of clipping
+- App-shell main content padding tightened on mobile; max-width bumped to 1100px to support 4-column tile grids on desktop
+
 ### Added
 - HTML invite email template (`lib/actions/invites.ts`): branded header, "What is Wishona?" explainer for unfamiliar recipients, "What happens next?" steps, prominent CTA button
 - Link metadata auto-fill on item form: paste URL → auto-populates name, price, description, image via `open-graph-scraper` + Amazon regex fallback (`lib/actions/scrape.ts`)

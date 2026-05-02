@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { signOut } from '@/lib/actions/auth'
+import EmptyStateCard from '@/components/empty-state-card'
+import UserAvatar from '@/components/ui/user-avatar'
 import ItemCard from './item-card'
 import type { Item, List, Profile, PurchaseWithGifter } from '@/types'
 
@@ -34,7 +36,7 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
     <div className="min-h-screen bg-background">
       {/* Nav */}
       <header className="bg-nav sticky top-0 z-50">
-        <div className="max-w-[960px] mx-auto px-6 h-14 flex items-center justify-between">
+        <div className="max-w-[1100px] mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/dashboard" className="text-white font-semibold text-sm tracking-tight hover:text-white/80 transition-colors">
             Wishona
           </Link>
@@ -51,45 +53,56 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
         </div>
       </header>
 
-      <main className="max-w-[960px] mx-auto px-6 py-8">
+      <main className="max-w-[1100px] mx-auto px-6 py-8">
         {/* Owner profile header */}
-        <div className="bg-card border border-border rounded-lg p-6 mb-6">
-          <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium mb-1">
-            {ownerName}&apos;s wishlist
-          </p>
-          <h1 className="text-xl font-semibold text-foreground">{list.name}</h1>
-
-          {profile?.wishlist_note && (
-            <p className="text-sm text-muted-foreground mt-2 italic">
-              &ldquo;{profile.wishlist_note}&rdquo;
-            </p>
-          )}
-
-          {(profile?.interests || sizeEntries.length > 0) && (
-            <div className="mt-4 pt-4 border-t border-border space-y-1.5">
-              {profile?.interests && (
-                <p className="text-sm text-muted-foreground">
-                  <span className="font-medium text-foreground">Interests:</span>{' '}
-                  {profile.interests}
-                </p>
-              )}
-              {sizeEntries.length > 0 && (
-                <p className="text-sm text-muted-foreground">
-                  <span className="font-medium text-foreground">Sizes:</span>{' '}
-                  {sizeEntries.join(' · ')}
-                </p>
-              )}
+        <div className="bg-card border border-border rounded-lg p-5 sm:p-6 mb-6 flex flex-col sm:flex-row sm:items-start gap-4">
+          <UserAvatar
+            avatarUrl={profile?.avatar_url ?? null}
+            firstName={owner.first_name}
+            lastName={owner.last_name}
+            username={owner.username}
+            size="lg"
+            className="size-14 text-base shrink-0"
+          />
+          <div className="flex-1 min-w-0 space-y-2">
+            <div>
+              <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">
+                {ownerName}&apos;s wishlist
+              </p>
+              <h1 className="text-xl font-semibold text-foreground">{list.name}</h1>
             </div>
-          )}
+            {profile?.wishlist_note && (
+              <p className="text-sm text-muted-foreground italic">
+                &ldquo;{profile.wishlist_note}&rdquo;
+              </p>
+            )}
+            {(profile?.interests || sizeEntries.length > 0) && (
+              <div className="space-y-1 pt-1">
+                {profile?.interests && (
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">Interests:</span>{' '}
+                    {profile.interests}
+                  </p>
+                )}
+                {sizeEntries.length > 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">Sizes:</span>{' '}
+                    {sizeEntries.join(' · ')}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Items */}
         {items.length === 0 ? (
-          <div className="bg-card border border-border rounded-lg px-5 py-12 text-center">
-            <p className="text-sm text-muted-foreground">No items on this list yet.</p>
-          </div>
+          <EmptyStateCard
+            title="No items on this list yet."
+            description="Check back soon — the list owner is still adding ideas."
+          />
         ) : (
-          <div className="bg-card border border-border rounded-lg divide-y divide-border">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 items-start">
             {items.map(item => {
               const itemPurchases = purchases.filter(p => p.item_id === item.id)
               const myPurchase = itemPurchases.find(p => p.gifter_id === currentUserId) ?? null

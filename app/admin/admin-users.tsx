@@ -26,8 +26,8 @@ export default function AdminUsers({ users }: { users: AdminUser[] }) {
           <p className="text-sm text-muted-foreground">No users.</p>
         </div>
       ) : (
-        <div className="bg-card border border-border rounded-lg overflow-hidden">
-          <table className="w-full text-sm">
+        <div className="bg-card border border-border rounded-lg overflow-x-auto">
+          <table className="w-full text-sm min-w-[640px]">
             <thead>
               <tr className="border-b border-border bg-muted/40">
                 <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Username</th>

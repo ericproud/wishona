@@ -6,16 +6,25 @@ import { updateList, deleteList } from '@/lib/actions/lists'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { PendingButton } from '@/components/ui/pending-button'
 import { Input } from '@/components/ui/input'
+import EmptyStateCard from '@/components/empty-state-card'
+import ListCard from '@/components/list-card'
 import type { List } from '@/types'
 
 interface ListsSectionProps {
   lists: List[]
   itemCounts: Record<string, number>
+  coverImagesByList: Record<string, string[]>
   pendingInviteCounts: Record<string, number>
   acceptedInviteCounts: Record<string, number>
 }
 
-export default function ListsSection({ lists, itemCounts, pendingInviteCounts, acceptedInviteCounts }: ListsSectionProps) {
+export default function ListsSection({
+  lists,
+  itemCounts,
+  coverImagesByList,
+  pendingInviteCounts,
+  acceptedInviteCounts,
+}: ListsSectionProps) {
   const [renamingId, setRenamingId] = useState<string | null>(null)
   const [confirmingId, setConfirmingId] = useState<string | null>(null)
 
@@ -29,77 +38,94 @@ export default function ListsSection({ lists, itemCounts, pendingInviteCounts, a
       </div>
 
       {lists.length === 0 ? (
-        <div className="bg-card border border-border rounded-lg px-5 py-10 text-center">
-          <p className="text-sm text-muted-foreground">No lists yet.</p>
-          <Link
-            href="/list/new"
-            className="text-sm text-primary font-medium hover:underline mt-1 inline-block"
-          >
-            Create your first list →
-          </Link>
-        </div>
+        <EmptyStateCard
+          title="No lists yet."
+          description="Create your first wishlist and invite the people who'll be shopping for you."
+          action={
+            <Link href="/list/new" className={buttonVariants({ size: 'sm' })}>
+              Create your first list
+            </Link>
+          }
+        />
       ) : (
-        <div className="bg-card border border-border rounded-lg divide-y divide-border">
-          {lists.map((list) => (
-            <div key={list.id} className="px-5 py-3.5">
-              {renamingId === list.id ? (
-                <form
-                  action={updateList.bind(null, list.id)}
-                  onSubmit={() => setRenamingId(null)}
-                  className="flex items-center gap-2"
-                >
-                  <Input name="name" defaultValue={list.name} required autoFocus className="h-8 text-sm" />
-                  <PendingButton size="sm" pendingLabel="Saving…">Save</PendingButton>
-                  <Button type="button" variant="ghost" size="sm" onClick={() => setRenamingId(null)}>
-                    Cancel
-                  </Button>
-                </form>
-              ) : confirmingId === list.id ? (
-                <div className="flex items-center gap-3">
-                  <p className="text-sm text-destructive flex-1">
-                    Delete &ldquo;{list.name}&rdquo;? This cannot be undone.
-                  </p>
-                  <form action={deleteList.bind(null, list.id)}>
-                    <PendingButton variant="destructive" size="sm" pendingLabel="Deleting…">
-                      Delete
-                    </PendingButton>
-                  </form>
-                  <Button variant="ghost" size="sm" onClick={() => setConfirmingId(null)}>
-                    Cancel
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">{list.name}</p>
-                    <div className="flex items-center gap-2.5 text-xs text-muted-foreground mt-0.5">
-                      <span>{itemCounts[list.id] ?? 0} {(itemCounts[list.id] ?? 0) === 1 ? 'item' : 'items'}</span>
-                      {(acceptedInviteCounts[list.id] ?? 0) > 0 && (
-                        <>
-                          <span className="text-border">·</span>
-                          <span>{acceptedInviteCounts[list.id]} {acceptedInviteCounts[list.id] === 1 ? 'gifter' : 'gifters'}</span>
-                        </>
-                      )}
-                      {(pendingInviteCounts[list.id] ?? 0) > 0 && (
-                        <>
-                          <span className="text-border">·</span>
-                          <span>{pendingInviteCounts[list.id]} pending</span>
-                        </>
-                      )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {lists.map((list) => {
+            const items = itemCounts[list.id] ?? 0
+            const gifters = acceptedInviteCounts[list.id] ?? 0
+            const pending = pendingInviteCounts[list.id] ?? 0
+
+            if (renamingId === list.id) {
+              return (
+                <div key={list.id} className="bg-card border border-border rounded-lg p-4 flex flex-col justify-center min-h-[280px]">
+                  <p className="text-xs font-medium text-muted-foreground mb-2">Rename list</p>
+                  <form
+                    action={updateList.bind(null, list.id)}
+                    onSubmit={() => setRenamingId(null)}
+                    className="space-y-2"
+                  >
+                    <Input name="name" defaultValue={list.name} required autoFocus className="h-9 text-sm" />
+                    <div className="flex items-center gap-2">
+                      <PendingButton size="sm" pendingLabel="Saving…">Save</PendingButton>
+                      <Button type="button" variant="ghost" size="sm" onClick={() => setRenamingId(null)}>
+                        Cancel
+                      </Button>
                     </div>
+                  </form>
+                </div>
+              )
+            }
+
+            if (confirmingId === list.id) {
+              return (
+                <div key={list.id} className="bg-destructive/5 border border-destructive/30 rounded-lg p-4 flex flex-col justify-center min-h-[280px] gap-3">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Delete &ldquo;{list.name}&rdquo;?</p>
+                    <p className="text-xs text-muted-foreground mt-1">This cannot be undone.</p>
                   </div>
-                  <div className="flex items-center gap-1 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <form action={deleteList.bind(null, list.id)}>
+                      <PendingButton variant="destructive" size="sm" pendingLabel="Deleting…">
+                        Delete
+                      </PendingButton>
+                    </form>
+                    <Button variant="ghost" size="sm" onClick={() => setConfirmingId(null)}>
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              )
+            }
+
+            return (
+              <ListCard
+                key={list.id}
+                href={`/list/${list.id}/edit`}
+                name={list.name}
+                coverImages={coverImagesByList[list.id] ?? []}
+                metadata={
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span>{items} {items === 1 ? 'item' : 'items'}</span>
+                    {gifters > 0 && (
+                      <>
+                        <span className="text-border">·</span>
+                        <span>{gifters} {gifters === 1 ? 'gifter' : 'gifters'}</span>
+                      </>
+                    )}
+                    {pending > 0 && (
+                      <>
+                        <span className="text-border">·</span>
+                        <span>{pending} pending</span>
+                      </>
+                    )}
+                  </div>
+                }
+                actions={
+                  <div className="flex items-center gap-1 -mx-2">
                     <Link
                       href={`/list/${list.id}/invites`}
                       className={buttonVariants({ variant: 'ghost', size: 'sm' })}
                     >
                       Invites
-                    </Link>
-                    <Link
-                      href={`/list/${list.id}/edit`}
-                      className={buttonVariants({ variant: 'outline', size: 'sm' })}
-                    >
-                      Edit items
                     </Link>
                     <Button
                       variant="ghost"
@@ -111,16 +137,16 @@ export default function ListsSection({ lists, itemCounts, pendingInviteCounts, a
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-destructive hover:text-destructive"
+                      className="text-destructive hover:text-destructive ml-auto"
                       onClick={() => { setRenamingId(null); setConfirmingId(list.id) }}
                     >
                       Delete
                     </Button>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                }
+              />
+            )
+          })}
         </div>
       )}
     </div>
