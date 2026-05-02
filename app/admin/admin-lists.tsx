@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { PendingButton } from '@/components/ui/pending-button'
 import { adminDeleteList } from '@/lib/actions/admin'
 
 type AdminList = {
@@ -50,7 +51,9 @@ export default function AdminLists({ lists }: { lists: AdminList[] }) {
                       <div className="flex items-center justify-end gap-2">
                         <span className="text-xs text-destructive">Delete list?</span>
                         <form action={adminDeleteList.bind(null, l.id)}>
-                          <Button variant="destructive" size="sm" type="submit">Delete</Button>
+                          <PendingButton variant="destructive" size="sm" pendingLabel="Deleting…">
+                            Delete
+                          </PendingButton>
                         </form>
                         <Button variant="ghost" size="sm" onClick={() => setConfirmingId(null)}>Cancel</Button>
                       </div>

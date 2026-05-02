@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { revokeInvite } from '@/lib/actions/invites'
-import { Button } from '@/components/ui/button'
+import { PendingButton } from '@/components/ui/pending-button'
 import AppShell from '@/components/app-shell'
 import InviteForm from './invite-form'
 import type { List, ListInvite } from '@/types'
@@ -73,9 +73,9 @@ export default async function InvitesPage({
                     </p>
                   </div>
                   <form action={revokeInvite.bind(null, invite.id)}>
-                    <Button variant="ghost" size="sm" type="submit" className="text-destructive hover:text-destructive">
+                    <PendingButton variant="ghost" size="sm" pendingLabel="Revoking…" className="text-destructive hover:text-destructive">
                       Revoke
-                    </Button>
+                    </PendingButton>
                   </form>
                 </div>
               ))}

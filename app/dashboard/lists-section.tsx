@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { updateList, deleteList } from '@/lib/actions/lists'
 import { Button, buttonVariants } from '@/components/ui/button'
+import { PendingButton } from '@/components/ui/pending-button'
 import { Input } from '@/components/ui/input'
 import type { List } from '@/types'
 
@@ -48,7 +49,7 @@ export default function ListsSection({ lists, itemCounts, pendingInviteCounts, a
                   className="flex items-center gap-2"
                 >
                   <Input name="name" defaultValue={list.name} required autoFocus className="h-8 text-sm" />
-                  <Button type="submit" size="sm">Save</Button>
+                  <PendingButton size="sm" pendingLabel="Saving…">Save</PendingButton>
                   <Button type="button" variant="ghost" size="sm" onClick={() => setRenamingId(null)}>
                     Cancel
                   </Button>
@@ -58,8 +59,10 @@ export default function ListsSection({ lists, itemCounts, pendingInviteCounts, a
                   <p className="text-sm text-destructive flex-1">
                     Delete &ldquo;{list.name}&rdquo;? This cannot be undone.
                   </p>
-                  <form action={deleteList.bind(null, list.id)} onSubmit={() => setConfirmingId(null)}>
-                    <Button variant="destructive" size="sm" type="submit">Delete</Button>
+                  <form action={deleteList.bind(null, list.id)}>
+                    <PendingButton variant="destructive" size="sm" pendingLabel="Deleting…">
+                      Delete
+                    </PendingButton>
                   </form>
                   <Button variant="ghost" size="sm" onClick={() => setConfirmingId(null)}>
                     Cancel

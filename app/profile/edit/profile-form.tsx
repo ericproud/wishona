@@ -61,7 +61,6 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
     setAvatarUploading(false)
   }
 
-  const success = state && 'success' in state
   const error = state && 'error' in state ? state.error : null
 
   return (
@@ -99,11 +98,6 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
       <form action={formAction}>
         <div className="bg-card border border-border rounded-lg p-5 space-y-4">
           <h2 className="text-sm font-semibold text-foreground">About you</h2>
-          {success && (
-            <div className="bg-primary/8 border border-primary/20 text-primary text-sm rounded-md px-3 py-2">
-              Profile saved.
-            </div>
-          )}
           {error && (
             <div className="bg-destructive/8 border border-destructive/20 text-destructive text-sm rounded-md px-3 py-2">
               {error}

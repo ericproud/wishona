@@ -3,7 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
-export type ProfileState = { error: string } | { success: true } | null
+export type ProfileState = { error: string } | null
 
 export async function updateProfile(
   _prevState: ProfileState,
@@ -45,7 +45,7 @@ export async function updateProfile(
 
   if (profileError) return { error: profileError.message }
 
-  return { success: true }
+  redirect('/dashboard')
 }
 
 export async function updateAvatarUrl(avatarUrl: string): Promise<{ error: string } | null> {
