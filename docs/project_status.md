@@ -114,11 +114,13 @@ Image-forward grid pattern (Pinterest/Etsy style), keeping the existing color pa
 - [x] Manual upload takes precedence; auto-scrape only fills `image_url` when empty
 - [x] Best-effort Storage cleanup on item update (when image changes/clears) and item delete
 
-#### Track 4 — Event dates on lists (~1 day)
-- [ ] Migration: add nullable `event_date date` column to `lists` table
-- [ ] Optional input on list create/edit forms
-- [ ] Display on dashboard ("in 3 weeks") and member view ("Sarah's birthday — Aug 15")
-- [ ] `formatEventDate` helper in `lib/utils.ts`
+#### Track 4 — Event dates on lists (~1 day) — ✅ Complete
+- [x] Migration: add nullable `event_date date` column to `lists` table
+- [x] Optional input on list create/edit forms (create + separate rename/date buttons on dashboard)
+- [x] Display on dashboard ("in 3 weeks") and member view ("Sarah's birthday — Aug 15")
+- [x] `formatEventDate` helper in `lib/utils.ts`
+- [x] Dashboard sort: closest future → farthest future → undated → closest past → farthest past
+- [x] Past-date lists greyed out at opacity-60
 
 #### Track 5 — Reminder emails (~2 days)
 - [ ] Vercel cron at 9am ET → `/api/cron/send-reminders`
