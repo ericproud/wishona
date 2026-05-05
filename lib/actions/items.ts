@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { getStorageItemPath } from '@/lib/utils'
 
 export type ItemState = { error: string } | { success: true } | null
 
@@ -61,7 +62,7 @@ export async function updateItem(
 
   const { data: item } = await supabase
     .from('items')
-    .select('list_id, lists!inner(owner_id)')
+    .select('list_id, image_url, lists!inner(owner_id)')
     .eq('id', itemId)
     .single()
 
@@ -90,6 +91,11 @@ export async function updateItem(
 
   if (error) return { error: error.message }
 
+  if (item.image_url && item.image_url !== imageUrl) {
+    const oldPath = getStorageItemPath(item.image_url)
+    if (oldPath) await supabase.storage.from('avatars').remove([oldPath])
+  }
+
   revalidatePath(`/list/${item.list_id}/edit`)
   return { success: true }
 }
@@ -101,7 +107,7 @@ export async function deleteItem(itemId: string): Promise<void> {
 
   const { data: item } = await supabase
     .from('items')
-    .select('list_id')
+    .select('list_id, image_url')
     .eq('id', itemId)
     .single()
 
@@ -111,6 +117,11 @@ export async function deleteItem(itemId: string): Promise<void> {
     .from('items')
     .delete()
     .eq('id', itemId)
+
+  if (item.image_url) {
+    const path = getStorageItemPath(item.image_url)
+    if (path) await supabase.storage.from('avatars').remove([path])
+  }
 
   revalidatePath(`/list/${item.list_id}/edit`)
 }

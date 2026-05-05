@@ -145,6 +145,24 @@ npm run build      # run before PRs, not necessarily every commit
 
 Never commit with TypeScript errors or lint errors. If the build fails, fix it before opening the PR.
 
+### Branch hygiene — clean up automatically, without being asked
+
+Whenever you start a session, switch branches, or finish a milestone, prune merged branches so the local repo stays in sync with GitHub. Do this on your own — don't wait for the user to ask.
+
+Standard cleanup sequence (run when the working tree is clean and the current branch is not the one being deleted):
+
+```bash
+git fetch --prune origin                  # drops remote-tracking refs whose upstream is gone
+git checkout main && git pull --ff-only   # fast-forward main to origin/main
+git branch --merged main | grep -vE '^\*|^\s*main$' | xargs -r git branch -d
+```
+
+Rules:
+- Only delete branches that are fully merged into `main` (use `-d`, never `-D`, unless the user explicitly approves a force-delete).
+- Never delete a branch with uncommitted or unpushed work — verify with `git status` and `git log origin/<branch>..HEAD` first.
+- If the current branch is the one to delete, switch to `main` first.
+- If something looks unexpected (unknown branches, divergent history), stop and ask before deleting.
+
 ---
 
 ## Common Commands

@@ -1,6 +1,7 @@
 'use client'
 
-import { useActionState, useState, useTransition } from 'react'
+import { useActionState, useRef, useState, useTransition } from 'react'
+import { createClient } from '@/lib/supabase/client'
 import { addItem } from '@/lib/actions/items'
 import { scrapeItemUrl } from '@/lib/actions/scrape'
 import { Button } from '@/components/ui/button'
@@ -9,7 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import Image from 'next/image'
 
-export default function ItemForm({ listId }: { listId: string }) {
+export default function ItemForm({ listId, userId }: { listId: string; userId: string }) {
   const [open, setOpen] = useState(false)
   const [state, action, isPending] = useActionState(addItem.bind(null, listId), null)
   const [prevState, setPrevState] = useState(state)
@@ -20,6 +21,9 @@ export default function ItemForm({ listId }: { listId: string }) {
   const [notes, setNotes] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [isScraping, startScraping] = useTransition()
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   if (state !== prevState) {
     setPrevState(state)
@@ -30,6 +34,7 @@ export default function ItemForm({ listId }: { listId: string }) {
       setPrice('')
       setNotes('')
       setImageUrl('')
+      setUploadError(null)
     }
   }
 
@@ -48,6 +53,35 @@ export default function ItemForm({ listId }: { listId: string }) {
   function handleUrlPaste(e: React.ClipboardEvent<HTMLInputElement>) {
     const pasted = e.clipboardData.getData('text').trim()
     triggerScrape(pasted)
+  }
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (file) await uploadImage(file)
+    e.target.value = ''
+  }
+
+  async function uploadImage(file: File) {
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadError('Image must be under 2 MB.')
+      return
+    }
+    setUploadError(null)
+    setUploading(true)
+    const ext = (file.name.split('.').pop() ?? 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
+    const path = `${userId}/items/${crypto.randomUUID()}.${ext}`
+    const supabase = createClient()
+    const { error } = await supabase.storage
+      .from('avatars')
+      .upload(path, file, { upsert: false, contentType: file.type })
+    if (error) {
+      setUploadError(error.message)
+      setUploading(false)
+      return
+    }
+    const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(path)
+    setImageUrl(publicUrl)
+    setUploading(false)
   }
 
   return (
@@ -86,20 +120,51 @@ export default function ItemForm({ listId }: { listId: string }) {
               </div>
             </div>
 
-            {imageUrl && (
+            <div className="space-y-1.5">
+              <Label>Image <span className="text-muted-foreground font-normal">(optional)</span></Label>
               <div className="flex items-center gap-3">
-                <div className="relative w-14 h-14 rounded border border-border overflow-hidden shrink-0 bg-muted">
-                  <Image src={imageUrl} alt="" fill className="object-contain" unoptimized />
+                {imageUrl ? (
+                  <div className="relative w-14 h-14 rounded border border-border overflow-hidden shrink-0 bg-muted">
+                    <Image src={imageUrl} alt="" fill className="object-contain" unoptimized />
+                  </div>
+                ) : (
+                  <div className="w-14 h-14 rounded border border-dashed border-border bg-muted shrink-0" />
+                )}
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={uploading}
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      {uploading ? 'Uploading…' : imageUrl ? 'Replace' : 'Upload photo'}
+                    </Button>
+                    {imageUrl && (
+                      <button
+                        type="button"
+                        className="text-xs text-muted-foreground hover:text-destructive transition-colors"
+                        onClick={() => setImageUrl('')}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Auto-filled from a link, or upload from your device · max 2 MB
+                  </p>
+                  {uploadError && <p className="text-xs text-destructive">{uploadError}</p>}
                 </div>
-                <button
-                  type="button"
-                  className="text-xs text-muted-foreground hover:text-destructive transition-colors"
-                  onClick={() => setImageUrl('')}
-                >
-                  Remove image
-                </button>
               </div>
-            )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+            </div>
 
             <input type="hidden" name="image_url" value={imageUrl} />
 
@@ -158,7 +223,7 @@ export default function ItemForm({ listId }: { listId: string }) {
             )}
 
             <div className="flex items-center gap-2 pt-2">
-              <Button type="submit" disabled={isPending || isScraping} className="flex-1">
+              <Button type="submit" disabled={isPending || isScraping || uploading} className="flex-1">
                 {isPending ? 'Adding…' : 'Add item'}
               </Button>
               <Button type="button" variant="ghost" onClick={() => setOpen(false)}>

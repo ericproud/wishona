@@ -61,7 +61,7 @@ export default async function EditItemsPage({
           >
             Manage invites
           </Link>
-          <ItemForm listId={id} />
+          <ItemForm listId={id} userId={user.id} />
         </div>
       </div>
 
@@ -71,7 +71,7 @@ export default async function EditItemsPage({
           description="Add items by pasting a link, uploading a photo, or typing in something they'll love."
         />
       ) : (
-        <ItemList items={itemList} />
+        <ItemList items={itemList} userId={user.id} />
       )}
     </AppShell>
   )
