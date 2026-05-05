@@ -8,6 +8,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (V1 Track 4 — event dates on lists)
+- `formatEventDate` helper (`lib/utils.ts`): formats nullable event dates as relative ("in 3 weeks", "2 weeks ago") + absolute ("Aug 15"), with `isPast` flag for styling
+- `EventDateBadge` component (`components/event-date-badge.tsx`): shared badge for displaying event dates on dashboard and member view; greyed text for past dates
+- Event date input on list create form (`app/list/new/page.tsx`) — optional native `<input type="date">`
+- Separate "Date" button on dashboard list cards (`app/dashboard/lists-section.tsx`) — focused inline form for setting event dates without renaming the list
+- Event date display on dashboard ListCards (both "Your lists" and "Gifting on" sections) and member view header
+- Dashboard list sorting: closest future dates → farthest future → undated → closest past → farthest past
+- Past-event lists rendered at `opacity-60` to de-emphasize completed events
+
+### Changed (V1 Track 4)
+- Dashboard list rename form now preserves event_date via hidden input field (renaming no longer clears the date)
+- `app/dashboard/lists-section.tsx`: added `datingId` state and separate inline form for date editing; updated "Rename" and "Delete" button handlers to manage three mutually exclusive inline states
+- `components/list-card.tsx`: added optional `isPast` prop for greying out past-event cards
+- Supabase schema: added nullable `event_date date` column to `lists` table
+- `types/supabase.ts`: regenerated to include `event_date: string | null` on lists Row/Insert/Update
+
 ### Added (V1 Track 2 — image-forward layout)
 - Shared `ListCard`, `ItemTile`, `EmptyStateCard` primitives (`components/list-card.tsx`, `components/item-tile.tsx`, `components/empty-state-card.tsx`) — image-forward retail tiles replace row-based UI throughout the app
 - shadcn `Sheet` component for slide-in drawers
