@@ -108,10 +108,11 @@ Image-forward grid pattern (Pinterest/Etsy style), keeping the existing color pa
 - [x] Page-by-page swap: dashboard, member view, item edit, item form (modal → Sheet), invites page, profile form (sectioned), admin tables (overflow-x), app-shell header (hamburger Sheet on mobile)
 - [x] Landing page (`app/page.tsx`) redesigned alongside the app pages — hero list mockup + image-led feature cards
 
-#### Track 3 — Manual product image upload (~1 day)
-- [ ] Mirror existing avatar upload pattern in `app/list/[id]/edit/item-form.tsx` and `item-list.tsx`
-- [ ] Reuse the `avatars` Storage bucket (path: `${userId}/items/...`) — no new bucket
-- [ ] Manual upload takes precedence; auto-scrape only fills `image_url` when empty
+#### Track 3 — Manual product image upload (~1 day) — ✅ Complete
+- [x] Mirror existing avatar upload pattern in `app/list/[id]/edit/item-form.tsx` and `item-list.tsx`
+- [x] Reuse the `avatars` Storage bucket (path: `${userId}/items/${uuid}.${ext}`) — no new bucket
+- [x] Manual upload takes precedence; auto-scrape only fills `image_url` when empty
+- [x] Best-effort Storage cleanup on item update (when image changes/clears) and item delete
 
 #### Track 4 — Event dates on lists (~1 day)
 - [ ] Migration: add nullable `event_date date` column to `lists` table

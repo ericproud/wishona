@@ -8,6 +8,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (V1 Track 3 — manual product image upload)
+- Manual image upload on item add and edit forms (`app/list/[id]/edit/item-form.tsx`, `app/list/[id]/edit/item-list.tsx`) — mirrors the existing profile avatar upload pattern; 2 MB cap, accepts any `image/*`
+- Files are stored in the existing `avatars` Supabase Storage bucket at `${userId}/items/${uuid}.${ext}` — no new bucket
+- Single shared image slot: scrape-on-paste still auto-fills only when empty; manual upload takes precedence
+- `getStorageItemPath` helper in `lib/utils.ts` recognizes URLs that point at our bucket so server cleanup only touches files we own
+- Best-effort Storage cleanup in `lib/actions/items.ts`: `updateItem` removes the prior file when `image_url` changes or is cleared; `deleteItem` removes the file when an item is deleted. Scraped/external URLs are skipped.
+
 ### Added (V1 Track 2 — image-forward layout)
 - Shared `ListCard`, `ItemTile`, `EmptyStateCard` primitives (`components/list-card.tsx`, `components/item-tile.tsx`, `components/empty-state-card.tsx`) — image-forward retail tiles replace row-based UI throughout the app
 - shadcn `Sheet` component for slide-in drawers
