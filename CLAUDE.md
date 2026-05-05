@@ -14,20 +14,9 @@ Instructions for working in this codebase.
 
 ---
 
-## Current Milestone
+## Current Status
 
-**MVP — 7-day target.** Full checklist in `project_spec.md §1.6`.
-
-Build order:
-
-1. Auth — sign up, log in, log out, username selection
-2. Profile — display name, photo, clothing sizes, interests, note
-3. Lists — create, rename, delete
-4. Invites — send by email (Resend), accept via token link, revoke
-5. Items — add, edit, delete, quantity
-6. List page — three-view logic: owner / accepted member / non-member
-7. Dashboard — owned lists, item counts, invite counts
-8. Admin — hardcoded to `ADMIN_USER_ID`, view/delete users and lists
+**MVP complete and shipped.** V1 in progress — see [`docs/project_status.md`](docs/project_status.md) for milestones and current work.
 
 ---
 
@@ -198,3 +187,48 @@ Before marking any feature complete:
 - For the list page specifically: verify all three viewer identities manually (owner, accepted member, unauthenticated/non-member)
 - Type checking and linting verify code correctness — they do not verify feature correctness. Always test in the browser.
 - Update `docs/project_status.md` and `docs/changelog.md` after completing each milestone before opening a PR.
+
+---
+
+## Documentation & Memory
+
+### When to write a patterns file
+
+Create a memory patterns file (in `.claude/projects/.../memory/`) **only if the pattern will be reused or has hidden gotchas**. Use this heuristic: *would documenting this save 10+ minutes of re-reading code in a future conversation?*
+
+**Write a patterns file when:**
+
+- **Reusable architecture** — the pattern applies to multiple features (e.g., hidden form fields for partial updates, local-date parsing for timezone safety, mutually exclusive UI states)
+- **Non-obvious gotchas** — subtle issues future work will hit (UTC midnight shifts, FormData coercion, RLS circular references)
+- **Cross-cutting concerns** — patterns that span multiple files or become a project convention
+- **Decision context** — why approach A was chosen over B, so you don't re-debate it later
+
+**Examples to skip:**
+
+- One-off bug fixes ("fix dropdown z-index clash") — no pattern, just a fix
+- Straightforward feature additions with no novel patterns — just work normally
+- Incremental improvements to existing features — captured in changelog is enough
+- Things already in CLAUDE.md or design-system.md — use those instead
+
+### What goes in a patterns file
+
+Structure: name, description, problem statement, solution with code example, "Apply to:" (where else this pattern fits), and any warnings.
+
+Example structure (from `track_4_patterns.md`):
+```markdown
+## Pattern Name
+
+**Problem:** Why this pattern was needed.
+
+**Solution:** How to solve it (with code snippet).
+
+**Apply to:** Other features or contexts where this pattern helps.
+
+**Why:** The reasoning behind the approach.
+```
+
+### Updating memory
+
+Keep memory entries current — if a pattern changes or a decision is reversed, update or delete the entry. Stale memory is worse than no memory.
+
+Add pointers to patterns files in `MEMORY.md` (the index), not the content itself — keep the index under 200 lines so it stays loaded in context.
