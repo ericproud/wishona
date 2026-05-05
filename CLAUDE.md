@@ -14,20 +14,9 @@ Instructions for working in this codebase.
 
 ---
 
-## Current Milestone
+## Current Status
 
-**MVP — 7-day target.** Full checklist in `project_spec.md §1.6`.
-
-Build order:
-
-1. Auth — sign up, log in, log out, username selection
-2. Profile — display name, photo, clothing sizes, interests, note
-3. Lists — create, rename, delete
-4. Invites — send by email (Resend), accept via token link, revoke
-5. Items — add, edit, delete, quantity
-6. List page — three-view logic: owner / accepted member / non-member
-7. Dashboard — owned lists, item counts, invite counts
-8. Admin — hardcoded to `ADMIN_USER_ID`, view/delete users and lists
+**MVP complete and shipped.** V1 in progress — see [`docs/project_status.md`](docs/project_status.md) for milestones and current work.
 
 ---
 

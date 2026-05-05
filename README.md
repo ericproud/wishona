@@ -52,19 +52,28 @@ See [`.env.example`](.env.example) for the full list. You'll need:
 
 ---
 
-## Common Commands
+## Development Workflows
 
+### Add a new shadcn component
 ```bash
-npm run dev               # start dev server
-npm run build             # production build
-npx tsc --noEmit          # type check
-npm run lint              # ESLint
-
-# shadcn/ui
 npx shadcn@latest add <component>
+```
 
-# Regenerate Supabase types after schema changes
-npx supabase gen types typescript --local > types/supabase.ts
+### After Supabase schema changes
+```bash
+npx supabase gen types typescript --project-id <ref> > types/supabase.ts
+```
+
+### Pre-commit checks (before opening a PR)
+```bash
+npx tsc --noEmit   # type check
+npm run lint       # linter
+npm run build      # production build
+```
+
+### Dev server
+```bash
+npm run dev   # localhost:3000
 ```
 
 ---
