@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionState, useEffect, useState, useTransition } from 'react'
+import { useActionState, useEffect, useRef, useState, useTransition } from 'react'
 import Image from 'next/image'
+import { createClient } from '@/lib/supabase/client'
 import { updateItem, deleteItem } from '@/lib/actions/items'
 import { scrapeItemUrl } from '@/lib/actions/scrape'
 import { Button } from '@/components/ui/button'
@@ -12,7 +13,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import ItemTile from '@/components/item-tile'
 import type { Item } from '@/types'
 
-function EditForm({ item, onDone }: { item: Item; onDone: () => void }) {
+function EditForm({ item, userId, onDone }: { item: Item; userId: string; onDone: () => void }) {
   const [state, action, isPending] = useActionState(updateItem.bind(null, item.id), null)
   const [name, setName] = useState(item.name)
   const [url, setUrl] = useState(item.url ?? '')
@@ -21,6 +22,9 @@ function EditForm({ item, onDone }: { item: Item; onDone: () => void }) {
   const [notes, setNotes] = useState(item.notes ?? '')
   const [imageUrl, setImageUrl] = useState(item.image_url ?? '')
   const [isScraping, startScraping] = useTransition()
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (state && 'success' in state) onDone()
@@ -41,6 +45,35 @@ function EditForm({ item, onDone }: { item: Item; onDone: () => void }) {
   function handleUrlPaste(e: React.ClipboardEvent<HTMLInputElement>) {
     const pasted = e.clipboardData.getData('text').trim()
     triggerScrape(pasted)
+  }
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (file) await uploadImage(file)
+    e.target.value = ''
+  }
+
+  async function uploadImage(file: File) {
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadError('Image must be under 2 MB.')
+      return
+    }
+    setUploadError(null)
+    setUploading(true)
+    const ext = (file.name.split('.').pop() ?? 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
+    const path = `${userId}/items/${crypto.randomUUID()}.${ext}`
+    const supabase = createClient()
+    const { error } = await supabase.storage
+      .from('avatars')
+      .upload(path, file, { upsert: false, contentType: file.type })
+    if (error) {
+      setUploadError(error.message)
+      setUploading(false)
+      return
+    }
+    const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(path)
+    setImageUrl(publicUrl)
+    setUploading(false)
   }
 
   return (
@@ -68,20 +101,51 @@ function EditForm({ item, onDone }: { item: Item; onDone: () => void }) {
         </div>
       </div>
 
-      {imageUrl && (
+      <div className="space-y-1.5">
+        <Label>Image <span className="text-muted-foreground font-normal">(optional)</span></Label>
         <div className="flex items-center gap-3">
-          <div className="relative w-14 h-14 rounded border border-border overflow-hidden shrink-0 bg-muted">
-            <Image src={imageUrl} alt="" fill className="object-contain" unoptimized />
+          {imageUrl ? (
+            <div className="relative w-14 h-14 rounded border border-border overflow-hidden shrink-0 bg-muted">
+              <Image src={imageUrl} alt="" fill className="object-contain" unoptimized />
+            </div>
+          ) : (
+            <div className="w-14 h-14 rounded border border-dashed border-border bg-muted shrink-0" />
+          )}
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={uploading}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {uploading ? 'Uploading…' : imageUrl ? 'Replace' : 'Upload photo'}
+              </Button>
+              {imageUrl && (
+                <button
+                  type="button"
+                  className="text-xs text-muted-foreground hover:text-destructive transition-colors"
+                  onClick={() => setImageUrl('')}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Auto-filled from a link, or upload from your device · max 2 MB
+            </p>
+            {uploadError && <p className="text-xs text-destructive">{uploadError}</p>}
           </div>
-          <button
-            type="button"
-            className="text-xs text-muted-foreground hover:text-destructive transition-colors"
-            onClick={() => setImageUrl('')}
-          >
-            Remove image
-          </button>
         </div>
-      )}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleImageUpload}
+        />
+      </div>
 
       <input type="hidden" name="image_url" value={imageUrl} />
 
@@ -111,14 +175,14 @@ function EditForm({ item, onDone }: { item: Item; onDone: () => void }) {
       )}
 
       <div className="flex items-center gap-2 pt-2">
-        <Button type="submit" disabled={isPending || isScraping} className="flex-1">{isPending ? 'Saving…' : 'Save changes'}</Button>
+        <Button type="submit" disabled={isPending || isScraping || uploading} className="flex-1">{isPending ? 'Saving…' : 'Save changes'}</Button>
         <Button type="button" variant="ghost" onClick={onDone}>Cancel</Button>
       </div>
     </form>
   )
 }
 
-function ItemRow({ item }: { item: Item }) {
+function ItemRow({ item, userId }: { item: Item; userId: string }) {
   const [editOpen, setEditOpen] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
 
@@ -169,7 +233,7 @@ function ItemRow({ item }: { item: Item }) {
             <SheetTitle>Edit item</SheetTitle>
           </SheetHeader>
           <div className="p-5 overflow-y-auto flex-1">
-            <EditForm item={item} onDone={() => setEditOpen(false)} />
+            <EditForm item={item} userId={userId} onDone={() => setEditOpen(false)} />
           </div>
         </SheetContent>
       </Sheet>
@@ -177,13 +241,13 @@ function ItemRow({ item }: { item: Item }) {
   )
 }
 
-export default function ItemList({ items }: { items: Item[] }) {
+export default function ItemList({ items, userId }: { items: Item[]; userId: string }) {
   if (items.length === 0) return null
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 items-start">
       {items.map((item) => (
-        <ItemRow key={item.id} item={item} />
+        <ItemRow key={item.id} item={item} userId={userId} />
       ))}
     </div>
   )
