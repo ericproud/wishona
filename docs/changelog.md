@@ -8,6 +8,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (V1 Track 5 — reminder emails)
+- `app/api/cron/send-reminders/route.ts` — Route Handler secured with `Authorization: Bearer {CRON_SECRET}`; queries all lists with `event_date` at T-14 or T-3 days using the admin Supabase client; sends Resend HTML email to every accepted gifter
+- `vercel.json` — registers the cron at `0 14 * * *` (2pm UTC = 9am ET daily)
+- HTML reminder email template: same structure as invite email (dark gradient header, green accent, inline CSS); urgency copy and CTA label vary between 14-day and 3-day variants
+- `CRON_SECRET` documented in `.env.example`; Vercel auto-generates the value in production
+
+### Fixed (V1 Track 5)
+- `types/supabase.ts` — `event_date: string | null` was missing from `lists` Row/Insert/Update (Track 4 type regeneration never committed); added manually
+
 ### Added (V1 Track 4 — event dates on lists)
 - `formatEventDate` helper (`lib/utils.ts`): formats nullable event dates as relative ("in 3 weeks", "2 weeks ago") + absolute ("Aug 15"), with `isPast` flag for styling
 - `EventDateBadge` component (`components/event-date-badge.tsx`): shared badge for displaying event dates on dashboard and member view; greyed text for past dates
