@@ -18,6 +18,22 @@ Instructions for working in this codebase.
 
 **MVP complete and shipped.** V1 in progress — see [`docs/project_status.md`](docs/project_status.md) for milestones and current work.
 
+### Session Handoff Protocol
+
+**At the start of each session:**
+1. Read [`.claude/SESSION_CONTEXT.md`](.claude/SESSION_CONTEXT.md) to understand where the last session left off
+2. Check git status and recent commits
+3. Review the "Start Checklist" in SESSION_CONTEXT to orient yourself
+
+**At the end of each session:**
+1. Update [`.claude/SESSION_CONTEXT.md`](.claude/SESSION_CONTEXT.md) with:
+   - What was completed (checkmarks or "✅ Done")
+   - What's next (prioritized list)
+   - Any blockers, decisions, or discoveries
+   - New patterns or gotchas found
+   - Updated "Last updated" date at the top
+2. This ensures continuity and saves the next session from re-reading the full conversation
+
 ---
 
 ## Architecture
