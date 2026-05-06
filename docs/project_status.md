@@ -122,11 +122,11 @@ Image-forward grid pattern (Pinterest/Etsy style), keeping the existing color pa
 - [x] Dashboard sort: closest future → farthest future → undated → closest past → farthest past
 - [x] Past-date lists greyed out at opacity-60
 
-#### Track 5 — Reminder emails (~2 days)
-- [ ] Vercel cron at 9am ET → `/api/cron/send-reminders`
-- [ ] Reminder cadence: 14 days before + 3 days before (default; tweakable)
-- [ ] Reuse Resend HTML template pattern from `lib/actions/invites.ts`
-- [ ] `CRON_SECRET` env var for route auth
+#### Track 5 — Reminder emails (~2 days) — ✅ Complete
+- [x] Vercel cron at 9am ET → `/api/cron/send-reminders`
+- [x] Reminder cadence: 14 days before + 3 days before (default; tweakable)
+- [x] Reuse Resend HTML template pattern from `lib/actions/invites.ts`
+- [x] `CRON_SECRET` env var for route auth
 
 ### Branching
 One PR per track. Tracks 1, 3, 4 are independent. Track 2 should land before Track 4's UI bits because `ListCard` consumes `event_date`. Track 5 depends on Track 4's schema migration.
