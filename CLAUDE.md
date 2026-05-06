@@ -20,19 +20,18 @@ Instructions for working in this codebase.
 
 ### Session Handoff Protocol
 
-**At the start of each session:**
-1. Read [`.claude/SESSION_CONTEXT.md`](.claude/SESSION_CONTEXT.md) to understand where the last session left off
-2. Check git status and recent commits
-3. Review the "Start Checklist" in SESSION_CONTEXT to orient yourself
+The session context file is automatically loaded below via `@import`. It is your responsibility to update it at the end of every session — not the user's.
 
-**At the end of each session:**
-1. Update [`.claude/SESSION_CONTEXT.md`](.claude/SESSION_CONTEXT.md) with:
-   - What was completed (checkmarks or "✅ Done")
-   - What's next (prioritized list)
-   - Any blockers, decisions, or discoveries
-   - New patterns or gotchas found
-   - Updated "Last updated" date at the top
-2. This ensures continuity and saves the next session from re-reading the full conversation
+@.claude/SESSION_CONTEXT.md
+
+**At the end of every session, before stopping:**
+Update `.claude/SESSION_CONTEXT.md` with:
+- What was completed
+- What's next (prioritized)
+- Any new blockers, decisions, or gotchas
+- Updated "Last updated" date
+
+Do this automatically, without being asked.
 
 ---
 

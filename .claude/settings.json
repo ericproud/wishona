@@ -1,0 +1,17 @@
+{
+  "enabledPlugins": {
+    "security-guidance@claude-plugins-official": true
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '⚠️  SESSION ENDING: Update .claude/SESSION_CONTEXT.md before closing. Include: what was done, what is next, any new blockers or gotchas, and update the Last updated date.'"
+          }
+        ]
+      }
+    ]
+  }
+}

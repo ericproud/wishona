@@ -37,8 +37,10 @@ yarn-error.log*
 # vercel
 .vercel
 
-# claude code local session data
-.claude/
+# claude code local session data (exclude local-only files, track shared ones)
+.claude/*
+!.claude/SESSION_CONTEXT.md
+!.claude/settings.json
 
 # playwright debug artifacts (console logs, page snapshots, screenshots)
 .playwright-mcp/
