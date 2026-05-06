@@ -1,35 +1,29 @@
 # Session Context — Handoff
 
-**Last updated:** 2026-05-05
-**Last session:** Documentation, memory system, session handoff wiring
-**Next priority:** V1 Track 5 (reminder emails)
+**Last updated:** 2026-05-06
+**Last session:** Rebuilt Track 4 (event dates), built Track 5 (reminder emails)
+**Next priority:** Merge PR #24 (Track 4) and PR #23 (Track 5), then V1 is complete
 
 ---
 
 ## Current State
 
-- **V1 Track 4 (event dates)** — ✅ Merged PR #21
-- **Docs optimization** — ✅ Merged PR #22. CLAUDE.md cleaned up, README reorganized.
-- **Pattern extraction** — ✅ 9 pattern files in memory system (~25k words)
-- **Session handoff system** — ✅ SESSION_CONTEXT.md auto-loaded via `@` import in CLAUDE.md; Stop hook fires reminder at session end
+- **V1 Track 4 (event dates)** — ✅ Rebuilt and pushed. PR #24 open. Was never actually committed in a previous session — only docs were merged in PR #21. Now fully implemented.
+- **V1 Track 5 (reminder emails)** — ✅ Built and pushed. PR #23 open.
+- Both PRs need browser testing before merge.
 
 ## What's Next
 
-**V1 Track 5 — Reminder emails (~2 days)**
-- Branch: `feature/v1-track-5-reminders`
-- Vercel cron at 9am ET → `/api/cron/send-reminders`
-- Cadence: 14 days before + 3 days before event_date
-- Reuse Resend HTML email pattern from `lib/actions/invites.ts`
-- Add `CRON_SECRET` env var for route auth
-- Schema dependency: Track 4's `event_date` column (already live)
+1. Merge PR #24 (Track 4) — test in browser first
+2. Merge PR #23 (Track 5) — verify cron shows up in Vercel dashboard after deploy
+3. **V1 is complete** after both merges
+4. Next up: V1.5 / V2 planning (see `project_spec.md §1.6` deferred items)
 
-## Active Branch
+## Active Branches
 
-`main` — clean, up to date with origin.
-
-## Blockers / Decisions
-
-None outstanding.
+- `feature/v1-track-4-event-dates` → PR #24
+- `feature/v1-track-5-reminders` → PR #23
+- `main` — clean
 
 ## Gotchas to Remember
 
@@ -39,3 +33,5 @@ None outstanding.
 4. Server Actions — always fetch auth'd user server-side, never trust client ID
 5. Race conditions on quantity — calculate available qty on server before accepting claim
 6. `.claude/*` in .gitignore with exceptions for SESSION_CONTEXT.md and settings.json
+7. Track 4 code was lost once (never committed) — don't let work pile up uncommitted
+8. CRON_SECRET: Vercel auto-generates in production; set manually in .env.local for local testing
