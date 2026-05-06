@@ -56,9 +56,12 @@ export async function createList(
     if (match) displayName = `${name} ${match[1]}`
   }
 
+  const eventDateRaw = formData.get('event_date') as string
+  const event_date = eventDateRaw || null
+
   const { error } = await supabase
     .from('lists')
-    .insert({ owner_id: user.id, name: displayName, slug })
+    .insert({ owner_id: user.id, name: displayName, slug, event_date })
 
   if (error) return { error: error.message }
 
@@ -81,6 +84,23 @@ export async function updateList(listId: string, formData: FormData): Promise<vo
   await supabase
     .from('lists')
     .update({ name, slug })
+    .eq('id', listId)
+    .eq('owner_id', user.id)
+
+  revalidatePath('/dashboard')
+}
+
+export async function updateListDate(listId: string, formData: FormData): Promise<void> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
+  const raw = formData.get('event_date') as string
+  const event_date = raw || null
+
+  await supabase
+    .from('lists')
+    .update({ event_date })
     .eq('id', listId)
     .eq('owner_id', user.id)
 

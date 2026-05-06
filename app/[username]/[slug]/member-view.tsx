@@ -3,6 +3,7 @@ import { signOut } from '@/lib/actions/auth'
 import EmptyStateCard from '@/components/empty-state-card'
 import UserAvatar from '@/components/ui/user-avatar'
 import ItemCard from './item-card'
+import { formatEventDate } from '@/lib/utils'
 import type { Item, List, Profile, PurchaseWithGifter } from '@/types'
 
 type Owner = { id: string; username: string; first_name: string | null; last_name: string | null }
@@ -31,6 +32,7 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
   const ownerName = (owner.first_name && owner.last_name)
     ? `${owner.first_name} ${owner.last_name}`
     : owner.first_name ?? owner.username
+  const eventDate = list.event_date ? formatEventDate(list.event_date) : null
 
   return (
     <div className="min-h-screen bg-background">
@@ -70,6 +72,11 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
                 {ownerName}&apos;s wishlist
               </p>
               <h1 className="text-xl font-semibold text-foreground">{list.name}</h1>
+              {eventDate && (
+                <p className={`text-sm mt-0.5 ${eventDate.isPast ? 'text-muted-foreground/60' : 'text-primary font-medium'}`}>
+                  {eventDate.absolute}
+                </p>
+              )}
             </div>
             {profile?.wishlist_note && (
               <p className="text-sm text-muted-foreground italic">

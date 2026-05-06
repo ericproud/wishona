@@ -8,13 +8,14 @@ type Props = {
   metadata?: ReactNode
   coverImages: string[]
   actions?: ReactNode
+  isPast?: boolean
 }
 
-export default function ListCard({ href, name, metadata, coverImages, actions }: Props) {
+export default function ListCard({ href, name, metadata, coverImages, actions, isPast }: Props) {
   const images = coverImages.filter(Boolean).slice(0, 4)
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden hover:border-foreground/20 hover:shadow-sm transition-all group flex flex-col">
+    <div className={`bg-card border border-border rounded-lg overflow-hidden hover:border-foreground/20 hover:shadow-sm transition-all group flex flex-col${isPast ? ' opacity-60' : ''}`}>
       <Link href={href} className="block">
         <div className="aspect-[4/3] bg-muted relative overflow-hidden">
           {images.length === 0 && (

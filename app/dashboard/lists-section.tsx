@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { updateList, deleteList } from '@/lib/actions/lists'
+import { updateList, updateListDate, deleteList } from '@/lib/actions/lists'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { PendingButton } from '@/components/ui/pending-button'
 import { Input } from '@/components/ui/input'
 import EmptyStateCard from '@/components/empty-state-card'
 import ListCard from '@/components/list-card'
+import { formatEventDate } from '@/lib/utils'
 import type { List } from '@/types'
 
 interface ListsSectionProps {
@@ -18,6 +19,8 @@ interface ListsSectionProps {
   acceptedInviteCounts: Record<string, number>
 }
 
+type InlineMode = 'renaming' | 'dating' | 'confirming'
+
 export default function ListsSection({
   lists,
   itemCounts,
@@ -25,8 +28,17 @@ export default function ListsSection({
   pendingInviteCounts,
   acceptedInviteCounts,
 }: ListsSectionProps) {
-  const [renamingId, setRenamingId] = useState<string | null>(null)
-  const [confirmingId, setConfirmingId] = useState<string | null>(null)
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const [activeMode, setActiveMode] = useState<InlineMode | null>(null)
+
+  function open(id: string, mode: InlineMode) {
+    setActiveId(id)
+    setActiveMode(mode)
+  }
+  function close() {
+    setActiveId(null)
+    setActiveMode(null)
+  }
 
   return (
     <div>
@@ -53,29 +65,53 @@ export default function ListsSection({
             const items = itemCounts[list.id] ?? 0
             const gifters = acceptedInviteCounts[list.id] ?? 0
             const pending = pendingInviteCounts[list.id] ?? 0
+            const dateInfo = list.event_date ? formatEventDate(list.event_date) : null
 
-            if (renamingId === list.id) {
+            if (activeId === list.id && activeMode === 'renaming') {
               return (
                 <div key={list.id} className="bg-card border border-border rounded-lg p-4 flex flex-col justify-center min-h-[280px]">
                   <p className="text-xs font-medium text-muted-foreground mb-2">Rename list</p>
                   <form
                     action={updateList.bind(null, list.id)}
-                    onSubmit={() => setRenamingId(null)}
+                    onSubmit={close}
                     className="space-y-2"
                   >
                     <Input name="name" defaultValue={list.name} required autoFocus className="h-9 text-sm" />
                     <div className="flex items-center gap-2">
                       <PendingButton size="sm" pendingLabel="Saving…">Save</PendingButton>
-                      <Button type="button" variant="ghost" size="sm" onClick={() => setRenamingId(null)}>
-                        Cancel
-                      </Button>
+                      <Button type="button" variant="ghost" size="sm" onClick={close}>Cancel</Button>
                     </div>
                   </form>
                 </div>
               )
             }
 
-            if (confirmingId === list.id) {
+            if (activeId === list.id && activeMode === 'dating') {
+              return (
+                <div key={list.id} className="bg-card border border-border rounded-lg p-4 flex flex-col justify-center min-h-[280px]">
+                  <p className="text-xs font-medium text-muted-foreground mb-2">Set event date</p>
+                  <form
+                    action={updateListDate.bind(null, list.id)}
+                    onSubmit={close}
+                    className="space-y-2"
+                  >
+                    <Input
+                      name="event_date"
+                      type="date"
+                      defaultValue={list.event_date ?? ''}
+                      autoFocus
+                      className="h-9 text-sm"
+                    />
+                    <div className="flex items-center gap-2">
+                      <PendingButton size="sm" pendingLabel="Saving…">Save</PendingButton>
+                      <Button type="button" variant="ghost" size="sm" onClick={close}>Cancel</Button>
+                    </div>
+                  </form>
+                </div>
+              )
+            }
+
+            if (activeId === list.id && activeMode === 'confirming') {
               return (
                 <div key={list.id} className="bg-destructive/5 border border-destructive/30 rounded-lg p-4 flex flex-col justify-center min-h-[280px] gap-3">
                   <div>
@@ -84,13 +120,9 @@ export default function ListsSection({
                   </div>
                   <div className="flex items-center gap-2">
                     <form action={deleteList.bind(null, list.id)}>
-                      <PendingButton variant="destructive" size="sm" pendingLabel="Deleting…">
-                        Delete
-                      </PendingButton>
+                      <PendingButton variant="destructive" size="sm" pendingLabel="Deleting…">Delete</PendingButton>
                     </form>
-                    <Button variant="ghost" size="sm" onClick={() => setConfirmingId(null)}>
-                      Cancel
-                    </Button>
+                    <Button variant="ghost" size="sm" onClick={close}>Cancel</Button>
                   </div>
                 </div>
               )
@@ -102,6 +134,7 @@ export default function ListsSection({
                 href={`/list/${list.id}/edit`}
                 name={list.name}
                 coverImages={coverImagesByList[list.id] ?? []}
+                isPast={dateInfo?.isPast ?? false}
                 metadata={
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <span>{items} {items === 1 ? 'item' : 'items'}</span>
@@ -117,6 +150,14 @@ export default function ListsSection({
                         <span>{pending} pending</span>
                       </>
                     )}
+                    {dateInfo && (
+                      <>
+                        <span className="text-border">·</span>
+                        <span className={dateInfo.isPast ? 'text-muted-foreground/60' : 'text-primary'}>
+                          {dateInfo.relative}
+                        </span>
+                      </>
+                    )}
                   </div>
                 }
                 actions={
@@ -127,18 +168,17 @@ export default function ListsSection({
                     >
                       Invites
                     </Link>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => { setConfirmingId(null); setRenamingId(list.id) }}
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => open(list.id, 'renaming')}>
                       Rename
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={() => open(list.id, 'dating')}>
+                      Date
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
                       className="text-destructive hover:text-destructive ml-auto"
-                      onClick={() => { setRenamingId(null); setConfirmingId(list.id) }}
+                      onClick={() => open(list.id, 'confirming')}
                     >
                       Delete
                     </Button>

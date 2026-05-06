@@ -42,6 +42,10 @@ export default function NewListPage() {
                 <Label htmlFor="name">List name</Label>
                 <Input id="name" name="name" placeholder="Birthday 2025" required autoFocus />
               </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="event_date">Event date <span className="text-muted-foreground font-normal">(optional)</span></Label>
+                <Input id="event_date" name="event_date" type="date" />
+              </div>
               <div className="flex gap-2 pt-1">
                 <Button type="submit" disabled={pending}>
                   {pending ? 'Creating…' : 'Create list'}

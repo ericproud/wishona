@@ -30,7 +30,27 @@ export default async function DashboardPage() {
     .eq('owner_id', user.id)
     .order('created_at', { ascending: false })
 
-  const lists = (listsData ?? []) as List[]
+  const rawLists = (listsData ?? []) as List[]
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  function parseDate(iso: string) {
+    const [y, m, d] = iso.split('-').map(Number)
+    return new Date(y, m - 1, d)
+  }
+  const lists = [...rawLists].sort((a, b) => {
+    const aDate = a.event_date ? parseDate(a.event_date) : null
+    const bDate = b.event_date ? parseDate(b.event_date) : null
+    const aFuture = aDate && aDate >= today
+    const bFuture = bDate && bDate >= today
+    if (aFuture && bFuture) return aDate.getTime() - bDate.getTime()
+    if (aFuture) return -1
+    if (bFuture) return 1
+    if (!a.event_date && !b.event_date) return 0
+    if (!a.event_date) return -1
+    if (!b.event_date) return 1
+    return bDate!.getTime() - aDate!.getTime()
+  })
   const listIds = lists.map(l => l.id)
 
   const emptyItemRows = Promise.resolve({ data: [] as { list_id: string; image_url: string | null; created_at: string | null }[], error: null })
