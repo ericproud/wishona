@@ -62,7 +62,7 @@ function buildReminderHtml(params: {
     ? `${ownerName}'s ${listName} is in just 3 days!`
     : `${ownerName}'s ${listName} is coming up in 2 weeks!`
   const body = isUrgent
-    ? `Time is running out — make sure you've claimed your items so there are no duplicate gifts.`
+    ? `Time is running out — make sure to pick up some items off of ${ownerName}'s list before it's too late!`
     : `You have plenty of time to pick something special. Head to the list to browse items and claim what you'd like to gift — before someone else does.`
   const ctaLabel = isUrgent ? 'View Wishlist Now' : 'View Wishlist'
 
