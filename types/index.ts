@@ -7,6 +7,7 @@ export type User = Tables<'users'>
 export type List = Tables<'lists'>
 export type Item = Tables<'items'>
 export type ListInvite = Tables<'list_invites'>
+export type ListInviteLink = Tables<'list_invite_links'>
 export type Purchase = Tables<'purchases'>
 
 // Profile overrides clothing_sizes with a structured type instead of the generic Json
