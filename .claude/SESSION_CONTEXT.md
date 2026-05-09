@@ -1,29 +1,32 @@
 # Session Context — Handoff
 
-**Last updated:** 2026-05-07
-**Last session:** V1 complete — Track 4 (event dates) rebuilt, Track 5 (reminder emails) built and tested in production
-**Next priority:** V1.5 / V2 planning
+**Last updated:** 2026-05-09
+**Last session:** Universal invite link + invites page UI redesign (PR #26 merged)
+**Next priority:** Run DB migration in Supabase, then V1.5 / V2 planning
 
 ---
 
 ## Current State
 
 - **V1 all 5 tracks** — ✅ Merged and deployed to wishona.com
-- **Reminder emails** — ✅ Tested in production via curl, emails delivered to real recipients
-- **CRON_SECRET** — set manually in Vercel env vars (not auto-generated — Vercel does NOT auto-generate this)
+- **Universal invite link** — ✅ Code merged (PR #26); `list_invite_links` table migration still needs to be run in Supabase SQL editor (see PR #26 description for SQL), then regenerate types
+- **Supabase types** — `list_invite_links` manually patched in `types/supabase.ts`; after running migration: `npx supabase gen types typescript --project-id <ref> > types/supabase.ts`
+- **CRON_SECRET** — set manually in Vercel env vars (Vercel does NOT auto-generate this)
 - **Git** — clean, only `main` locally, all feature branches deleted
 
 ## What's Next
 
-V1 is shipped. Deferred items from `project_spec.md §1.6` for V1.5 / V2:
-- Anonymous purchase toggle
-- Gift priority ranking
-- Item suggestions from gifters
-- "All claimed" notification email to list owner
-- Public list mode
-- Affiliate link rewriting (Amazon Associates)
-- Filter bar on list page (available only toggle)
-- Request access CTA on access-denied page
+1. Run the `list_invite_links` migration in Supabase production (SQL in PR #26 description)
+2. Regenerate Supabase types
+3. V1.5 / V2 deferred items from `project_spec.md §1.6`:
+   - Anonymous purchase toggle
+   - Gift priority ranking
+   - Item suggestions from gifters
+   - "All claimed" notification email to list owner
+   - Public list mode
+   - Affiliate link rewriting (Amazon Associates)
+   - Filter bar on list page (available only toggle)
+   - Request access CTA on access-denied page
 
 ## Active Branch
 

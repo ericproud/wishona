@@ -8,6 +8,20 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Universal invite link — 2026-05-09)
+- `list_invite_links` table — one row per list, rotatable UUID token, `is_active` flag, RLS-secured
+- `lib/actions/invite-links.ts` — `generateInviteLink`, `deactivateInviteLink`, `joinViaLink`, `joinViaLinkForm` server actions
+- `app/join/[token]/page.tsx` — public join preview page; handles all edge cases (invalid/deactivated link, owner self-join, already a member, unauthenticated)
+- `app/join/[token]/join-button.tsx` — auto-submits on mount so users who just signed up are joined immediately without a manual click
+- `app/list/[id]/invites/invite-link-section.tsx` — generate/copy/regenerate/deactivate UI with inline confirmations; all display state derived from `useActionState`, zero `useEffect` setState
+- `join` added to reserved usernames in `lib/actions/auth.ts`
+
+### Changed (Invites page UI redesign — 2026-05-09)
+- Two-column grid layout: link card and email card side by side on desktop, stacked on mobile
+- Link card gets a green left-border accent (`border-l-2 border-l-primary`) to distinguish it from the email card
+- Members section shows initials avatar + display name + email (previously raw email only); label changed from "Accepted" to "Members"
+- Invite form updated with icon header matching link section style
+
 ### Added (V1 Track 5 — reminder emails)
 - `app/api/cron/send-reminders/route.ts` — Route Handler secured with `Authorization: Bearer {CRON_SECRET}`; queries all lists with `event_date` at T-14 or T-3 days using the admin Supabase client; sends Resend HTML email to every accepted gifter
 - `vercel.json` — registers the cron at `0 14 * * *` (2pm UTC = 9am ET daily)

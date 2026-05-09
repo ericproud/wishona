@@ -135,6 +135,15 @@ Detailed plan in the local plan file (not committed).
 
 ---
 
+#### Universal invite link — ✅ Complete (2026-05-09)
+- [x] `list_invite_links` table with RLS; one row per list, rotatable token
+- [x] `lib/actions/invite-links.ts` — generate, deactivate, join via link (admin client bypasses RLS for lookup)
+- [x] `app/join/[token]/page.tsx` — public preview page; handles not found, deactivated, already member, unauthenticated, and eligible states
+- [x] `app/join/[token]/join-button.tsx` — auto-submits on mount for seamless post-signup join flow
+- [x] `app/list/[id]/invites/invite-link-section.tsx` — copy, regenerate (with confirm), deactivate (with confirm); all state derived from action results, no useEffect setState
+- [x] Invites page UI redesign: two-column grid (link card + email card), member initials avatars, display names instead of raw emails, "Members" label
+- [x] `join` added to reserved usernames to prevent route collision
+
 ## Milestones
 
 | Milestone | Status | Notes |
