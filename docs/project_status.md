@@ -156,12 +156,16 @@ Detailed plan in the local plan file (not committed).
 
 Small polish and UX improvements on top of the shipped V1.
 
-#### Filter bar on list page — PR #28 open (2026-05-09)
-- [ ] "Available only" toggle on gifter member view — hides fully-claimed items, live count label always visible
+#### Filter bar on list page — ✅ Complete (2026-05-09)
+- [x] "Available only" toggle on gifter member view — hides fully-claimed items, live count label always visible
 - Extracts grid into new `ItemsGrid` client component (`app/[username]/[slug]/items-grid.tsx`); `MemberView` stays a server component
 
-#### Priority select label fix — PR #29 open (2026-05-09)
-- [ ] "No priority" → "—" in both priority select dropdowns (Add item + Edit item forms)
+#### Priority select label fix — ✅ Complete (2026-05-09)
+- [x] "No priority" → "—" in both priority select dropdowns (Add item + Edit item forms)
+
+#### Request access CTA on access-denied page — ✅ Complete (2026-05-09)
+- [x] Email form on access-denied page; visitor enters email → owner notified via Resend; success state replaces form
+- New `RequestAccessForm` client component (`app/[username]/[slug]/request-access-form.tsx`); `requestAccess` server action added to `lib/actions/invites.ts`
 
 ---
 

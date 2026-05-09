@@ -1,8 +1,8 @@
 # Session Context — Handoff
 
 **Last updated:** 2026-05-09
-**Last session:** Filter bar (PR #28) + priority select label fix (PR #29) — both pushed, PRs open
-**Next priority:** Merge PRs #28 and #29, then Request access CTA on access-denied page
+**Last session:** Merged PRs #28 (filter bar), #29 (priority select label), #30 (request access CTA on access-denied page)
+**Next priority:** Anonymous purchase toggle or "All claimed" notification email to list owner
 
 ---
 
@@ -13,14 +13,13 @@
 - **Gift priority ranking** — ✅ Merged and deployed; `priority` column was already in DB, no migration needed
 - **`/wrap-up` command** — ✅ Live at `.claude/skills/wrap-up/SKILL.md`
 - **CRON_SECRET** — set manually in Vercel env vars (Vercel does NOT auto-generate this)
-- **Filter bar** — PR #28 open on `feature/filter-bar-available-only`; not yet merged
-- **Priority select label** — PR #29 open on `fix/priority-select-no-priority-label`; not yet merged
+- **Filter bar** — ✅ Merged (PR #28)
+- **Priority select label** — ✅ Merged (PR #29)
+- **Request access CTA** — ✅ Merged (PR #30); no DB changes; dev mode skips email
 
 ## What's Next
 
 V1.5 deferred items:
-- Merge PR #28 (filter bar) and PR #29 (priority select label)
-- Request access CTA on access-denied page — next quick win
 - Anonymous purchase toggle
 - Item suggestions from gifters
 - "All claimed" notification email to list owner
@@ -29,8 +28,7 @@ V1.5 deferred items:
 
 ## Active Branches
 
-- `feature/filter-bar-available-only` — PR #28; available-only toggle on member view; new `ItemsGrid` client component (`app/[username]/[slug]/items-grid.tsx`)
-- `fix/priority-select-no-priority-label` — PR #29; "No priority" → "—" in both priority selects
+None.
 
 ## Blockers / Decisions
 
