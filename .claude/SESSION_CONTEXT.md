@@ -1,8 +1,8 @@
 # Session Context — Handoff
 
 **Last updated:** 2026-05-09
-**Last session:** Post-merge cleanup, CLAUDE.md Git Etiquette rewrite, /wrap-up slash command
-**Next priority:** V1.5 / V2 planning
+**Last session:** Gift priority ranking (PR #27, merged)
+**Next priority:** Filter bar on list page (available-only toggle) or Request access CTA on access-denied page
 
 ---
 
@@ -10,21 +10,21 @@
 
 - **V1 all 5 tracks** — ✅ Merged and deployed to wishona.com
 - **Universal invite link** — ✅ Live in production; `list_invite_links` migration run, Supabase types regenerated
-- **`/wrap-up` command** — ✅ Live at `.claude/skills/wrap-up/SKILL.md`; requires Claude Code restart to activate in an existing session, works from session start going forward
+- **Gift priority ranking** — ✅ Merged and deployed; `priority` column was already in DB, no migration needed
+- **`/wrap-up` command** — ✅ Live at `.claude/skills/wrap-up/SKILL.md`
 - **CRON_SECRET** — set manually in Vercel env vars (Vercel does NOT auto-generate this)
 - **Git** — clean, only `main` locally, all feature branches deleted
 
 ## What's Next
 
 V1.5 / V2 deferred items from `project_spec.md §1.6`:
+- Filter bar on list page (available-only toggle) — quick win
+- Request access CTA on access-denied page — quick win
 - Anonymous purchase toggle
-- Gift priority ranking
 - Item suggestions from gifters
 - "All claimed" notification email to list owner
 - Public list mode
 - Affiliate link rewriting (Amazon Associates)
-- Filter bar on list page (available only toggle)
-- Request access CTA on access-denied page
 
 ## Active Branch
 

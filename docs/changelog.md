@@ -8,6 +8,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Gift priority ranking — 2026-05-09)
+- Priority select field ("Most wanted" / "Would love it" / "Nice to have") on the Add Item sheet (`app/list/[id]/edit/item-form.tsx`) and Edit Item sheet (`app/list/[id]/edit/item-list.tsx`); pre-fills from existing value on edit
+- Priority badge on `ItemTile` (`components/item-tile.tsx`): amber for Most wanted, teal for Would love it, muted for Nice to have; hidden when priority is null
+- `addItem` and `updateItem` server actions (`lib/actions/items.ts`) now read and persist the `priority` field; validated to `1 | 2 | 3 | null`
+- Items sorted by `priority asc nulls last, created_at asc` in both the owner edit view (`app/list/[id]/edit/page.tsx`) and the member/gifter view (`app/[username]/[slug]/page.tsx`)
+- `priority` prop wired through `ItemCard` (`app/[username]/[slug]/item-card.tsx`) to `ItemTile`
+
 ### Added (Developer tooling — 2026-05-09)
 - `.claude/skills/wrap-up/SKILL.md` — `/wrap-up` slash command that runs the full end-of-session ritual: infers completed work from git log, confirms before writing, updates `docs/project_status.md`, `docs/changelog.md`, and `.claude/SESSION_CONTEXT.md`, commits and pushes, then prints a next-session handoff summary
 

@@ -93,7 +93,7 @@ Full requirements in `project_spec.md §1.6`.
 
 **Goals:** more signups + deeper engagement post-signup. **Time budget:** 1–2 weeks.
 
-V1 scope was scoped down from the original V1 backlog (in `project_spec.md §1.6`) to focus on what makes the *core experience* tighter and more visual. The original V1 items not in this scope (anonymous purchase toggle, gift priority ranking, item suggestions from gifters, "all claimed" notification) are deferred to V1.5 or V2.
+V1 scope was scoped down from the original V1 backlog (in `project_spec.md §1.6`) to focus on what makes the *core experience* tighter and more visual. The original V1 items not in this scope (anonymous purchase toggle, item suggestions from gifters, "all claimed" notification) are deferred to V1.5 or V2. Gift priority ranking shipped post-V1 as an incremental feature.
 
 ### Locked-in scope — 5 tracks
 
@@ -134,6 +134,12 @@ One PR per track. Tracks 1, 3, 4 are independent. Track 2 should land before Tra
 Detailed plan in the local plan file (not committed).
 
 ---
+
+#### Gift priority ranking — ✅ Complete (2026-05-09)
+- [x] Priority select (Most wanted / Would love it / Nice to have) on both Add and Edit item forms
+- [x] Priority badge rendered on `ItemTile` in owner edit view and member/gifter view
+- [x] Items sorted by priority (nulls last) then `created_at` in both views
+- [x] No migration — `priority integer` column already existed in DB schema; `addItem` and `updateItem` server actions updated to persist priority
 
 #### Universal invite link — ✅ Complete (2026-05-09)
 - [x] `list_invite_links` table with RLS; one row per list, rotatable token
