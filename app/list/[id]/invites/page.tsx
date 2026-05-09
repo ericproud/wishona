@@ -6,7 +6,26 @@ import { PendingButton } from '@/components/ui/pending-button'
 import AppShell from '@/components/app-shell'
 import EmptyStateCard from '@/components/empty-state-card'
 import InviteForm from './invite-form'
+import InviteLinkSection from './invite-link-section'
 import type { List, ListInvite } from '@/types'
+
+type InviteWithUser = ListInvite & {
+  user: { first_name: string | null; last_name: string | null; username: string } | null
+}
+
+function getDisplayName(invite: InviteWithUser): string {
+  const u = invite.user
+  if (u?.first_name && u?.last_name) return `${u.first_name} ${u.last_name}`
+  if (u?.first_name) return u.first_name
+  if (u?.username) return u.username
+  return invite.invited_email
+}
+
+function getInitials(name: string): string {
+  const parts = name.trim().split(' ')
+  if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+  return name.slice(0, 2).toUpperCase()
+}
 
 export default async function InvitesPage({
   params,
@@ -28,14 +47,18 @@ export default async function InvitesPage({
 
   if (!list) redirect('/dashboard')
 
-  const { data: invites } = await supabase
-    .from('list_invites')
-    .select('*')
-    .eq('list_id', id)
-    .order('created_at', { ascending: false })
+  const [{ data: invites }, { data: inviteLink }] = await Promise.all([
+    supabase
+      .from('list_invites')
+      .select('*, user:users!user_id(first_name, last_name, username)')
+      .eq('list_id', id)
+      .order('created_at', { ascending: false }),
+    supabase.from('list_invite_links').select('*').eq('list_id', id).maybeSingle(),
+  ])
 
-  const pending = (invites ?? []).filter((i: ListInvite) => !i.accepted_at)
-  const accepted = (invites ?? []).filter((i: ListInvite) => !!i.accepted_at)
+  const allInvites = (invites ?? []) as InviteWithUser[]
+  const pending = allInvites.filter(i => !i.accepted_at)
+  const accepted = allInvites.filter(i => !!i.accepted_at)
 
   return (
     <AppShell>
@@ -53,11 +76,43 @@ export default async function InvitesPage({
 
       <div className="mb-6">
         <h1 className="text-xl font-semibold text-foreground">{(list as List).name}</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">Manage who has access to this list</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Invite people and manage who can view and claim gifts.</p>
       </div>
 
       <div className="space-y-6">
-        <InviteForm listId={id} />
+        {/* Invite methods — side by side on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <InviteLinkSection listId={id} inviteLink={inviteLink ?? null} />
+          <InviteForm listId={id} />
+        </div>
+
+        {accepted.length > 0 && (
+          <div>
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+              Members ({accepted.length})
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {accepted.map((invite) => {
+                const name = getDisplayName(invite)
+                const initials = getInitials(name)
+                return (
+                  <div
+                    key={invite.id}
+                    className="bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-3"
+                  >
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-semibold shrink-0">
+                      {initials}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground truncate">{name}</p>
+                      <p className="text-xs text-muted-foreground truncate mt-0.5">{invite.invited_email}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
 
         {pending.length > 0 && (
           <div>
@@ -65,7 +120,7 @@ export default async function InvitesPage({
               Pending ({pending.length})
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {pending.map((invite: ListInvite) => (
+              {pending.map((invite) => (
                 <div
                   key={invite.id}
                   className="bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-3"
@@ -97,36 +152,10 @@ export default async function InvitesPage({
           </div>
         )}
 
-        {accepted.length > 0 && (
-          <div>
-            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-              Accepted ({accepted.length})
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {accepted.map((invite: ListInvite) => (
-                <div
-                  key={invite.id}
-                  className="bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-3"
-                >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">{invite.invited_email}</p>
-                    <p className="text-xs text-primary/80 mt-0.5">Accepted</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         {pending.length === 0 && accepted.length === 0 && (
           <EmptyStateCard
             title="No invites sent yet."
-            description="Add an email above to invite someone to this list."
+            description="Share the link or add an email above to invite someone."
           />
         )}
       </div>

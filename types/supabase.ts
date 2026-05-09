@@ -61,6 +61,48 @@ export type Database = {
           },
         ]
       }
+      list_invite_links: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          is_active: boolean
+          list_id: string
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          is_active?: boolean
+          list_id: string
+          token: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_active?: boolean
+          list_id?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "list_invite_links_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "list_invite_links_list_id_fkey"
+            columns: ["list_id"]
+            isOneToOne: true
+            referencedRelation: "lists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       list_invites: {
         Row: {
           accepted_at: string | null

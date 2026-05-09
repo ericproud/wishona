@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 
 const RESERVED_USERNAMES = new Set([
   'admin', 'api', 'login', 'signup', 'dashboard',
-  'profile', 'list', 'assets', 'static', 'invite',
+  'profile', 'list', 'assets', 'static', 'invite', 'join',
 ])
 
 function isValidUsername(username: string): boolean {
