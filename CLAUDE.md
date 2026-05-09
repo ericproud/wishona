@@ -113,58 +113,114 @@ Before writing or committing any UI change, ask: **would a real user understand 
 
 ## Git Etiquette
 
-- **Never push directly to `main`.** All changes go through a feature branch and PR.
-- **Branch naming:** `feature/short-description`, `fix/short-description`, `chore/short-description`
-- **Commit messages:** Imperative mood, lowercase, concise — e.g. `add invite acceptance page`, `fix purchase RLS policy`
-- **One PR per milestone.** Each milestone in the build order gets its own branch and PR. Do not bundle multiple milestones into one branch.
-- **Repo:** `https://github.com/ericproud/wishlist` (private)
+**Repo:** `https://github.com/ericproud/wishlist` (private)  
+**Default branch:** `main` — never commit or push directly to it.
 
-### Milestone completion — do this automatically, without being asked
+---
 
-When a milestone is fully tested and working:
+### Branch naming
 
-1. Update `docs/project_status.md` and `docs/changelog.md`
-2. Run the pre-commit checklist and fix any issues
-3. Commit the doc updates
-4. Push the branch and open a PR on GitHub
-5. Tell the user the PR is ready to merge, then immediately create the next feature branch and continue
+| Type | Pattern | Example |
+|------|---------|---------|
+| New feature | `feature/short-description` | `feature/universal-invite-link` |
+| Bug fix | `fix/short-description` | `fix/reminder-email-copy` |
+| Chore / docs | `chore/short-description` | `chore/update-session-context` |
 
-Do not wait for the user to ask. A clean git history is a project requirement.
+One branch per feature or fix. Do not bundle unrelated changes into one branch.
 
-### When to commit
+---
 
-Commit at every logical stopping point — don't let work pile up. Good commit moments:
-- A feature or sub-feature is complete and tested in the browser
-- A bug is fixed and verified
-- A refactor is done and type-checks pass
+### Feature workflow — follow this every time
+
+**1. Start a branch before writing any code.**
+```bash
+git checkout main && git pull --ff-only
+git checkout -b feature/your-description
+```
+
+**2. Commit at logical checkpoints** — don't let work pile up.
+
+Good moments to commit:
+- A sub-feature is complete and type-checks pass
+- A bug is fixed and verified in the browser
 - Before switching to a different concern
+
+Run the pre-commit checklist first (see below). Then:
+```bash
+git add <specific files>        # stage by name, never `git add .`
+git commit -m "verb: short description"
+```
+
+**3. When the feature is fully tested, open a PR.**
+```bash
+git push -u origin feature/your-description
+gh pr create --title "..." --body "..."
+```
+
+**4. After merge, clean up** (see Branch Hygiene below).
+
+---
+
+### Commit messages
+
+Format: `type: short description` — imperative mood, lowercase, no period.
+
+```
+feature: add universal invite link for wishlists
+fix: update 3-day reminder email copy
+chore: update session context
+refactor: extract event date badge into component
+```
+
+- `feature:` — new user-visible functionality
+- `fix:` — bug fix
+- `chore:` — maintenance, docs, deps, config
+- `refactor:` — code change with no behavior change
+
+Keep the subject line under 72 characters. Add a body only when the *why* isn't obvious from the diff.
+
+---
 
 ### Pre-commit checklist (run in order, fix before committing)
 
 ```bash
-npx tsc --noEmit   # must be zero errors
-npm run lint       # must be zero errors (warnings OK)
-npm run build      # run before PRs, not necessarily every commit
+npx tsc --noEmit    # zero errors required
+npm run lint        # zero errors required (warnings OK)
+npm run build       # required before opening a PR; not required for every commit
 ```
 
-Never commit with TypeScript errors or lint errors. If the build fails, fix it before opening the PR.
+Never commit TypeScript errors or lint errors. If a check fails, fix it before committing.
+
+---
+
+### PR requirements
+
+Every PR must have:
+- A clear title (`feature:`, `fix:`, etc.)
+- A summary of what changed and why
+- A test plan — bullet list of what to verify manually
+- The migration SQL in the body if a DB change is included
+
+Use `gh pr create` with a `--body` heredoc. Do not open a PR with an empty description.
+
+---
 
 ### Branch hygiene — clean up automatically, without being asked
 
-Whenever you start a session, switch branches, or finish a milestone, prune merged branches so the local repo stays in sync with GitHub. Do this on your own — don't wait for the user to ask.
+After a branch is merged (or at the start of a new session), prune stale local branches.
 
-Standard cleanup sequence (run when the working tree is clean and the current branch is not the one being deleted):
-
-```bash
-git fetch --prune origin                  # drops remote-tracking refs whose upstream is gone
-git checkout main && git pull --ff-only   # fast-forward main to origin/main
-git branch --merged main | grep -vE '^\*|^\s*main$' | xargs -r git branch -d
+**Windows (PowerShell):**
+```powershell
+git fetch --prune origin
+git checkout main
+git pull --ff-only
+# Delete all local branches fully merged into main
+git branch --merged main | Where-Object { $_ -notmatch '^\*|main' } | ForEach-Object { git branch -d $_.Trim() }
 ```
 
-Rules:
-- Only delete branches that are fully merged into `main` (use `-d`, never `-D`, unless the user explicitly approves a force-delete).
-- Never delete a branch with uncommitted or unpushed work — verify with `git status` and `git log origin/<branch>..HEAD` first.
-- If the current branch is the one to delete, switch to `main` first.
+**Rules:**
+- Only delete branches merged into `main` — use `-d`, never `-D`, unless the user explicitly approves.
+- Never delete a branch with uncommitted or unpushed work.
 - If something looks unexpected (unknown branches, divergent history), stop and ask before deleting.
 
 ---
