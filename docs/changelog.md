@@ -8,6 +8,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Filter bar on list page — 2026-05-09)
+- `app/[username]/[slug]/items-grid.tsx` (new) — client component that owns the available-only filter state; renders the item grid and count label; handles the "all claimed" empty state when filter is active
+- "Available only" toggle button above the item grid on the gifter/member view; fills green when active, outline when off; count label ("X of Y available") always visible
+- `app/[username]/[slug]/member-view.tsx` updated to render `ItemsGrid` instead of the inline items map
+
+### Fixed (Priority select label — 2026-05-09)
+- `app/list/[id]/edit/item-form.tsx` — priority select empty option changed from "No priority" to "—"
+- `app/list/[id]/edit/item-list.tsx` — same change in the edit item form
+
 ### Added (Gift priority ranking — 2026-05-09)
 - Priority select field ("Most wanted" / "Would love it" / "Nice to have") on the Add Item sheet (`app/list/[id]/edit/item-form.tsx`) and Edit Item sheet (`app/list/[id]/edit/item-list.tsx`); pre-fills from existing value on edit
 - Priority badge on `ItemTile` (`components/item-tile.tsx`): amber for Most wanted, teal for Would love it, muted for Nice to have; hidden when priority is null
