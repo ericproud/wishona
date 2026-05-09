@@ -117,7 +117,7 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
       <div className="space-y-2">
         <p className="text-xs text-muted-foreground">Remove your claim on this item?</p>
         <div className="flex items-center gap-1.5">
-          <form action={unmarkPurchased.bind(null, myPurchase.id, listPath)} className="flex-1">
+          <form action={unmarkPurchased.bind(null, myPurchase.id, listPath, item.list_id)} className="flex-1">
             <Button variant="destructive" size="sm" type="submit" className="w-full">Yes, unclaim</Button>
           </form>
           <Button variant="ghost" size="sm" onClick={() => setMode('idle')}>Cancel</Button>
