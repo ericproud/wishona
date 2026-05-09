@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { signOut } from '@/lib/actions/auth'
 import EmptyStateCard from '@/components/empty-state-card'
 import UserAvatar from '@/components/ui/user-avatar'
-import ItemCard from './item-card'
+import ItemsGrid from './items-grid'
 import { formatEventDate } from '@/lib/utils'
 import type { Item, List, Profile, PurchaseWithGifter } from '@/types'
 
@@ -109,26 +109,12 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
             description="Check back soon — the list owner is still adding ideas."
           />
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 items-start">
-            {items.map(item => {
-              const itemPurchases = purchases.filter(p => p.item_id === item.id)
-              const myPurchase = itemPurchases.find(p => p.gifter_id === currentUserId) ?? null
-              const otherPurchases = itemPurchases.filter(p => p.gifter_id !== currentUserId)
-              const totalClaimed = itemPurchases.reduce((sum, p) => sum + p.quantity, 0)
-              const availableQty = item.quantity - totalClaimed
-
-              return (
-                <ItemCard
-                  key={item.id}
-                  item={item}
-                  myPurchase={myPurchase}
-                  otherPurchases={otherPurchases}
-                  availableQty={availableQty}
-                  listPath={listPath}
-                />
-              )
-            })}
-          </div>
+          <ItemsGrid
+            items={items}
+            purchases={purchases}
+            currentUserId={currentUserId}
+            listPath={listPath}
+          />
         )}
       </main>
     </div>
