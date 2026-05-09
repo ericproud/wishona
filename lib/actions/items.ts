@@ -37,13 +37,16 @@ export async function addItem(
   const url = urlRaw || null
   const price = priceRaw ? parseFloat(priceRaw) : null
   const quantity = quantityRaw ? parseInt(quantityRaw, 10) : 1
+  const priorityRaw = (formData.get('priority') as string).trim()
+  const priority = priorityRaw ? parseInt(priorityRaw, 10) : null
 
   if (price !== null && (isNaN(price) || price < 0)) return { error: 'Price must be a positive number.' }
   if (isNaN(quantity) || quantity < 1) return { error: 'Quantity must be at least 1.' }
+  if (priority !== null && ![1, 2, 3].includes(priority)) return { error: 'Invalid priority.' }
 
   const { error } = await supabase
     .from('items')
-    .insert({ list_id: listId, name, url, price, quantity, notes: notes || null, image_url: imageUrl })
+    .insert({ list_id: listId, name, url, price, quantity, notes: notes || null, image_url: imageUrl, priority })
 
   if (error) return { error: error.message }
 
@@ -80,13 +83,16 @@ export async function updateItem(
   const url = urlRaw || null
   const price = priceRaw ? parseFloat(priceRaw) : null
   const quantity = quantityRaw ? parseInt(quantityRaw, 10) : 1
+  const priorityRaw = (formData.get('priority') as string).trim()
+  const priority = priorityRaw ? parseInt(priorityRaw, 10) : null
 
   if (price !== null && (isNaN(price) || price < 0)) return { error: 'Price must be a positive number.' }
   if (isNaN(quantity) || quantity < 1) return { error: 'Quantity must be at least 1.' }
+  if (priority !== null && ![1, 2, 3].includes(priority)) return { error: 'Invalid priority.' }
 
   const { error } = await supabase
     .from('items')
-    .update({ name, url, price, quantity, notes: notes || null, image_url: imageUrl })
+    .update({ name, url, price, quantity, notes: notes || null, image_url: imageUrl, priority })
     .eq('id', itemId)
 
   if (error) return { error: error.message }

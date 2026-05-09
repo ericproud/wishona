@@ -48,6 +48,7 @@ export default async function ListPage({
     .from('items')
     .select('*')
     .eq('list_id', list.id)
+    .order('priority', { ascending: true, nullsFirst: false })
     .order('created_at', { ascending: true })
 
   const items = (itemsData ?? []) as Item[]
