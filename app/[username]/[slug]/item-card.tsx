@@ -152,6 +152,7 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
       quantity={item.quantity}
       url={item.url}
       notes={item.notes}
+      priority={item.priority}
       topRight={topRight}
       meta={meta}
       footer={footer}

@@ -20,6 +20,7 @@ function EditForm({ item, userId, onDone }: { item: Item; userId: string; onDone
   const [price, setPrice] = useState(item.price !== null ? String(item.price) : '')
   const [quantity, setQuantity] = useState(String(item.quantity))
   const [notes, setNotes] = useState(item.notes ?? '')
+  const [priority, setPriority] = useState(item.priority !== null ? String(item.priority) : '')
   const [imageUrl, setImageUrl] = useState(item.image_url ?? '')
   const [isScraping, startScraping] = useTransition()
   const [uploading, setUploading] = useState(false)
@@ -170,6 +171,22 @@ function EditForm({ item, userId, onDone }: { item: Item; userId: string; onDone
         <Input id={`notes-${item.id}`} name="notes" value={notes} onChange={e => setNotes(e.target.value)} placeholder="Size, color, or anything helpful for the gifter" />
       </div>
 
+      <div className="space-y-1.5">
+        <Label htmlFor={`priority-${item.id}`}>Priority <span className="text-muted-foreground font-normal">(optional)</span></Label>
+        <select
+          id={`priority-${item.id}`}
+          name="priority"
+          value={priority}
+          onChange={e => setPriority(e.target.value)}
+          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+        >
+          <option value="">No priority</option>
+          <option value="1">Most wanted</option>
+          <option value="2">Would love it</option>
+          <option value="3">Nice to have</option>
+        </select>
+      </div>
+
       {state && 'error' in state && (
         <p className="text-xs text-destructive">{state.error}</p>
       )}
@@ -225,6 +242,7 @@ function ItemRow({ item, userId }: { item: Item; userId: string }) {
         quantity={item.quantity}
         url={item.url}
         notes={item.notes}
+        priority={item.priority}
         footer={footer}
       />
       <Sheet open={editOpen} onOpenChange={setEditOpen}>

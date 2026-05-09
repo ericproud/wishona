@@ -20,6 +20,7 @@ export default function ItemForm({ listId, userId }: { listId: string; userId: s
   const [price, setPrice] = useState('')
   const [notes, setNotes] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [priority, setPriority] = useState('')
   const [isScraping, startScraping] = useTransition()
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
@@ -34,6 +35,7 @@ export default function ItemForm({ listId, userId }: { listId: string; userId: s
       setPrice('')
       setNotes('')
       setImageUrl('')
+      setPriority('')
       setUploadError(null)
     }
   }
@@ -214,6 +216,24 @@ export default function ItemForm({ listId, userId }: { listId: string; userId: s
                 value={notes}
                 onChange={e => setNotes(e.target.value)}
               />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="priority">
+                Priority <span className="text-muted-foreground font-normal">(optional)</span>
+              </Label>
+              <select
+                id="priority"
+                name="priority"
+                value={priority}
+                onChange={e => setPriority(e.target.value)}
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                <option value="">No priority</option>
+                <option value="1">Most wanted</option>
+                <option value="2">Would love it</option>
+                <option value="3">Nice to have</option>
+              </select>
             </div>
 
             {state && 'error' in state && (

@@ -31,6 +31,7 @@ export default async function EditItemsPage({
     .from('items')
     .select('*')
     .eq('list_id', id)
+    .order('priority', { ascending: true, nullsFirst: false })
     .order('created_at', { ascending: true })
 
   const itemList = (items ?? []) as Item[]

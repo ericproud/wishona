@@ -1,6 +1,18 @@
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 
+const PRIORITY_LABELS: Record<number, string> = {
+  1: 'Most wanted',
+  2: 'Would love it',
+  3: 'Nice to have',
+}
+
+const PRIORITY_STYLES: Record<number, string> = {
+  1: 'bg-amber-100 text-amber-700',
+  2: 'bg-emerald-100 text-emerald-700',
+  3: 'bg-muted text-muted-foreground',
+}
+
 type Props = {
   imageUrl: string | null
   name: string
@@ -8,6 +20,7 @@ type Props = {
   quantity?: number
   url?: string | null
   notes?: string | null
+  priority?: number | null
   topRight?: ReactNode
   meta?: ReactNode
   footer?: ReactNode
@@ -22,6 +35,7 @@ export default function ItemTile({
   quantity = 1,
   url,
   notes,
+  priority,
   topRight,
   meta,
   footer,
@@ -53,6 +67,11 @@ export default function ItemTile({
       </div>
       <div className="p-3 flex flex-col flex-1 gap-1">
         <p className="text-sm font-medium text-foreground line-clamp-2 leading-snug">{name}</p>
+        {priority != null && PRIORITY_LABELS[priority] && (
+          <span className={`self-start text-[10px] font-medium px-1.5 py-0.5 rounded ${PRIORITY_STYLES[priority]}`}>
+            {PRIORITY_LABELS[priority]}
+          </span>
+        )}
         {(price !== null || url) && (
           <div className="flex items-center gap-2 text-xs">
             {price !== null && <span className="font-semibold text-foreground">${price.toFixed(2)}</span>}
