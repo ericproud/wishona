@@ -57,19 +57,26 @@ export async function markPurchased(
 
   if (error) return { error: error.message }
 
-  await maybeNotifyOwnerAllClaimed(item.list_id)
+  await maybeNotifyGiftersAllClaimed(item.list_id)
 
   revalidatePath(listPath)
   return { success: true }
 }
 
-async function maybeNotifyOwnerAllClaimed(listId: string): Promise<void> {
+async function maybeNotifyGiftersAllClaimed(listId: string): Promise<void> {
   const admin = createAdminClient()
 
   const [{ data: listData }, { data: items }] = await Promise.all([
     admin
       .from('lists')
-      .select('id, name, slug, all_claimed_notified_at, owner:users!lists_owner_id_fkey (email, first_name, last_name, username)')
+      .select(`
+        id, name, slug, all_claimed_notified_at,
+        owner:users!lists_owner_id_fkey (first_name, last_name, username),
+        list_invites (
+          invited_email, user_id, accepted_at,
+          gifter:users!list_invites_user_id_fkey (email, first_name)
+        )
+      `)
       .eq('id', listId)
       .single(),
     admin
@@ -100,22 +107,36 @@ async function maybeNotifyOwnerAllClaimed(listId: string): Promise<void> {
 
   if (process.env.NODE_ENV !== 'production') return
 
-  const owner = listData.owner as { email: string; first_name: string | null; last_name: string | null; username: string }
+  const owner = listData.owner as { first_name: string | null; last_name: string | null; username: string }
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishona.com'
   const listUrl = `${appUrl}/${owner.username}/${listData.slug}`
+  const ownerName = displayName(owner)
+
+  const invites = listData.list_invites as {
+    invited_email: string
+    user_id: string | null
+    accepted_at: string | null
+    gifter: { email: string; first_name: string | null } | null
+  }[]
+
+  const accepted = invites.filter((inv) => inv.user_id !== null && inv.accepted_at !== null)
 
   const resend = new Resend(process.env.RESEND_API_KEY)
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL!,
-    to: owner.email,
-    subject: `Everything on your "${listData.name}" wishlist is claimed!`,
-    html: buildAllClaimedHtml({
-      ownerName: displayName(owner),
-      listName: listData.name,
-      listUrl,
-      appUrl,
-    }),
-  })
+
+  for (const invite of accepted) {
+    const toEmail = invite.gifter?.email ?? invite.invited_email
+    await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL!,
+      to: toEmail,
+      subject: `Everything on ${ownerName}'s "${listData.name}" wishlist is claimed!`,
+      html: buildAllClaimedHtml({
+        ownerName,
+        listName: listData.name,
+        listUrl,
+        appUrl,
+      }),
+    })
+  }
 }
 
 export async function unmarkPurchased(purchaseId: string, listPath: string, listId: string): Promise<void> {

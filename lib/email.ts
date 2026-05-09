@@ -34,9 +34,9 @@ export function buildAllClaimedHtml(params: {
                 <!-- Main content -->
                 <tr>
                   <td style="padding: 40px 30px;">
-                    <p style="margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">Your wishlist is fully covered!</p>
+                    <p style="margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">${ownerName}'s ${listName} is fully claimed!</p>
                     <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280;">
-                      Great news, ${ownerName} — every item on your <strong>${listName}</strong> has been claimed. Your gifters have it all sorted out.
+                      Every item on the wishlist has been claimed — no need to worry about any gaps. Head to the list to see what's been covered.
                     </p>
 
                     <!-- CTA Button -->
@@ -48,7 +48,7 @@ export function buildAllClaimedHtml(params: {
                       </tr>
                     </table>
 
-                    <p style="margin: 24px 0 0 0; font-size: 13px; color: #9ca3af;">You're receiving this because you own this wishlist on Wishona.</p>
+                    <p style="margin: 24px 0 0 0; font-size: 13px; color: #9ca3af;">You're receiving this because you accepted an invite to ${ownerName}'s list on Wishona.</p>
                   </td>
                 </tr>
 
