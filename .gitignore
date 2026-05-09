@@ -41,6 +41,9 @@ yarn-error.log*
 .claude/*
 !.claude/SESSION_CONTEXT.md
 !.claude/settings.json
+!.claude/commands
+.claude/commands/*
+!.claude/commands/*.md
 
 # playwright debug artifacts (console logs, page snapshots, screenshots)
 .playwright-mcp/
