@@ -34,16 +34,16 @@ export function buildAllClaimedHtml(params: {
                 <!-- Main content -->
                 <tr>
                   <td style="padding: 40px 30px;">
-                    <p style="margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">${ownerName}'s ${listName} is fully claimed!</p>
+                    <p style="margin: 0 0 20px 0; font-size: 18px; font-weight: 600;">The list is all covered!</p>
                     <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280;">
-                      Every item on the wishlist has been claimed — no need to worry about any gaps. Head to the list to see what's been covered.
+                      Just a heads up — every item on ${ownerName}'s <strong>${listName}</strong> has been claimed. No need to scramble for anything. Sounds like ${ownerName} is in for some great gifts!
                     </p>
 
                     <!-- CTA Button -->
                     <table cellpadding="0" cellspacing="0" style="margin: 32px 0;">
                       <tr>
                         <td align="center" style="background-color: #059669; border-radius: 6px;">
-                          <a href="${listUrl}" style="display: inline-block; padding: 14px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">View Your Wishlist</a>
+                          <a href="${listUrl}" style="display: inline-block; padding: 14px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">View the List</a>
                         </td>
                       </tr>
                     </table>

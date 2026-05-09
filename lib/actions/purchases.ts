@@ -128,7 +128,7 @@ async function maybeNotifyGiftersAllClaimed(listId: string): Promise<void> {
     await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL!,
       to: toEmail,
-      subject: `Everything on ${ownerName}'s "${listData.name}" wishlist is claimed!`,
+      subject: `${ownerName}'s ${listData.name} is all covered`,
       html: buildAllClaimedHtml({
         ownerName,
         listName: listData.name,
