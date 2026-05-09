@@ -163,6 +163,7 @@ export type Database = {
       }
       lists: {
         Row: {
+          all_claimed_notified_at: string | null
           created_at: string | null
           event_date: string | null
           id: string
@@ -172,6 +173,7 @@ export type Database = {
           slug: string
         }
         Insert: {
+          all_claimed_notified_at?: string | null
           created_at?: string | null
           event_date?: string | null
           id?: string
@@ -181,6 +183,7 @@ export type Database = {
           slug: string
         }
         Update: {
+          all_claimed_notified_at?: string | null
           created_at?: string | null
           event_date?: string | null
           id?: string
