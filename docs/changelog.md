@@ -8,6 +8,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Request access CTA — 2026-05-09)
+- `app/[username]/[slug]/request-access-form.tsx` (new) — client component with email input and `useActionState`; transitions to "Request sent" confirmation on success
+- `requestAccess` server action in `lib/actions/invites.ts` — validates email, looks up owner's email via admin client, sends Resend notification to owner; skips email in development mode
+- `app/[username]/[slug]/access-denied.tsx` — added `RequestAccessForm` below the lock message and `ownerUserId` prop; "Go to dashboard" button demoted to ghost variant
+- `app/[username]/[slug]/page.tsx` — passes `ownerUserId` to `AccessDenied`
+
 ### Added (Filter bar on list page — 2026-05-09)
 - `app/[username]/[slug]/items-grid.tsx` (new) — client component that owns the available-only filter state; renders the item grid and count label; handles the "all claimed" empty state when filter is active
 - "Available only" toggle button above the item grid on the gifter/member view; fills green when active, outline when off; count label ("X of Y available") always visible
