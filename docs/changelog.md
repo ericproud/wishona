@@ -8,6 +8,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Developer tooling — 2026-05-09)
+- `.claude/skills/wrap-up/SKILL.md` — `/wrap-up` slash command that runs the full end-of-session ritual: infers completed work from git log, confirms before writing, updates `docs/project_status.md`, `docs/changelog.md`, and `.claude/SESSION_CONTEXT.md`, commits and pushes, then prints a next-session handoff summary
+
+### Changed (Developer tooling — 2026-05-09)
+- `CLAUDE.md` Git Etiquette section rewritten: explicit feature workflow (start branch before writing code), branch naming table, commit message type prefix table, pre-commit checklist, PR requirements, PowerShell-compatible branch cleanup
+- `CLAUDE.md` — added "After merge — end-of-task cleanup" section covering post-merge pull, branch deletion, docs updates, session context update, and commit sequence
+
 ### Added (Universal invite link — 2026-05-09)
 - `list_invite_links` table — one row per list, rotatable UUID token, `is_active` flag, RLS-secured
 - `lib/actions/invite-links.ts` — `generateInviteLink`, `deactivateInviteLink`, `joinViaLink`, `joinViaLinkForm` server actions

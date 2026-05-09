@@ -1,32 +1,30 @@
 # Session Context — Handoff
 
 **Last updated:** 2026-05-09
-**Last session:** Universal invite link + invites page UI redesign (PR #26 merged)
-**Next priority:** Run DB migration in Supabase, then V1.5 / V2 planning
+**Last session:** Post-merge cleanup, CLAUDE.md Git Etiquette rewrite, /wrap-up slash command
+**Next priority:** V1.5 / V2 planning
 
 ---
 
 ## Current State
 
 - **V1 all 5 tracks** — ✅ Merged and deployed to wishona.com
-- **Universal invite link** — ✅ Code merged (PR #26); `list_invite_links` table migration still needs to be run in Supabase SQL editor (see PR #26 description for SQL), then regenerate types
-- **Supabase types** — `list_invite_links` manually patched in `types/supabase.ts`; after running migration: `npx supabase gen types typescript --project-id <ref> > types/supabase.ts`
+- **Universal invite link** — ✅ Live in production; `list_invite_links` migration run, Supabase types regenerated
+- **`/wrap-up` command** — ✅ Live at `.claude/skills/wrap-up/SKILL.md`; requires Claude Code restart to activate in an existing session, works from session start going forward
 - **CRON_SECRET** — set manually in Vercel env vars (Vercel does NOT auto-generate this)
 - **Git** — clean, only `main` locally, all feature branches deleted
 
 ## What's Next
 
-1. Run the `list_invite_links` migration in Supabase production (SQL in PR #26 description)
-2. Regenerate Supabase types
-3. V1.5 / V2 deferred items from `project_spec.md §1.6`:
-   - Anonymous purchase toggle
-   - Gift priority ranking
-   - Item suggestions from gifters
-   - "All claimed" notification email to list owner
-   - Public list mode
-   - Affiliate link rewriting (Amazon Associates)
-   - Filter bar on list page (available only toggle)
-   - Request access CTA on access-denied page
+V1.5 / V2 deferred items from `project_spec.md §1.6`:
+- Anonymous purchase toggle
+- Gift priority ranking
+- Item suggestions from gifters
+- "All claimed" notification email to list owner
+- Public list mode
+- Affiliate link rewriting (Amazon Associates)
+- Filter bar on list page (available only toggle)
+- Request access CTA on access-denied page
 
 ## Active Branch
 
