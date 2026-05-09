@@ -225,6 +225,44 @@ git branch --merged main | Where-Object { $_ -notmatch '^\*|main' } | ForEach-Ob
 
 ---
 
+### After merge — end-of-task cleanup
+
+Run this sequence after every PR is merged, without being asked.
+
+**1. Pull main and delete the local branch.**
+```powershell
+git checkout main
+git pull --ff-only
+git branch --merged main | Where-Object { $_ -notmatch '^\*|main' } | ForEach-Object { git branch -d $_.Trim() }
+```
+
+**2. Verify the branch is gone.**
+```powershell
+git branch        # should list only main (or other active branches)
+git fetch --prune origin   # drop remote-tracking refs that are gone upstream
+```
+
+**3. Update the docs.**
+- `docs/project_status.md` — mark the milestone complete, update "In progress" if needed.
+- `docs/changelog.md` — add an entry: date, what shipped, any caveats.
+
+**4. Update `.claude/SESSION_CONTEXT.md`.**
+- Mark what was completed.
+- Update "What's next" with the next priority.
+- Note any blockers, decisions, or gotchas that came up.
+- Update "Last updated" to today's date.
+
+**5. Commit the doc updates on main.**
+```bash
+git add docs/project_status.md docs/changelog.md .claude/SESSION_CONTEXT.md
+git commit -m "chore: update session context"
+git push
+```
+
+**6. Tell the user the PR is merged and docs are updated, then create the next feature branch if there's more work to do.**
+
+---
+
 ## Common Commands
 
 ```bash
