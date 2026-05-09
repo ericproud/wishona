@@ -16,7 +16,7 @@
 - **Filter bar** — ✅ Merged (PR #28)
 - **Priority select label** — ✅ Merged (PR #29)
 - **Request access CTA** — ✅ Merged (PR #30); no DB changes; dev mode skips email
-- **"All claimed" notification** — ✅ Merged (PR #31); emails all accepted gifters when every item is claimed; DB migration required: `ALTER TABLE lists ADD COLUMN all_claimed_notified_at timestamptz;`
+- **"All claimed" notification** — ✅ Merged (PR #31); emails all accepted gifters when every item is claimed; PR description corrected post-merge; DB migration required: `ALTER TABLE lists ADD COLUMN all_claimed_notified_at timestamptz;`
 
 ## What's Next
 
