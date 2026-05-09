@@ -6,6 +6,7 @@ import { Resend } from 'resend'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 
 export type InviteState = { error: string } | { success: true; inviteUrl?: string } | null
+export type RequestAccessState = { error: string } | { success: true } | null
 
 export async function sendInvite(
   listId: string,
@@ -237,4 +238,101 @@ export async function revokeInvite(inviteId: string): Promise<void> {
     .is('accepted_at', null)
 
   revalidatePath(`/list/${invite.list_id}/invites`)
+}
+
+export async function requestAccess(
+  _prevState: RequestAccessState,
+  formData: FormData
+): Promise<RequestAccessState> {
+  const email = ((formData.get('email') as string) ?? '').trim().toLowerCase()
+  const ownerUserId = formData.get('ownerUserId') as string
+  const ownerName = formData.get('ownerName') as string
+
+  if (!email || !email.includes('@')) return { error: 'Please enter a valid email address.' }
+  if (!ownerUserId) return { error: 'Something went wrong. Please try again.' }
+
+  const adminClient = createAdminClient()
+  const { data: ownerUser } = await adminClient
+    .from('users')
+    .select('email')
+    .eq('id', ownerUserId)
+    .single()
+
+  if (!ownerUser?.email) return { error: 'Something went wrong. Please try again.' }
+
+  if (process.env.NODE_ENV === 'development') {
+    return { success: true }
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishona.com'
+
+  const { error: emailError } = await resend.emails.send({
+    from: process.env.RESEND_FROM_EMAIL!,
+    to: ownerUser.email,
+    subject: `Someone wants access to your wishlist on Wishona`,
+    html: buildRequestAccessHtml({ requesterEmail: email, ownerName, appUrl }),
+  })
+
+  if (emailError) return { error: 'Failed to send request. Please try again.' }
+
+  return { success: true }
+}
+
+function buildRequestAccessHtml(params: {
+  requesterEmail: string
+  ownerName: string
+  appUrl: string
+}): string {
+  const { requesterEmail, ownerName, appUrl } = params
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f9fafb;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9fafb;">
+          <tr>
+            <td align="center" style="padding: 40px 20px;">
+              <table width="100%" max-width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+                <tr style="background: linear-gradient(135deg, #1f2937 0%, #111827 100%);">
+                  <td align="center" style="padding: 30px 20px;">
+                    <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 600;">Wishona</h1>
+                    <p style="margin: 8px 0 0 0; color: #d1d5db; font-size: 14px;">Smart wishlists for meaningful gifts</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 40px 30px;">
+                    <p style="margin: 0 0 20px 0; font-size: 16px; font-weight: 600;">Hi ${ownerName}, someone wants access to your wishlist</p>
+                    <p style="margin: 0 0 20px 0; font-size: 14px; color: #6b7280;">The following person has requested access to one of your wishlists on Wishona:</p>
+                    <div style="background-color: #f3f4f6; border-left: 4px solid #059669; padding: 16px; margin: 20px 0; border-radius: 4px;">
+                      <p style="margin: 0; font-size: 15px; font-weight: 600;">${requesterEmail}</p>
+                    </div>
+                    <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280;">To invite them, log in to Wishona and send them an invite from your list's invite page.</p>
+                    <table cellpadding="0" cellspacing="0" style="margin: 32px 0;">
+                      <tr>
+                        <td align="center" style="background-color: #059669; border-radius: 6px;">
+                          <a href="${appUrl}/dashboard" style="display: inline-block; padding: 14px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">Go to Dashboard</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 24px 30px; border-top: 1px solid #e5e7eb; background-color: #f9fafb;">
+                    <p style="margin: 0; font-size: 12px; color: #9ca3af; text-align: center;">
+                      © 2026 Wishona. All rights reserved.<br />
+                      <a href="${appUrl}" style="color: #059669; text-decoration: none;">Visit Wishona →</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+  `
 }

@@ -1,7 +1,14 @@
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
+import RequestAccessForm from './request-access-form'
 
-export default function AccessDenied({ ownerName }: { ownerName: string }) {
+export default function AccessDenied({
+  ownerName,
+  ownerUserId,
+}: {
+  ownerName: string
+  ownerUserId: string
+}) {
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-nav">
@@ -23,7 +30,11 @@ export default function AccessDenied({ ownerName }: { ownerName: string }) {
               This list is private. You need an invitation from {ownerName} to view it.
             </p>
           </div>
-          <Link href="/dashboard" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
+          <div className="border-t border-border pt-4 text-left space-y-3">
+            <p className="text-xs text-muted-foreground text-center">Don&apos;t have an invite? Request access below.</p>
+            <RequestAccessForm ownerUserId={ownerUserId} ownerName={ownerName} />
+          </div>
+          <Link href="/dashboard" className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
             Go to dashboard
           </Link>
         </div>

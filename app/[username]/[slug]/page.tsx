@@ -33,7 +33,7 @@ export default async function ListPage({
     const ownerName = (ownerData.first_name && ownerData.last_name)
       ? `${ownerData.first_name} ${ownerData.last_name}`
       : ownerData.first_name ?? ownerData.username
-    return <AccessDenied ownerName={ownerName} />
+    return <AccessDenied ownerName={ownerName} ownerUserId={ownerData.id} />
   }
 
   // Owner → redirect to the items edit page
