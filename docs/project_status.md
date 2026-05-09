@@ -156,6 +156,13 @@ Detailed plan in the local plan file (not committed).
 
 Small polish and UX improvements on top of the shipped V1.
 
+#### "All claimed" notification email — ✅ Complete (2026-05-09)
+- [x] After a gifter claims an item, checks if all items on the list are fully covered
+- [x] If yes, emails all accepted gifters: "The list is all covered!" — no gifter names or purchase details revealed
+- [x] Atomic `all_claimed_notified_at` flag on `lists` prevents duplicate sends; resets on unclaim so owner is notified again if re-claimed
+- [x] `lib/email.ts` — shared `displayName` helper and `buildAllClaimedHtml` template
+- DB migration: `ALTER TABLE lists ADD COLUMN all_claimed_notified_at timestamptz;`
+
 #### Filter bar on list page — ✅ Complete (2026-05-09)
 - [x] "Available only" toggle on gifter member view — hides fully-claimed items, live count label always visible
 - Extracts grid into new `ItemsGrid` client component (`app/[username]/[slug]/items-grid.tsx`); `MemberView` stays a server component

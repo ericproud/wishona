@@ -8,6 +8,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added ("All claimed" notification email — 2026-05-09)
+- `lib/email.ts` (new) — shared `displayName` helper and `buildAllClaimedHtml` HTML email template
+- `maybeNotifyGiftersAllClaimed` in `lib/actions/purchases.ts` — fires after each purchase; queries all items + purchases; if fully covered, does an atomic update on `lists.all_claimed_notified_at` and emails all accepted gifters
+- `unmarkPurchased` updated to accept `listId` and reset `all_claimed_notified_at` on unclaim so the notification re-fires if everything gets reclaimed
+- `item-card.tsx` — passes `item.list_id` through to `unmarkPurchased` bind
+- DB migration: `ALTER TABLE lists ADD COLUMN all_claimed_notified_at timestamptz;`
+
 ### Added (Request access CTA — 2026-05-09)
 - `app/[username]/[slug]/request-access-form.tsx` (new) — client component with email input and `useActionState`; transitions to "Request sent" confirmation on success
 - `requestAccess` server action in `lib/actions/invites.ts` — validates email, looks up owner's email via admin client, sends Resend notification to owner; skips email in development mode
