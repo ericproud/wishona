@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import Link from 'next/link'
-import { updateList, updateListDate, deleteList } from '@/lib/actions/lists'
+import { updateList, updateListDate, deleteList, toggleListVisibility } from '@/lib/actions/lists'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { PendingButton } from '@/components/ui/pending-button'
 import { Input } from '@/components/ui/input'
@@ -30,6 +30,8 @@ export default function ListsSection({
 }: ListsSectionProps) {
   const [activeId, setActiveId] = useState<string | null>(null)
   const [activeMode, setActiveMode] = useState<InlineMode | null>(null)
+  const [visibilityPendingId, setVisibilityPendingId] = useState<string | null>(null)
+  const [, startVisibilityTransition] = useTransition()
 
   function open(id: string, mode: InlineMode) {
     setActiveId(id)
@@ -38,6 +40,14 @@ export default function ListsSection({
   function close() {
     setActiveId(null)
     setActiveMode(null)
+  }
+
+  function handleToggleVisibility(listId: string, currentIsPublic: boolean) {
+    setVisibilityPendingId(listId)
+    startVisibilityTransition(async () => {
+      await toggleListVisibility(listId, !currentIsPublic)
+      setVisibilityPendingId(null)
+    })
   }
 
   return (
@@ -158,6 +168,12 @@ export default function ListsSection({
                         </span>
                       </>
                     )}
+                    {list.is_public && (
+                      <>
+                        <span className="text-border">·</span>
+                        <span className="text-primary font-medium">Public</span>
+                      </>
+                    )}
                   </div>
                 }
                 actions={
@@ -173,6 +189,14 @@ export default function ListsSection({
                     </Button>
                     <Button variant="ghost" size="sm" onClick={() => open(list.id, 'dating')}>
                       Date
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={visibilityPendingId === list.id}
+                      onClick={() => handleToggleVisibility(list.id, list.is_public ?? false)}
+                    >
+                      {visibilityPendingId === list.id ? '…' : (list.is_public ? 'Make private' : 'Make public')}
                     </Button>
                     <Button
                       variant="ghost"

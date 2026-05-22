@@ -107,6 +107,20 @@ export async function updateListDate(listId: string, formData: FormData): Promis
   revalidatePath('/dashboard')
 }
 
+export async function toggleListVisibility(listId: string, isPublic: boolean): Promise<void> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
+  await supabase
+    .from('lists')
+    .update({ is_public: isPublic })
+    .eq('id', listId)
+    .eq('owner_id', user.id)
+
+  revalidatePath('/dashboard')
+}
+
 export async function deleteList(listId: string): Promise<void> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

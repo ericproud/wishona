@@ -24,11 +24,11 @@ export default async function ListPage({
   // Fetch profile, list (RLS-gated), and current user in parallel
   const [{ data: profile }, { data: list }, { data: { user } }] = await Promise.all([
     supabase.from('profiles').select('*').eq('user_id', ownerData.id).single(),
-    supabase.from('lists').select('id, name, slug').eq('owner_id', ownerData.id).eq('slug', slug).single(),
+    supabase.from('lists').select('id, name, slug, is_public').eq('owner_id', ownerData.id).eq('slug', slug).single(),
     supabase.auth.getUser(),
   ])
 
-  // No list returned = no access (list doesn't exist, or viewer isn't a member)
+  // No list returned = doesn't exist, or is private and viewer isn't a member
   if (!list) {
     const ownerName = (ownerData.first_name && ownerData.last_name)
       ? `${ownerData.first_name} ${ownerData.last_name}`
@@ -41,8 +41,33 @@ export default async function ListPage({
     redirect(`/list/${list.id}/edit`)
   }
 
-  // RLS confirmed viewer is an accepted member — user must be non-null
-  if (!user) redirect('/login')
+  const isPublicList = list.is_public ?? false
+
+  // Unauthenticated visitor on a public list — show items only, no purchases
+  if (!user) {
+    if (isPublicList) {
+      const { data: itemsData } = await supabase
+        .from('items')
+        .select('*')
+        .eq('list_id', list.id)
+        .order('priority', { ascending: true, nullsFirst: false })
+        .order('created_at', { ascending: true })
+
+      return (
+        <MemberView
+          list={list as List}
+          owner={{ id: ownerData.id, username: ownerData.username, first_name: ownerData.first_name ?? null, last_name: ownerData.last_name ?? null }}
+          profile={profile as Profile | null}
+          items={(itemsData ?? []) as Item[]}
+          purchases={[]}
+          currentUserId={null}
+          isPublicList={true}
+          listPath={`/${username}/${slug}`}
+        />
+      )
+    }
+    redirect('/login')
+  }
 
   const { data: itemsData } = await supabase
     .from('items')
@@ -68,6 +93,7 @@ export default async function ListPage({
       items={items}
       purchases={(purchasesData ?? []) as unknown as PurchaseWithGifter[]}
       currentUserId={user.id}
+      isPublicList={isPublicList}
       listPath={`/${username}/${slug}`}
     />
   )

@@ -9,17 +9,22 @@ import type { Item, PurchaseWithGifter } from '@/types'
 type Props = {
   items: Item[]
   purchases: PurchaseWithGifter[]
-  currentUserId: string
+  currentUserId: string | null
+  isPublicList: boolean
   listPath: string
 }
 
-export default function ItemsGrid({ items, purchases, currentUserId, listPath }: Props) {
+export default function ItemsGrid({ items, purchases, currentUserId, isPublicList, listPath }: Props) {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false)
 
   const enriched = items.map(item => {
     const itemPurchases = purchases.filter(p => p.item_id === item.id)
-    const myPurchase = itemPurchases.find(p => p.gifter_id === currentUserId) ?? null
-    const otherPurchases = itemPurchases.filter(p => p.gifter_id !== currentUserId)
+    const myPurchase = currentUserId
+      ? (itemPurchases.find(p => p.gifter_id === currentUserId) ?? null)
+      : null
+    const otherPurchases = currentUserId
+      ? itemPurchases.filter(p => p.gifter_id !== currentUserId)
+      : itemPurchases
     const totalClaimed = itemPurchases.reduce((sum, p) => sum + p.quantity, 0)
     const availableQty = item.quantity - totalClaimed
     return { item, myPurchase, otherPurchases, availableQty }
@@ -60,6 +65,8 @@ export default function ItemsGrid({ items, purchases, currentUserId, listPath }:
               myPurchase={myPurchase}
               otherPurchases={otherPurchases}
               availableQty={availableQty}
+              currentUserId={currentUserId}
+              isPublicList={isPublicList}
               listPath={listPath}
             />
           ))}
