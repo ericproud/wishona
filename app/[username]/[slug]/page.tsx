@@ -56,7 +56,7 @@ export default async function ListPage({
   const { data: purchasesData } = items.length > 0
     ? await supabase
         .from('purchases')
-        .select('id, item_id, quantity, gifter_id, purchased_at, gifter:users!purchases_gifter_id_fkey(id, first_name, last_name, username)')
+        .select('id, item_id, quantity, gifter_id, purchased_at, is_anonymous, gifter:users!purchases_gifter_id_fkey(id, first_name, last_name, username)')
         .in('item_id', items.map(i => i.id))
     : { data: [] }
 

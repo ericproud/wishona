@@ -238,6 +238,7 @@ export type Database = {
         Row: {
           gifter_id: string
           id: string
+          is_anonymous: boolean
           item_id: string
           purchased_at: string | null
           quantity: number
@@ -245,6 +246,7 @@ export type Database = {
         Insert: {
           gifter_id: string
           id?: string
+          is_anonymous?: boolean
           item_id: string
           purchased_at?: string | null
           quantity?: number
@@ -252,6 +254,7 @@ export type Database = {
         Update: {
           gifter_id?: string
           id?: string
+          is_anonymous?: boolean
           item_id?: string
           purchased_at?: string | null
           quantity?: number
