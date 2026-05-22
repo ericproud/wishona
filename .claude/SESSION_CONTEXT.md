@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-05-22
 **Last session:** Merged PR #33 — public list mode
-**Next priority:** V1.5 complete — no active backlog. Waiting on Skimlinks approval before affiliate work begins.
+**Next priority:** Plan V2 feature set
 
 ---
 
@@ -22,7 +22,7 @@
 
 ## What's Next
 
-V1.5 complete. No deferred items remaining. Skimlinks affiliate approval still pending — affiliate link rewriting removed from backlog until approved.
+V1.5 complete. Next session: plan out the next feature set for the app (V2 scope). Skimlinks affiliate approval still pending — affiliate link rewriting blocked until approved.
 
 ## Active Branches
 
