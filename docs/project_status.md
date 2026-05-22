@@ -156,6 +156,11 @@ Detailed plan in the local plan file (not committed).
 
 Small polish and UX improvements on top of the shipped V1.
 
+#### Anonymous purchase toggle — ✅ Complete (2026-05-22)
+- [x] "Claim anonymously" checkbox on the claim form (per-purchase, gifter's choice)
+- [x] Anonymous purchases display as "Someone is getting this" to other gifters; claimer always sees "You are getting this"
+- DB migration: `ALTER TABLE public.purchases ADD COLUMN is_anonymous boolean NOT NULL DEFAULT false;` (already applied)
+
 #### "All claimed" notification email — ✅ Complete (2026-05-09)
 - [x] After a gifter claims an item, checks if all items on the list are fully covered
 - [x] If yes, emails all accepted gifters: "The list is all covered!" — no gifter names or purchase details revealed

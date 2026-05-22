@@ -8,6 +8,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Anonymous purchase toggle — 2026-05-22)
+- `purchases.is_anonymous` column (`boolean NOT NULL DEFAULT false`) — migration applied to production
+- "Claim anonymously" checkbox in `item-card.tsx` claim form; unchecked by default
+- Anonymous purchases render as "Someone is getting this" to other gifters; claimer always sees their own "You are getting this"
+- `markPurchased` server action reads `is_anonymous` from FormData and persists it on insert
+- `page.tsx` purchases select updated to include `is_anonymous` in the column list (bug caught during testing — was missing from the original query)
+
 ### Added ("All claimed" notification email — 2026-05-09)
 - `lib/email.ts` (new) — shared `displayName` helper and `buildAllClaimedHtml` HTML email template
 - `maybeNotifyGiftersAllClaimed` in `lib/actions/purchases.ts` — fires after each purchase; queries all items + purchases; if fully covered, does an atomic update on `lists.all_claimed_notified_at` and emails all accepted gifters
