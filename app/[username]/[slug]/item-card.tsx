@@ -1,7 +1,8 @@
 'use client'
 
+import Link from 'next/link'
 import { useActionState, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { markPurchased, unmarkPurchased } from '@/lib/actions/purchases'
 import ItemTile from '@/components/item-tile'
@@ -12,6 +13,8 @@ type Props = {
   myPurchase: PurchaseWithGifter | null
   otherPurchases: PurchaseWithGifter[]
   availableQty: number
+  currentUserId: string | null
+  isPublicList: boolean
   listPath: string
 }
 
@@ -20,7 +23,7 @@ function gifterName(g: { first_name: string | null; last_name: string | null; us
   return g.first_name || g.username
 }
 
-export default function ItemCard({ item, myPurchase, otherPurchases, availableQty, listPath }: Props) {
+export default function ItemCard({ item, myPurchase, otherPurchases, availableQty, currentUserId, isPublicList, listPath }: Props) {
   const [mode, setMode] = useState<'idle' | 'claiming' | 'unclaiming'>('idle')
   const [claimQty, setClaimQty] = useState(1)
   const [claimState, claimAction, isClaiming] = useActionState(
@@ -60,7 +63,7 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
       )}
       {otherPurchases.map(p => (
         <p key={p.id}>
-          {p.is_anonymous ? 'Someone' : gifterName(p.gifter)}
+          {isPublicList || p.is_anonymous ? 'Someone' : gifterName(p.gifter)}
           {' '}{p.quantity > 1 ? `is getting ${p.quantity}` : 'is getting this'}
         </p>
       ))}
@@ -74,7 +77,20 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
 
   let footer: React.ReactNode
 
-  if (mode === 'claiming') {
+  if (!currentUserId) {
+    // Unauthenticated visitor on a public list
+    footer = (
+      <div className="flex items-center gap-1.5">
+        {!isFullyClaimed ? (
+          <Link href="/login" className={buttonVariants({ size: 'sm' }) + ' flex-1 text-center'}>
+            Sign in to claim
+          </Link>
+        ) : (
+          <p className="text-xs text-muted-foreground">Someone&apos;s already getting this.</p>
+        )}
+      </div>
+    )
+  } else if (mode === 'claiming') {
     footer = (
       <form action={claimAction} className="space-y-2">
         {availableQty > 1 ? (

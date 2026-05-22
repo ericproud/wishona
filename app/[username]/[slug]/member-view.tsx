@@ -14,11 +14,12 @@ type Props = {
   profile: Profile | null
   items: Item[]
   purchases: PurchaseWithGifter[]
-  currentUserId: string
+  currentUserId: string | null
+  isPublicList: boolean
   listPath: string
 }
 
-export default function MemberView({ list, owner, profile, items, purchases, currentUserId, listPath }: Props) {
+export default function MemberView({ list, owner, profile, items, purchases, currentUserId, isPublicList, listPath }: Props) {
   const sizes = profile?.clothing_sizes
   const sizeEntries = sizes
     ? [
@@ -43,14 +44,22 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
             Wishona
           </Link>
           <div className="flex items-center gap-5">
-            <Link href="/dashboard" className="text-sm text-white/60 hover:text-white/90 transition-colors">
-              Dashboard
-            </Link>
-            <form action={signOut}>
-              <button type="submit" className="text-sm text-white/60 hover:text-white/90 transition-colors cursor-pointer">
-                Log out
-              </button>
-            </form>
+            {currentUserId ? (
+              <>
+                <Link href="/dashboard" className="text-sm text-white/60 hover:text-white/90 transition-colors">
+                  Dashboard
+                </Link>
+                <form action={signOut}>
+                  <button type="submit" className="text-sm text-white/60 hover:text-white/90 transition-colors cursor-pointer">
+                    Log out
+                  </button>
+                </form>
+              </>
+            ) : (
+              <Link href="/login" className="text-sm text-white/60 hover:text-white/90 transition-colors">
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
       </header>
@@ -113,6 +122,7 @@ export default function MemberView({ list, owner, profile, items, purchases, cur
             items={items}
             purchases={purchases}
             currentUserId={currentUserId}
+            isPublicList={isPublicList}
             listPath={listPath}
           />
         )}
