@@ -51,9 +51,11 @@ export async function markPurchased(
   if (isNaN(quantity) || quantity < 1) return { error: 'Quantity must be at least 1.' }
   if (quantity > available) return { error: `Only ${available} unit${available === 1 ? '' : 's'} remaining.` }
 
+  const isAnonymous = formData.get('is_anonymous') === 'true'
+
   const { error } = await supabase
     .from('purchases')
-    .insert({ item_id: itemId, gifter_id: user.id, quantity })
+    .insert({ item_id: itemId, gifter_id: user.id, quantity, is_anonymous: isAnonymous })
 
   if (error) return { error: error.message }
 

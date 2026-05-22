@@ -60,7 +60,7 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
       )}
       {otherPurchases.map(p => (
         <p key={p.id}>
-          {gifterName(p.gifter)}
+          {p.is_anonymous ? 'Someone' : gifterName(p.gifter)}
           {' '}{p.quantity > 1 ? `is getting ${p.quantity}` : 'is getting this'}
         </p>
       ))}
@@ -101,6 +101,15 @@ export default function ItemCard({ item, myPurchase, otherPurchases, availableQt
             )}
           </>
         )}
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            name="is_anonymous"
+            value="true"
+            className="h-3.5 w-3.5 accent-primary"
+          />
+          <span className="text-xs text-muted-foreground">Claim anonymously</span>
+        </label>
         {claimState && 'error' in claimState && (
           <p className="text-xs text-destructive">{claimState.error}</p>
         )}
