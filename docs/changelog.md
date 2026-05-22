@@ -8,6 +8,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (Public list mode — 2026-05-22)
+- `lists.is_public` column (`boolean DEFAULT false`) — default and nulls backfilled; RLS policies on `lists` and `items` updated to allow reads when `is_public = true`
+- "Make public" / "Make private" toggle per list card on the dashboard; "Public" badge shown in card metadata when visible
+- Unauthenticated visitors can browse a public list (items visible, no purchase data); "Sign in to claim" replaces claim buttons; "Sign in" shown in nav
+- Authenticated non-members get full gifter view on public lists and can claim items
+- All purchases on public lists always display as "Someone is getting this" regardless of the per-purchase anonymous flag
+- Owner visiting their own public list still redirects to edit (owner blindness preserved)
+
 ### Added (Anonymous purchase toggle — 2026-05-22)
 - `purchases.is_anonymous` column (`boolean NOT NULL DEFAULT false`) — migration applied to production
 - "Claim anonymously" checkbox in `item-card.tsx` claim form; unchecked by default

@@ -156,6 +156,14 @@ Detailed plan in the local plan file (not committed).
 
 Small polish and UX improvements on top of the shipped V1.
 
+#### Public list mode — ✅ Complete (2026-05-22)
+- [x] "Make public" / "Make private" toggle per list on dashboard; "Public" badge in card metadata
+- [x] Unauthenticated visitors see items + "Sign in to claim"; no purchase data shown
+- [x] Authenticated non-members get full gifter view and can claim
+- [x] All purchases on public lists always display as anonymous ("Someone is getting this")
+- [x] Owner visiting their own public list still redirects to edit (owner blindness preserved)
+- DB migration: `UPDATE lists SET is_public = false WHERE is_public IS NULL; ALTER TABLE lists ALTER COLUMN is_public SET DEFAULT false;` + updated RLS on `lists` and `items`
+
 #### Anonymous purchase toggle — ✅ Complete (2026-05-22)
 - [x] "Claim anonymously" checkbox on the claim form (per-purchase, gifter's choice)
 - [x] Anonymous purchases display as "Someone is getting this" to other gifters; claimer always sees "You are getting this"

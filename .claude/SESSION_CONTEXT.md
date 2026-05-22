@@ -1,8 +1,8 @@
 # Session Context — Handoff
 
 **Last updated:** 2026-05-22
-**Last session:** Merged PR #32 — anonymous purchase toggle
-**Next priority:** Item suggestions from gifters, or public list mode
+**Last session:** Merged PR #33 — public list mode
+**Next priority:** Affiliate link rewriting (Amazon Associates) — only remaining V1.5 item
 
 ---
 
@@ -18,12 +18,11 @@
 - **Request access CTA** — ✅ Merged (PR #30); no DB changes; dev mode skips email
 - **"All claimed" notification** — ✅ Merged (PR #31); emails all accepted gifters when every item is claimed; PR description corrected post-merge; DB migration required: `ALTER TABLE lists ADD COLUMN all_claimed_notified_at timestamptz;`
 - **Anonymous purchase toggle** — ✅ Merged (PR #32); per-purchase checkbox; DB migration applied: `ALTER TABLE purchases ADD COLUMN is_anonymous boolean NOT NULL DEFAULT false;`
+- **Public list mode** — ✅ Merged (PR #33); dashboard toggle per list; unauth visitors see items + "Sign in to claim"; auth non-members get full gifter view; all purchases on public lists always anonymous; DB migration applied to production
 
 ## What's Next
 
 V1.5 deferred items:
-- Item suggestions from gifters
-- Public list mode
 - Affiliate link rewriting (Amazon Associates)
 
 ## Active Branches
