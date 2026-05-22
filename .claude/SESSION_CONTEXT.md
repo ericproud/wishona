@@ -22,8 +22,7 @@
 
 ## What's Next
 
-V1.5 deferred items:
-- Affiliate link rewriting (Amazon Associates)
+V1.5 complete. No deferred items remaining. Skimlinks affiliate approval still pending — affiliate link rewriting removed from backlog until approved.
 
 ## Active Branches
 

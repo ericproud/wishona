@@ -93,7 +93,7 @@ Full requirements in `project_spec.md §1.6`.
 
 **Goals:** more signups + deeper engagement post-signup. **Time budget:** 1–2 weeks.
 
-V1 scope was scoped down from the original V1 backlog (in `project_spec.md §1.6`) to focus on what makes the *core experience* tighter and more visual. The original V1 items not in this scope (anonymous purchase toggle, item suggestions from gifters, "all claimed" notification) are deferred to V1.5 or V2. Gift priority ranking shipped post-V1 as an incremental feature.
+V1 scope was scoped down from the original V1 backlog (in `project_spec.md §1.6`) to focus on what makes the *core experience* tighter and more visual. The original V1 items not in this scope (anonymous purchase toggle, "all claimed" notification) are deferred to V1.5 or V2. Gift priority ranking shipped post-V1 as an incremental feature. Item suggestions from gifters was removed from the backlog. Affiliate link rewriting is blocked pending Skimlinks approval.
 
 ### Locked-in scope — 5 tracks
 
