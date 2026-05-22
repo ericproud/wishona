@@ -152,9 +152,9 @@ Detailed plan in the local plan file (not committed).
 
 ---
 
-## V1.5 — In Progress
+## V1.5 — ✅ Complete
 
-Small polish and UX improvements on top of the shipped V1.
+Small polish and UX improvements on top of the shipped V1. All planned items shipped. Item suggestions from gifters was cut. Affiliate link rewriting is blocked pending Skimlinks approval and removed from this milestone.
 
 #### Public list mode — ✅ Complete (2026-05-22)
 - [x] "Make public" / "Make private" toggle per list on dashboard; "Public" badge in card metadata

@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-05-22
 **Last session:** Merged PR #33 — public list mode
-**Next priority:** Affiliate link rewriting (Amazon Associates) — only remaining V1.5 item
+**Next priority:** V1.5 complete — no active backlog. Waiting on Skimlinks approval before affiliate work begins.
 
 ---
 
