@@ -1,8 +1,8 @@
 # Session Context — Handoff
 
-**Last updated:** 2026-05-22
-**Last session:** Merged PR #33 — public list mode
-**Next priority:** Plan V2 feature set
+**Last updated:** 2026-05-23
+**Last session:** Planned V2 feature set — 5 tracks documented in `docs/project_status.md`
+**Next priority:** V2 Track 1 — Mobile-First Navigation
 
 ---
 
@@ -22,7 +22,15 @@
 
 ## What's Next
 
-V1.5 complete. Next session: plan out the next feature set for the app (V2 scope). Skimlinks affiliate approval still pending — affiliate link rewriting blocked until approved.
+V2 planned — 5 tracks, all UX/visual polish, no DB migrations. Full track details in `docs/project_status.md`. Tackle one track per session in order:
+
+1. **Track 1 (next):** Mobile-First Navigation — bottom tab bar, larger tap targets, sticky list header
+2. Track 2: Dashboard Improvements — quick share, item/gifter counts, empty state
+3. Track 3: Gifter Experience Polish — claimed state, quantity display, priority sections, 1-tap claim
+4. Track 4: Onboarding & First-Time UX — welcome banner, empty state coaching, profile nudge
+5. Track 5: Sharing Flow — share sheet component, share button on list page, QR code on invite page
+
+Skimlinks affiliate approval still pending — link rewriting not in V2 scope.
 
 ## Active Branches
 

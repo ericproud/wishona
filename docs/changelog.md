@@ -8,6 +8,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Planning (V2 scope — 2026-05-23)
+- V2 feature set scoped and documented in `docs/project_status.md`
+- 5 tracks planned (in priority order): mobile-first navigation, dashboard improvements, gifter experience polish, onboarding & first-time UX, sharing flow improvements
+- No code changes — planning session only; all tracks are UI/UX, no DB migrations required
+
 ### Added (Public list mode — 2026-05-22)
 - `lists.is_public` column (`boolean DEFAULT false`) — default and nulls backfilled; RLS policies on `lists` and `items` updated to allow reads when `is_public = true`
 - "Make public" / "Make private" toggle per list card on the dashboard; "Public" badge shown in card metadata when visible

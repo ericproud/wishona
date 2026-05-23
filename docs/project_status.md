@@ -189,6 +189,55 @@ Small polish and UX improvements on top of the shipped V1. All planned items shi
 
 ---
 
+---
+
+## V2 — Planned
+
+**Goal:** Make the core experience noticeably better — better flows, better visual design, proper mobile experience. No new monetization or DB changes. Each track is a separate PR / Claude session.
+
+### Track 1 — Mobile-First Navigation
+- Replace mobile hamburger + slide-in sheet with a **bottom tab bar** (Dashboard, Profile, + New List)
+- Larger tap targets across item cards and action buttons
+- Ensure list page (`/[username]/[slug]`) works well at 390px
+- Sticky list title header on scroll
+- **Key files:** `AppShell` nav component, `app/[username]/[slug]/page.tsx`, responsive Tailwind classes
+
+### Track 2 — Dashboard Improvements
+- **Quick share button** on each list card (copies universal invite link inline)
+- **Item count + gifter count** badges on list cards
+- **Improved empty state** — illustrated/styled CTA for users with no lists
+- List cover image from first item image (may already exist partially)
+- Tighten "Gifting on" section — owner avatar + name more prominent
+- **Key files:** `app/dashboard/page.tsx`, `ListCard` component, `lib/actions/lists.ts`
+
+### Track 3 — Gifter Experience Polish
+- **Visual claimed state** — fully claimed items greyed out / badged ("Fully claimed")
+- **Quantity display** on item cards ("2 of 3 being gifted"), not just in claim modal
+- **Priority section headers** — group items by tier ("Most wanted", "Would love it", "Nice to have")
+- **Smooth claim flow** — single-tap claim on mobile for qty=1 items (skip modal)
+- **Key files:** `app/[username]/[slug]/page.tsx`, item card component, `lib/actions/purchases.ts`
+
+### Track 4 — Onboarding & First-Time UX
+- **Welcome banner** — shown once after signup until first list is created
+- **Empty dashboard coaching** — styled empty state with "Create your first list" CTA
+- **Inline "add your first item" prompt** on a new list with 0 items
+- **Profile completeness nudge** — one-time prompt to add photo + sizes
+- **Key files:** `app/dashboard/page.tsx`, `app/list/[id]/edit/page.tsx`, `app/signup/page.tsx`
+
+### Track 5 — Sharing Flow Improvements
+- **Share sheet component** — reusable drawer with copy link + Web Share API (mobile native)
+- **Share button on list page** (owner view) — share directly from the manage-items page
+- **QR code on invite page** — for in-person sharing; use `qrcode.react` (~17kB, acceptable to add)
+- **Key files:** new `components/sharing/ShareSheet.tsx`, `app/list/[id]/edit/page.tsx`, `app/list/[id]/invites/page.tsx`
+
+### Notes
+- No DB migrations for any track
+- No new server actions needed except a small query update for gifter count (Track 2)
+- Skimlinks affiliate link rewriting remains blocked pending approval — not in V2 scope
+- Implement tracks in order (Track 1 first — affects all other tracks)
+
+---
+
 ## Milestones
 
 | Milestone | Status | Notes |
